@@ -1,5 +1,4 @@
 package com.company;
-
 /**
  * Created by Michael on 2/3/2015.
  */
@@ -8,10 +7,15 @@ public class Cpu
     public String memory[] = {"0xC050005C", "0x4B060000"};
     public int sReg;
     public int dReg;
+    public int bReg;
     public int reg1;
     public int reg2;
-    public int oppCode;
+    public int opCode;
     public int instructionType;
+    public long address;
+    public int inputBuffer;
+    public int outputBuffer;
+    public int tempBuffer;
     public int pc;
 
     public Cpu ()
@@ -44,7 +48,7 @@ public class Cpu
         return fetchedInstr;
     }
 
-    public String decode (String fetchedInstr)
+    public void decode (String fetchedInstr)
     {
         // temporary stings used for manipulating the instruction set
         String tempInstr;
@@ -52,6 +56,7 @@ public class Cpu
         String tempInstructionType;
         String tempReg1;
         String tempReg2;
+        String tempAddress;
 
         tempInstr = fetchedInstr;
 
@@ -60,11 +65,10 @@ public class Cpu
         instructionType = Integer.parseInt(tempInstructionType);
         System.out.println(instructionType);
 
-
         // Use second 6 bits as the oppcode
         tempOppCode = tempInstr.substring(3,8);
-        oppCode = Integer.parseInt(tempOppCode);
-        System.out.println(oppCode);
+        opCode = Integer.parseInt(tempOppCode,2);
+        System.out.println(opCode);
 
         // determine what instruction should be executed
         switch(instructionType)
@@ -102,24 +106,20 @@ public class Cpu
                 reg2 = Integer.parseInt(tempReg2);
                 System.out.println(reg2);
 
+                tempAddress = tempInstr.substring(17);
+                address = Long.parseLong(tempAddress);
+                System.out.println(address);
+
                 break;
             }
 
             // Error case
             default:
             {
-                System.out.println("Error not supported instruction type");
+                System.out.println("Error: instruction type not supported");
                 break;
             }
         }
-
-        // string used for output of function
-        String decodedInstr = "";
-
-        fetchedInstr = decodedInstr;
-
-        // return decoded instruction
-        return decodedInstr;
     }
 
     public void execute ()
