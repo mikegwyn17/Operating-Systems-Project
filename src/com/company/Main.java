@@ -2,12 +2,11 @@ package com.company;
 
 public class Main {
 
+    //THE MAIN CLASS IS THE DRIVER OF THE COMPUTER.
+
     public static void main(String[] args)
     {
-        Cpu cpu1 = new Cpu();
-        String foo = cpu1.fetch();
-        System.out.println(foo);
-        cpu1.decode(foo);
+
 //        String main = "0xC050005C";
 //        String newMain = main.substring(2);
 //        String some = "123";
