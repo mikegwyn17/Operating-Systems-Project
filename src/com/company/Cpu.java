@@ -5,7 +5,8 @@ package com.company;
 public class Cpu
 {
     public String memory[] = {"0xC050005C", "0x4B060000"};
-    public int sReg;
+    public int sReg1;
+    public int sReg2;
     public int dReg;
     public int bReg;
     public int reg1;
@@ -57,6 +58,10 @@ public class Cpu
         String tempReg1;
         String tempReg2;
         String tempAddress;
+        String tempSReg1;
+        String tempSReg2;
+        String tempDReg;
+        String tempBReg;
 
         tempInstr = fetchedInstr;
 
@@ -68,7 +73,7 @@ public class Cpu
         // Use second 6 bits as the oppcode
         tempOppCode = tempInstr.substring(3,8);
         opCode = Integer.parseInt(tempOppCode,2);
-        System.out.println(opCode);
+        System.out.println("OpCode: " + opCode);
 
         // determine what instruction should be executed
         switch(instructionType)
@@ -77,6 +82,17 @@ public class Cpu
             case 00:
             {
                 System.out.println("Arithmetic case");
+                tempSReg1 = tempInstr.substring(9,12);
+                reg1 = Integer.parseInt(tempSReg1);
+                System.out.println(sReg1);
+
+                tempSReg2 = tempInstr.substring(13,16);
+                reg1 = Integer.parseInt(tempSReg2);
+                System.out.println(sReg2);
+
+                tempDReg = tempInstr.substring(17,20);
+                dReg = Integer.parseInt(tempDReg);
+                System.out.println(dReg);
                 break;
             }
 
@@ -84,6 +100,14 @@ public class Cpu
             case 01:
             {
                 System.out.println("Conditional format");
+                tempDReg = tempInstr.substring(9,12);
+                bReg = Integer.parseInt(tempDReg);
+                System.out.println(dReg);
+
+                tempReg1 = tempInstr.substring(13,16);
+                reg1 = Integer.parseInt(tempReg1);
+                System.out.println(reg1);
+
                 break;
             }
 

@@ -8,6 +8,8 @@ public class Main {
         String foo = cpu1.fetch();
         System.out.println(foo);
         cpu1.decode(foo);
+        int a = Integer.parseInt("1000");
+        System.out.println(a);
 //        String main = "0xC050005C";
 //        String newMain = main.substring(2);
 //        String some = "123";
