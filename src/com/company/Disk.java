@@ -5,26 +5,28 @@ package com.company;
  */
 public class Disk {
     private String data;
+    private String[] disk = new String[4096];
+
     //Each sector in the disk array will have a string data.
     public Disk()
     {
         data = null;
         //data will be null when 1st create a disk
     }
-    public String returnData()
+    public String returnData(int index)
     {
-        return this.data;
+        return disk[index];
         //return a disk data in that sector in the array
     }
     public String readDisk()
     {
-        String s = this.returnData();
-        return s;
+        //String s = this.returnData();
+        return "s";
         //read a data from a disk and copy it into RAM;
     }
-    public void writeDisk(String s)
+    public void writeDisk(String s, int index)
     {
-        this.data = s;
+        disk[index] = s;
         //read string from a text file and write it into disk
     }
     public void copyDisk(String s)
