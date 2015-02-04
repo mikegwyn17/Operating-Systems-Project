@@ -51,7 +51,7 @@ public class Cpu
 
     public void decode (String fetchedInstr)
     {
-        // temporary stings used for manipulating the instruction set
+        // temporary stings used for decoding the instruction set
         String tempInstr;
         String tempOppCode;
         String tempInstructionType;
@@ -68,7 +68,7 @@ public class Cpu
         // Use first 2 bits to determine instruction type
         tempInstructionType = tempInstr.substring(0,2);
         instructionType = Integer.parseInt(tempInstructionType);
-        System.out.println(instructionType);
+        System.out.println("Instruction type: " + instructionType);
 
         // Use second 6 bits as the oppcode
         tempOppCode = tempInstr.substring(3,8);
@@ -84,15 +84,15 @@ public class Cpu
                 System.out.println("Arithmetic case");
                 tempSReg1 = tempInstr.substring(9,12);
                 reg1 = Integer.parseInt(tempSReg1);
-                System.out.println(sReg1);
+                System.out.println("S-Reg1: " + sReg1);
 
                 tempSReg2 = tempInstr.substring(13,16);
                 reg1 = Integer.parseInt(tempSReg2);
-                System.out.println(sReg2);
+                System.out.println("S-Reg2: " + sReg2);
 
                 tempDReg = tempInstr.substring(17,20);
                 dReg = Integer.parseInt(tempDReg);
-                System.out.println(dReg);
+                System.out.println("D-Reg: " + dReg);
                 break;
             }
 
@@ -100,21 +100,27 @@ public class Cpu
             case 01:
             {
                 System.out.println("Conditional format");
-                tempDReg = tempInstr.substring(9,12);
-                bReg = Integer.parseInt(tempDReg);
+                tempBReg = tempInstr.substring(9,12);
+                bReg = Integer.parseInt(tempBReg);
+                System.out.println(bReg);
+
+                tempDReg = tempInstr.substring(13,16);
+                dReg = Integer.parseInt(tempDReg);
                 System.out.println(dReg);
 
-                tempReg1 = tempInstr.substring(13,16);
-                reg1 = Integer.parseInt(tempReg1);
-                System.out.println(reg1);
-
+                tempAddress = tempInstr.substring(17);
+                address = Integer.parseInt(tempAddress);
+                System.out.println(address);
                 break;
             }
 
-            // Unconditional Jump
+            // Unconditional Jump format
             case 10:
             {
                 System.out.println("Unconditional jump");
+                tempAddress = tempInstr.substring(9);
+                address = Integer.parseInt(tempAddress);
+                System.out.println(address);
                 break;
             }
 
@@ -124,15 +130,15 @@ public class Cpu
                 System.out.println("Input and Output format");
                 tempReg1 = tempInstr.substring(9,12);
                 reg1 = Integer.parseInt(tempReg1);
-                System.out.println(reg1);
+                System.out.println("Reg1: " + reg1);
 
                 tempReg2 = tempInstr.substring(13,16);
                 reg2 = Integer.parseInt(tempReg2);
-                System.out.println(reg2);
+                System.out.println("Reg2: " + reg2);
 
                 tempAddress = tempInstr.substring(17);
                 address = Long.parseLong(tempAddress);
-                System.out.println(address);
+                System.out.println("Address: " + address);
 
                 break;
             }
