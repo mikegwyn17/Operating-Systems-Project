@@ -129,15 +129,15 @@ public class Cpu
             {
                 System.out.println("Input and Output format");
                 tempReg1 = tempInstr.substring(9,12);
-                reg1 = Integer.parseInt(tempReg1);
+                reg1 = Integer.parseInt(tempReg1,2);
                 System.out.println("Reg1: " + reg1);
 
                 tempReg2 = tempInstr.substring(13,16);
-                reg2 = Integer.parseInt(tempReg2);
+                reg2 = Integer.parseInt(tempReg2,2);
                 System.out.println("Reg2: " + reg2);
 
                 tempAddress = tempInstr.substring(17);
-                address = Long.parseLong(tempAddress);
+                address = Long.parseLong(tempAddress,2);
                 System.out.println("Address: " + address);
 
                 break;
