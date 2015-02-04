@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Created by evanross on 2/4/15.
  */
-public class loader {
+public class Loader {
 
     public void method(){
 
@@ -20,7 +20,7 @@ public class loader {
     FileReader fr;
     BufferedReader br;
 
-    public  loader(String file) {
+    public  Loader(String file) {
 
         try {
             fr = new FileReader(file);
