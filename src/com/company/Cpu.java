@@ -4,7 +4,7 @@ package com.company;
  */
 public class Cpu
 {
-    public String memory[] = {"0xC050005C", "0x4B060000"};
+    public String memory[] = {"0xA"};
     public int sReg1;
     public int sReg2;
     public int dReg;
@@ -18,6 +18,7 @@ public class Cpu
     public int outputBuffer;
     public int tempBuffer;
     public int pc;
+    public int accumulator;
 
     public Cpu ()
     {
@@ -29,6 +30,7 @@ public class Cpu
         // long used for converting to binary
         long tempLong;
 
+        int numLeadingZeroes = 0;
         // temporary string used for storing the binary value of the instruction
         String tempInstr2;
 
@@ -38,6 +40,10 @@ public class Cpu
         tempInstr = tempInstr.substring(2);
         tempLong = Long.parseLong(tempInstr,16);
         tempInstr2 = Long.toBinaryString(tempLong);
+        while (tempInstr2.length() != 31)
+        {
+            tempInstr2 = "0" + tempInstr2.substring(0);
+        }
 
         // string used as output of function
         String fetchedInstr = tempInstr2;
@@ -101,15 +107,15 @@ public class Cpu
             {
                 System.out.println("Conditional format");
                 tempBReg = tempInstr.substring(9,12);
-                bReg = Integer.parseInt(tempBReg);
+                bReg = Integer.parseInt(tempBReg,2);
                 System.out.println(bReg);
 
                 tempDReg = tempInstr.substring(13,16);
-                dReg = Integer.parseInt(tempDReg);
+                dReg = Integer.parseInt(tempDReg,2);
                 System.out.println(dReg);
 
                 tempAddress = tempInstr.substring(17);
-                address = Integer.parseInt(tempAddress);
+                address = Long.parseLong(tempAddress, 2);
                 System.out.println(address);
                 break;
             }
@@ -119,8 +125,8 @@ public class Cpu
             {
                 System.out.println("Unconditional jump");
                 tempAddress = tempInstr.substring(9);
-                address = Integer.parseInt(tempAddress);
-                System.out.println(address);
+                address = Long.parseLong(tempAddress, 2);
+                System.out.println("Address: " + address);
                 break;
             }
 
@@ -154,7 +160,208 @@ public class Cpu
 
     public void execute ()
     {
+        switch(opCode)
+        {
+            // Reads the content of I/P buffer into accumulator
+            case 0:
+            {
+                accumulator = inputBuffer;
+                System.out.println("RD Instruction");
+                break;
+            }
 
+            // Writes the content of the accumulator into O/P buffer
+            case 1:
+            {
+                outputBuffer = accumulator;
+                System.out.println("WR Instruction");
+                break;
+            }
+
+            // Stores content of a register into an address
+            case 2:
+            {
+                System.out.println("ST Instruction");
+                break;
+            }
+
+            // Loads the content of an address into an address of a register
+            case 3:
+            {
+                System.out.println("LW Instruction");
+                break;
+            }
+
+            // Transfers the content of an address into register
+            case 4:
+            {
+                System.out.println("MOV Instruction");
+                break;
+            }
+
+            // Adds content of two S-regs into D-reg
+            case 5:
+            {
+                System.out.println("ADD Instruction");
+                break;
+            }
+
+            // Subtracts content of two S-regs into D-reg
+            case 6:
+            {
+                System.out.println("SUB Instruction");
+                break;
+            }
+
+            // Multiplies content of two S-regs into D-reg
+            case 7:
+            {
+                System.out.println("MUL Instruction");
+                break;
+            }
+
+            // Divides content of two S-regs into D-reg
+            case 8:
+            {
+                System.out.println("DIV Instruction");
+                break;
+            }
+
+            // Logical AND of two S-regs into D-reg
+            case 9:
+            {
+                System.out.println("AND Instruction");
+                break;
+            }
+
+            // Logical OR of two S-regs into D-reg
+            case 10:
+            {
+                System.out.println("OR Instruction");
+                break;
+            }
+
+            // Transfers address/data directly into a register
+            case 11:
+            {
+                System.out.println("MOVI Instruction");
+                break;
+            }
+
+            // Adds a data directly to the content of a register
+            case 12:
+            {
+                System.out.println("ADDI Instruction");
+                break;
+            }
+
+            // Multiplies a data directly to the content of a register
+            case 13:
+            {
+                System.out.println("MULI Instruction");
+                break;
+            }
+
+            // Divides a data directly to the content of a register
+            case 14:
+            {
+                System.out.println("DIVI Instruction");
+                break;
+            }
+
+            // Loads a data/address directly to the content of a register
+            case 15:
+            {
+                System.out.println("LDI Instruction");
+                break;
+            }
+
+            // Sets the D-reg to 1 if  first S-reg is less than second B-reg, and 0 otherwise
+            case 16:
+            {
+                System.out.println("SLT Instruction");
+                break;
+            }
+
+            // Sets the D-reg to 1 if  first S-reg is less than a data, and 0 otherwise
+            case 17:
+            {
+                System.out.println("SLTI Instruction");
+                break;
+            }
+
+            // Logical end of program
+            case 18:
+            {
+                System.out.println("HLT Instruction");
+                break;
+            }
+
+            // Does nothing and moves to next instruction
+            case 19:
+            {
+                System.out.println("NOP Instruction");
+                break;
+            }
+
+            // Jumps to a specified location
+            case 20:
+            {
+                System.out.println("JMP Instruction");
+                break;
+            }
+
+            // Branches to an address when content of B-reg = D-reg
+            case 21:
+            {
+                System.out.println("BEQ Instruction");
+                break;
+            }
+
+            // Branches to an address when content of B-reg <> D-reg
+            case 22:
+            {
+                System.out.println("BNE Instruction");
+                break;
+            }
+
+            // Branches to an address when content of B-reg = 0
+            case 23:
+            {
+                System.out.println("BEZ Instruction");
+                break;
+            }
+
+            // Branches to an address when content of B-reg <> 0
+            case 24:
+            {
+                System.out.println("BNZ Instructions");
+                break;
+            }
+
+            // Branches to an address when content of B-reg <> 0
+            case 25:
+            {
+                System.out.println("BGZ Instruction");
+                break;
+            }
+
+            // Branches to an address when content of B-reg < 0
+            case 26:
+            {
+                System.out.println("BLZ Instruction");
+                break;
+            }
+
+            // Error case
+            default:
+            {
+                System.out.println("Error, Op code not supported");
+                break;
+            }
+
+
+        }
     }
 
 }
