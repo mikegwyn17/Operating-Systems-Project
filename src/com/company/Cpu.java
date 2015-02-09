@@ -329,48 +329,92 @@ public class Cpu
             case 11:
             {
                 System.out.println("Before MOVI Instruction");
+                System.out.println("contents of d-reg: " + dReg + " contents of address: " + address);
+                address = dReg;
+
+                System.out.println("After MOVI Instruction");
+                System.out.println("contents of d-reg: " + dReg + " contents of address: " + address);
                 break;
             }
 
             // Adds a data directly to the content of a register
             case 12:
             {
-                System.out.println("ADDI Instruction");
+                System.out.println("Before ADDI Instruction");
+                System.out.println("contents of d-reg: " + dReg + " contents of address: " + address);
+                dReg += (int)address;
+
+                System.out.println("After ADDI Instruction");
+                System.out.println("contents of d-reg: " + dReg + " contents of address: " + address);
                 break;
             }
 
             // Multiplies a data directly to the content of a register
             case 13:
             {
-                System.out.println("MULI Instruction");
+                System.out.println("Before MULI Instruction");
+                System.out.println("contents of d-reg: " + dReg + " contents of address: " + address);
+                dReg *= (int)address;
+
+                System.out.println("After MULI Instruction");
+                System.out.println("contents of d-reg: " + dReg + " contents of address: " + address);
                 break;
             }
 
             // Divides a data directly to the content of a register
             case 14:
             {
-                System.out.println("DIVI Instruction");
+                System.out.println("Before DIVI Instruction");
+                System.out.println("contents of d-reg: " + dReg + " contents of address: " + address);
+                dReg /= (int)address;
+
+                System.out.println("After MULI Instruction");
+                System.out.println("contents of d-reg: " + dReg + " contents of address: " + address);
                 break;
             }
 
             // Loads a data/address directly to the content of a register
             case 15:
             {
-                System.out.println("LDI Instruction");
+                System.out.println("Before LDI Instruction");
+                System.out.println("contents of d-reg: " + dReg + " contents of address: " + address);
+                dReg = (int)address;
+
+                System.out.println("After MULI Instruction");
+                System.out.println("contents of d-reg: " + dReg + " contents of address: " + address);
                 break;
             }
 
             // Sets the D-reg to 1 if  first S-reg is less than second B-reg, and 0 otherwise
             case 16:
             {
-                System.out.println("SLT Instruction");
+                System.out.println("Before SLT Instruction");
+                System.out.println("contents of s-reg1: " + sReg1 + " contents of s-reg2: " + sReg2 + " contents of d-reg: " + dReg);
+
+                if (sReg1 < sReg2)
+                    dReg = 1;
+                else
+                    dReg = 0;
+
+                System.out.println("After OR Instruction");
+                System.out.println("contents of s-reg1: " + sReg1 + " contents of s-reg2: " + sReg2 + " contents of d-reg: " + dReg);
+
                 break;
             }
 
             // Sets the D-reg to 1 if  first S-reg is less than a data, and 0 otherwise
             case 17:
             {
-                System.out.println("SLTI Instruction");
+                System.out.println("Before SLTI Instruction");
+                System.out.println("contents of s-reg1: " + sReg1 + " contents of s-reg2: " + sReg2 + " contents of d-reg: " + dReg);
+
+                if (sReg1 < (int)address)
+                    dReg = 1;
+                else
+                    dReg = 0;
+
+                System.out.println("After SLTI Instruction");
+                System.out.println("contents of s-reg1: " + sReg1 + " contents of address: " + address + " contents of d-reg: " + dReg);
                 break;
             }
 
@@ -385,6 +429,7 @@ public class Cpu
             case 19:
             {
                 System.out.println("NOP Instruction");
+                pc++;
                 break;
             }
 
