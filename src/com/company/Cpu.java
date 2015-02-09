@@ -15,15 +15,18 @@ public class Cpu
     public int reg1;
     public int reg2;
     public int tempReg;
-    public int accumulator;
+    public int zero = 1;
+    public int accumulator = 0;
 
     public int opCode;
     public int instructionType;
     public long address;
+
     public int inputBuffer;
     public int outputBuffer;
     public int tempBuffer;
     public int pc;
+    public boolean jumped;
 
     public Cpu ()
     {
@@ -422,6 +425,7 @@ public class Cpu
             case 18:
             {
                 System.out.println("HLT Instruction");
+                System.out.println("End Program");
                 break;
             }
 
@@ -429,21 +433,34 @@ public class Cpu
             case 19:
             {
                 System.out.println("NOP Instruction");
-                pc++;
+                System.out.println("Moving to next instruction");
                 break;
             }
 
             // Jumps to a specified location
             case 20:
             {
-                System.out.println("JMP Instruction");
+                System.out.println("Before JMP Instruction");
+                System.out.println("contents of address: " + address + " contents of pc " + pc);
+                pc = (int)address;
+                jumped = true;
+
+                System.out.println("After JMP Instruction");
+                System.out.println("contents of address: " + address + " contents of pc " + pc);
                 break;
             }
 
             // Branches to an address when content of B-reg = D-reg
             case 21:
             {
-                System.out.println("BEQ Instruction");
+                System.out.println("Before BEQ Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of d-reg: " + dReg + " contents of pc: " + pc);
+                {
+                    pc = (int)address;
+                }
+
+                System.out.println("After BEQ Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of d-reg: " + dReg + " contents of pc: " + pc);
                 break;
             }
 
@@ -457,7 +474,15 @@ public class Cpu
             // Branches to an address when content of B-reg = 0
             case 23:
             {
-                System.out.println("BEZ Instruction");
+                System.out.println("Before BEZ Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of pc: " + pc + "contents of address: " + address);
+                if (bReg == 0)
+                {
+                    pc = (int)address;
+                }
+
+                System.out.println("After BEZ Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of pc: " + pc + "contents of address: " + address);
                 break;
             }
 
@@ -468,17 +493,31 @@ public class Cpu
                 break;
             }
 
-            // Branches to an address when content of B-reg <> 0
+            // Branches to an address when content of B-reg > 0
             case 25:
             {
-                System.out.println("BGZ Instruction");
+                System.out.println("Before BGZ Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of pc: " + pc + "contents of address: " + address);
+                if (bReg > 0)
+                {
+                    pc = (int)address;
+                }
+                System.out.println("After BGZ Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of pc: " + pc + "contents of address: " + address);
                 break;
             }
 
             // Branches to an address when content of B-reg < 0
             case 26:
             {
-                System.out.println("BLZ Instruction");
+                System.out.println("Before BLZ Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of pc: " + pc + "contents of address: " + address);
+                if (bReg < 0)
+                {
+                    pc = (int)address;
+                }
+                System.out.println("After BLZ Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of pc: " + pc + "contents of address: " + address);
                 break;
             }
 
