@@ -210,8 +210,8 @@ public class Cpu
                 System.out.println("Before ST Instruction");
                 System.out.println("contents of address: " + address + " contents of d-reg: " + dReg);
 
-                System.out.println("After ST Instruction");
                 address += dReg;
+                System.out.println("After ST Instruction");
                 System.out.println("contents of address: " + address + " contents of d-reg: " + dReg);
                 break;
             }
@@ -455,6 +455,7 @@ public class Cpu
             {
                 System.out.println("Before BEQ Instruction");
                 System.out.println("contents of b-reg " + bReg + " contents of d-reg: " + dReg + " contents of pc: " + pc);
+                if (bReg == dReg)
                 {
                     pc = (int)address;
                 }
@@ -467,7 +468,14 @@ public class Cpu
             // Branches to an address when content of B-reg <> D-reg
             case 22:
             {
-                System.out.println("BNE Instruction");
+                System.out.println("Before BNE Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of d-reg: " + dReg + " contents of pc: " + pc);
+                if (bReg != dReg)
+                {
+                    pc = (int)address;
+                }
+                System.out.println("After BNE Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of d-reg: " + dReg + " contents of pc: " + pc);
                 break;
             }
 
@@ -490,6 +498,14 @@ public class Cpu
             case 24:
             {
                 System.out.println("BNZ Instructions");
+                System.out.println("contents of b-reg " + bReg + " contents of pc: " + pc + "contents of address: " + address);
+                if (bReg != 0)
+                {
+                    pc = (int)address;
+                }
+
+                System.out.println("After BNZ Instruction");
+                System.out.println("contents of b-reg " + bReg + " contents of pc: " + pc + "contents of address: " + address);
                 break;
             }
 
