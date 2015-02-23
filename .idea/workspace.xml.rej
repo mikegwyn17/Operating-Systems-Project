@@ -1,0 +1,13 @@
+diff a/.idea/workspace.xml b/.idea/workspace.xml	(rejected hunks)
+@@ -1,10 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="eb738059-3d21-4774-bef8-a043eb27824a" name="Default" comment="">
+-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Operating-Systems-Project.iml" afterPath="$PROJECT_DIR$/Operating-Systems-Project.iml" />
+-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+-    </list>
++    <list default="true" id="eb738059-3d21-4774-bef8-a043eb27824a" name="Default" comment="" />
+     <ignored path="Operating-Systems-Project.iws" />
+     <ignored path=".idea/workspace.xml" />
+     <ignored path="$PROJECT_DIR$/out/" />
