@@ -15,7 +15,7 @@ public class Ram {
         return ram[index];
         //return a disk data in that sector in the array
     }
-    public string readRam(){
+    public String readRam(){
         //String s = this.returnData();
         System.out.print("test");
         return "s";
@@ -25,7 +25,7 @@ public class Ram {
         ram[index] = s;
         //read string from a text file and write it into CPU
     }
-    public void copyRam(string s){
+    public void copyRam(String s){
         //may or not be needed
     }
 }
