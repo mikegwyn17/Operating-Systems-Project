@@ -17,6 +17,7 @@ public class Ram {
     }
     public string readRam(){
         //String s = this.returnData();
+        System.out.print("test");
         return "s";
         //read a data from ram and copy it into CPU
     }
