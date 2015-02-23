@@ -5,7 +5,5 @@ package com.company;
  */
 public class LongTermScheduler {
 
-    public static void main(String[] args) {
-        System.out.println("hi");
-    }
+
 }
