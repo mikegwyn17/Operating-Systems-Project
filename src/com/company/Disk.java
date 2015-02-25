@@ -5,12 +5,13 @@ package com.company;
  */
 public class Disk {
     private String data;
-    private String[] disk = new String[4096];
+    private String[] disk;
 
     //Each sector in the disk array will have a string data.
     public Disk()
     {
         data = null;
+        disk = new String[4096];
         //data will be null when 1st create a disk
     }
     public String returnData(int index)
@@ -18,11 +19,9 @@ public class Disk {
         return disk[index];
         //return a disk data in that sector in the array
     }
-    public String readDisk()
+    public String readDisk(int index)
     {
-        //String s = this.returnData();
-        return "s";
-        //read a data from a disk and copy it into RAM;
+        return disk[index];
     }
     public void writeDisk(String s, int index)
     {

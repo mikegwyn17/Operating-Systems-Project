@@ -10,17 +10,17 @@ import java.io.IOException;
  */
 public class Loader {
 
-    public void method(){
-
-        for (int i = 0; i < 10; i++)
-            System.out.println(i % 2);
-        System.out.println("Hello World");
-    }
-
     FileReader fr;
     BufferedReader br;
+    PCBObject pcbObject;
 
-    public  Loader(String file) {
+    int lastJobNo;
+
+    final int JOB_NUMBER = 2, INPUT_BUFFER = 2;
+    final int JOB_INSTRUCTIONS = 3, OUTPUT_BUFFER = 3;
+    final int JOB_PRIORITY = 4, TEMPORARY_BUFFER = 3;
+
+    public Loader(String file) {
 
         try {
             fr = new FileReader(file);
@@ -29,12 +29,31 @@ public class Loader {
             String line;
             int index = 0;
             while(true) {
+
                 line = br.readLine();
                 if(line == null) break;
 
-                if(line.contains("JOB") || line.contains("Data")) {
+                if(line.contains("JOB")) {
+                    String[] control = line.split("\\s+");
+                    lastJobNo = Integer.parseInt(control[JOB_NUMBER], 16);
+                    pcbObject = new PCBObject(lastJobNo, Integer.parseInt(control[JOB_PRIORITY], 16), index, Integer.parseInt(control[JOB_INSTRUCTIONS], 16));
+                    Main.pcb.insert(pcbObject);
+                }
+                else if(line.contains("Data")) {
 
-                } else {
+                    String[] control = line.split("\\s+");
+
+                    if(Main.pcb.getPCBSortStatus() == PCB.sorttype.JOB_NUMBER) {
+                        PCBObject thisJob = Main.pcb.getPCB(lastJobNo);
+                        thisJob.setDataDiskAddress(index);
+                        thisJob.setInputBuffer(Integer.parseInt(control[INPUT_BUFFER], 16));
+                        thisJob.setOutputBuffer(Integer.parseInt(control[OUTPUT_BUFFER], 16));
+                        thisJob.setTemporaryBuffer(Integer.parseInt(control[TEMPORARY_BUFFER], 16));
+                    } else {
+                        Main.pcb.sortPCB(PCB.sorttype.JOB_NUMBER);
+                    }
+                }
+                else {
                     Main.disk.writeDisk(line, index);
                     index++;
                 }
