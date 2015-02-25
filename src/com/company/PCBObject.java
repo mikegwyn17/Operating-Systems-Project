@@ -47,6 +47,6 @@ public class PCBObject {
 
     @Override
     public String toString() {
-        return "\n\n-JOB " + jobNumber + " INFO- \n" + "Job Priority: " + jobPriority + ", Instructions: " + instructionCount + ", Disk Address: " + jobDiskAddress + ", Memory Address: " + jobMemoryAddress + "\n-DATA INFO-\nDisk Address: " + dataDiskAddress + ", Memory Address: " + dataMemoryAddress + "\n-BUFFERS-\nInput: " + inputBuffer + ", Output: " + outputBuffer + ", Temporary: " + temporaryBuffer;
+        return "\n\n*****- JOB " + jobNumber + " INFO -*****\n" + "Job Priority: " + jobPriority + ", Instructions: " + instructionCount + ", Disk Address: " + jobDiskAddress + ", Memory Address: " + jobMemoryAddress + "\n*****- DATA INFO -*****\nDisk Address: " + dataDiskAddress + ", Memory Address: " + dataMemoryAddress + "\n*****- BUFFERS -*****\nInput: " + inputBuffer + ", Output: " + outputBuffer + ", Temporary: " + temporaryBuffer;
     }
 }
