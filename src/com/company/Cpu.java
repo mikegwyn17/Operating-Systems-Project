@@ -153,7 +153,6 @@ public class Cpu
                 tempAddress = tempInstr.substring(9);
                 address = Long.parseLong(tempAddress, 2);
                 System.out.println("Address: " + address);
-                jumped = true;
                 break;
             }
 
