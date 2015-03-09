@@ -10,6 +10,7 @@ public class Driver {
     public static void main(String[] a) {
         String program = "program.txt";
         Loader loader = new Loader(program);
+        Cpu cpu = new Cpu ();
 
         int pcbSize = pcb.getNumberOfJobs();
 
