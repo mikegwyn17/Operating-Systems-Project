@@ -8,15 +8,15 @@ public class Cpu
     public String memory[] = {"0x56810018"};
 
     // Registers for the cpu
-    public int sReg1 = 2;
-    public int sReg2 = 3;
-    public int dReg = 4;
-    public int bReg = 5;
-    public int reg1 = 6;
-    public int reg2 = 7;
-    public int tempReg = 8;
-    public int zero = 1;
-    public int accumulator = 0;
+    public int sReg1;
+    public int sReg2;
+    public int dReg;
+    public int bReg;
+    public int reg1;
+    public int reg2;
+    public int tempReg;
+    public static int zero = 1;
+    public static int accumulator = 0;
     public int[] regArray;
 
     public int opCode;
