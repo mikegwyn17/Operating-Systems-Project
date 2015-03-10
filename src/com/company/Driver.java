@@ -5,6 +5,7 @@ import java.util.List;
 public class Driver {
     public static Disk disk = new Disk();
     public static PCB pcb = new PCB();
+    public static Ram ram = new Ram();
 
     public static void main(String[] a) {
         String program = "program.txt";

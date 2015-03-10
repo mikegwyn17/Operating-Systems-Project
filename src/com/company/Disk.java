@@ -14,15 +14,10 @@ public class Disk {
         disk = new String[4096];
         //data will be null when 1st create a disk
     }
-    public String returnData(int index)
-    {
-        return disk[index];
-        //return a disk data in that sector in the array
-    }
-    public String readDisk(int index)
-    {
+    public String readDisk(int index){
         return disk[index];
     }
+
     public void writeDisk(String s, int index)
     {
         disk[index] = s;

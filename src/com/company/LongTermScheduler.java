@@ -16,10 +16,10 @@ public class LongTermScheduler {
 
 
     public void MultiProgramming() {
-//Degree of multiprogramming
-// number of processes in memory
-//  Process creation must be equal to the average departure rate
-// Compare last departed process with processes in the HDD to decide next process to create
+    //Degree of multiprogramming
+    // number of processes in memory
+    //  Process creation must be equal to the average departure rate
+    // Compare last departed process with processes in the HDD to decide next process to create
     }
 
 

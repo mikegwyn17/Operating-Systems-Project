@@ -33,8 +33,8 @@ public class ShortTermScheduler
                 if (Job1.getJobPriority() < Job2.getJobPriority()) {
                     Job = Job1;
                     PCBObject tempJob = readyQueue.get(i + 1);
-                    readyQueue.add(i, tempJob);
-                    readyQueue.add(i + 1, Job);
+                    readyQueue.set(i, tempJob);
+                    readyQueue.set(i + 1, Job);
                     go = true;
                 }
             }
