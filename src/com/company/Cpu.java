@@ -31,13 +31,28 @@ public class Cpu
     public int pc;
     public boolean jumped;
 
+    public PCBObject Job;
+
     public Cpu ()
     {
         pc = 0;
-        regArray = new int[16];
+        regArray = new int[15];
         regArray[zero] = 0;
         ioCount = 0;
         jumped = false;
+    }
+
+    public String loadCpu (PCBObject j)
+    {
+        Job = j;
+        tempBuffer = Job.getTemporaryBuffer();
+        inputBuffer = Job.getInputBuffer();
+        outputBuffer = Job.getOutputBuffer();
+        pc = Job.getJobDiskAddress();
+
+
+        String instruction = "";
+        return instruction;
     }
 
     public int effectiveAddress(int i, long a)
@@ -260,8 +275,7 @@ public class Cpu
                 System.out.println("Before ADD Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
 
-                regArray[tempReg] = regArray[sReg1] + regArray[sReg2];
-                regArray[dReg] = regArray[tempReg];
+                regArray[dReg] = regArray[sReg1] + regArray[sReg2];
                 System.out.println("After ADD Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
                 break;

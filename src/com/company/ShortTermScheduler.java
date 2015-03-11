@@ -1,6 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by Mike-PC on 3/1/2015.
@@ -9,8 +9,8 @@ public class ShortTermScheduler
 {
     public ArrayList<PCBObject> readyQueue;
     Cpu cpu = new Cpu();
-    public boolean go;
     public PCBObject Job;
+    public boolean go = false;
 
     public ShortTermScheduler (PCB pcb)
     {
@@ -20,22 +20,22 @@ public class ShortTermScheduler
     public void SJF ()
     {
         // Sort ready queue in order with highest priority at the front
-        go = true;
         int n = readyQueue.size();
-
-        while (go) {
+        go = true;
+        while (go)
+        {
             n--;
-            go = false;
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 PCBObject Job1 = readyQueue.get(i);
                 PCBObject Job2 = readyQueue.get(i + 1);
 
-                if (Job1.getJobPriority() < Job2.getJobPriority()) {
+                if (Job1.getJobPriority() < Job2.getJobPriority())
+                {
                     Job = Job1;
                     PCBObject tempJob = readyQueue.get(i + 1);
                     readyQueue.set(i, tempJob);
                     readyQueue.set(i + 1, Job);
-                    go = true;
                 }
             }
         }
