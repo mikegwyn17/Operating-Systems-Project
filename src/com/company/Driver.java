@@ -10,13 +10,17 @@ public class Driver {
     public static void main(String[] a) {
         String program = "program.txt";
         Loader loader = new Loader(program);
-        Cpu cpu = new Cpu ();
+        Cpu cpu = new Cpu(disk);
 
         int pcbSize = pcb.getNumberOfJobs();
 
-        for(int i = 1; i <= pcbSize; i++) {
+        for(int i = 1; i <= pcbSize; i++)
+        {
             System.out.println(pcb.getPCB(i).toString());
         }
-        sts.SJF();
+        for (int i = 1; i <= pcbSize; i++)
+        {
+            cpu.loadCpu(pcb.getPCB(i));
+        }
     }
 }

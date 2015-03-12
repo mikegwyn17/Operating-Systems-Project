@@ -8,7 +8,7 @@ import java.util.*;
 public class ShortTermScheduler
 {
     public ArrayList<PCBObject> readyQueue;
-    Cpu cpu = new Cpu();
+    //Cpu cpu = new Cpu();
     public PCBObject Job;
     public boolean go = false;
 
@@ -17,7 +17,7 @@ public class ShortTermScheduler
 
     }
 
-    public void SJF ()
+    public void PrioritySchedule ()
     {
         // Sort ready queue in order with highest priority at the front
         int n = readyQueue.size();

@@ -5,7 +5,6 @@ package com.company;
 public class Cpu
 {
     // Array of strings used to simulate memory, will be replaced.
-    public String memory[] = {"0x56810018"};
 
     // Registers for the cpu
     public int sReg1;
@@ -32,9 +31,11 @@ public class Cpu
     public boolean jumped;
 
     public PCBObject Job;
+    public Disk hardDisk;
 
-    public Cpu ()
+    public Cpu (Disk disk)
     {
+        hardDisk = disk;
         pc = 0;
         regArray = new int[15];
         regArray[zero] = 0;
@@ -42,17 +43,23 @@ public class Cpu
         jumped = false;
     }
 
-    public String loadCpu (PCBObject j)
+    public void loadCpu (PCBObject j)
     {
         Job = j;
         tempBuffer = Job.getTemporaryBuffer();
         inputBuffer = Job.getInputBuffer();
         outputBuffer = Job.getOutputBuffer();
         pc = Job.getJobDiskAddress();
-
-
-        String instruction = "";
-        return instruction;
+        for (int i = Job.getInstructionCount(); i > 0; i--)
+        {
+            System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
+            String instr = fetch(pc);
+            execute(decode(instr), Job.getJobNumber());
+            if (!jumped)
+                pc++;
+            else
+                jumped = false;
+        }
     }
 
     public int effectiveAddress(int i, long a)
@@ -60,8 +67,9 @@ public class Cpu
         return regArray[i] + (int)a;
     }
 
-    public String fetch ()
+    public String fetch (int p)
     {
+        pc = p;
         // long used for converting to binary
         long tempLong;
 
@@ -70,7 +78,7 @@ public class Cpu
 
         // temporary string used for manipulating the instruction
         String tempInstr;
-        tempInstr = memory[pc];
+        tempInstr = hardDisk.readDisk(pc);
         tempInstr = tempInstr.substring(2);
         tempLong = Long.parseLong(tempInstr,16);
         tempInstr2 = Long.toBinaryString(tempLong);
@@ -82,14 +90,11 @@ public class Cpu
         // string used as output of function
         String fetchedInstr = tempInstr2;
 
-        // point program counter to next instruction
-        pc++;
-
         // return fetched instruction
         return fetchedInstr;
     }
 
-    public void decode (String fetchedInstr)
+    public int decode (String fetchedInstr)
     {
         // temporary stings used for decoding the instruction set
         String tempInstr;
@@ -124,18 +129,18 @@ public class Cpu
                 // set reg-1
                 System.out.println("Arithmetic case");
                 tempSReg1 = tempInstr.substring(9,12);
-                regArray[reg1] = Integer.parseInt(tempSReg1);
-                System.out.println("S-Reg1: " + regArray[sReg1]);
+                sReg1 = Integer.parseInt(tempSReg1,2);
+                System.out.println("S-Reg1: " + sReg1);
 
                 // set reg-2
                 tempSReg2 = tempInstr.substring(13,16);
-                regArray[reg1] = Integer.parseInt(tempSReg2);
-                System.out.println("S-Reg2: " + regArray[sReg2]);
+                sReg2 = Integer.parseInt(tempSReg2,2);
+                System.out.println("S-Reg2: " + sReg2);
 
                 // set d-reg
                 tempDReg = tempInstr.substring(17,20);
-                regArray[dReg] = Integer.parseInt(tempDReg);
-                System.out.println("D-Reg: " + regArray[dReg]);
+                dReg = Integer.parseInt(tempDReg);
+                System.out.println("D-Reg: " + dReg);
                 break;
             }
 
@@ -145,13 +150,13 @@ public class Cpu
                 // set b-reg
                 System.out.println("Conditional format");
                 tempBReg = tempInstr.substring(9,12);
-                regArray[bReg] = Integer.parseInt(tempBReg,2);
-                System.out.println("B-reg: " + regArray[bReg]);
+                bReg = Integer.parseInt(tempBReg,2);
+                System.out.println("B-reg: " + bReg);
 
                 // set d-reg
                 tempDReg = tempInstr.substring(13,16);
-                regArray[dReg] = Integer.parseInt(tempDReg,2);
-                System.out.println("D-reg: " + regArray[dReg]);
+                dReg = Integer.parseInt(tempDReg,2);
+                System.out.println("D-reg: " + dReg);
 
                 // set address
                 tempAddress = tempInstr.substring(17);
@@ -177,13 +182,13 @@ public class Cpu
                 // set reg-1
                 System.out.println("Input and Output format");
                 tempReg1 = tempInstr.substring(9,12);
-                regArray[reg1] = Integer.parseInt(tempReg1,2);
-                System.out.println("Reg1: " + regArray[reg1]);
+                reg1 = Integer.parseInt(tempReg1,2);
+                System.out.println("Reg1: " + reg1);
 
                 // set reg-2
                 tempReg2 = tempInstr.substring(13,16);
-                regArray[reg2] = Integer.parseInt(tempReg2,2);
-                System.out.println("Reg2: " + regArray[reg2]);
+                reg2 = Integer.parseInt(tempReg2,2);
+                System.out.println("Reg2: " + reg2);
 
                 // set address
                 tempAddress = tempInstr.substring(17);
@@ -200,10 +205,12 @@ public class Cpu
                 break;
             }
         }
+        return opCode;
     }
 
-    public void execute ()
+    public void execute (int o, int jobNum)
     {
+        opCode = o;
         switch(opCode)
         {
             // Reads the content of I/P buffer into accumulator
