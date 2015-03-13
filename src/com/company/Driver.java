@@ -3,6 +3,9 @@ package com.company;
 import java.util.List;
 
 public class Driver {
+    public static double totalPercent;
+    public static double sumPercent;
+    public static int counter = 0;
     public static Disk disk = new Disk();
     public static PCB pcb = new PCB();
     public static Ram ram = new Ram();
