@@ -42,17 +42,9 @@ public class Driver {
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
 
-        System.out.println("LTS Schedule....");
-        lts.beginSchedule();
-
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
         }
-
-
-
-
-
 
 //      These comments print the whole PCB. Only used for debugging purposes.
 //        for(int i = 1; i <= pcbSize; i++) {
