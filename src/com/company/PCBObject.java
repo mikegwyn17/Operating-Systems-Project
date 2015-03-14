@@ -14,6 +14,8 @@ public class PCBObject {
     private int inputBuffer;
     private int outputBuffer;
     private int temporaryBuffer;
+    private boolean IObound; //IObound or not
+    private String instruction; //instuction set for job
 
     public PCBObject(int jobNumber, int jobPriority, int jobDiskAddress, int instructionCount) {
         this.jobNumber = jobNumber;
@@ -31,6 +33,8 @@ public class PCBObject {
     public int getInputBuffer() { return inputBuffer; }
     public int getOutputBuffer() { return outputBuffer; }
     public int getTemporaryBuffer() { return temporaryBuffer; }
+    public String getInstruction(){return instruction;}
+    public boolean checkIOBound(){return IObound};
 
     public void setDataDiskAddress(int k) {
         dataDiskAddress = k;
@@ -44,6 +48,7 @@ public class PCBObject {
     public void setInputBuffer(int k) { inputBuffer = k; }
     public void setOutputBuffer(int k) { outputBuffer = k; }
     public void setTemporaryBuffer(int k) { temporaryBuffer = k; }
+    public void setIObound(boolean k) {IObound = k;}
 
     @Override
     public String toString() {

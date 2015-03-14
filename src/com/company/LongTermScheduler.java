@@ -14,13 +14,44 @@ public class LongTermScheduler {
     private int curJob;
     private double average;
     public  double percent;
-
-
+    //instruction code
 
     public LongTermScheduler(){
             readyQueue = new ArrayList<PCBObject>();
             curJob = 0;
             //Begin();
+    }
+
+    public void checkType() {
+        int k = Driver.pcb.getNumberOfJobs();
+
+        for (int i = 0; i <= k; i++) {
+            if(Job.getInstruction() == "00" || Job.getInstruction() == "01") {
+                Job.setIObound(true);
+            }
+            else {
+                Job.setIObound(false);
+            }
+        }
+    }
+
+    public void beginSchedule()
+    {
+        int k = Driver.pcb.getNumberOfJobs();
+        int IOboundInside =0;
+        int CPUboundInside=0;
+        //loop check
+        while(IOboundInside - CPUboundInside <=2 || IOboundInside - CPUboundInside >= -2) {
+            for (int i = 0; i <=k; i++) {
+                readyQueue.add(Driver.pcb.getPCB(i));
+                if(Job.checkIOBound() == true){
+                    IOboundInside++;
+                }
+                else{
+                    CPUboundInside++;
+                }
+            }
+        }
     }
 
     public void RamPercent(int p){
