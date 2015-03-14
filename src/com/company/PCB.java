@@ -1,5 +1,7 @@
 package com.company;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by amanbhimani on 2/23/15.
@@ -23,8 +25,8 @@ public class PCB {
         }
     }
 
-    public PCBObject getPCB(int jobNumber) {
-        return pcb.get(jobNumber - 1);
+    public PCBObject getPCB(int index) {
+        return pcb.get(index - 1);
     }
 
     public sorttype getPCBSortStatus() {
@@ -33,14 +35,29 @@ public class PCB {
 
     public void sortPCB(sorttype s) {
         switch(s) {
-            case JOB_NUMBER:
-                //TODO: make an algorithm to sort the PCB.
-                break;
             case JOB_PRIORITY:
-                //TODO: make an algorithm to sort the PCB with job priority.
+                Collections.sort(pcb, new Comparator<PCBObject>() {
+                    @Override
+                    public int compare(PCBObject o1, PCBObject o2) {
+                        return o1.getJobPriority() - o2.getJobPriority();
+                    }
+                });
+
+                sortType = sorttype.JOB_PRIORITY;
+
+                break;
+            case JOB_NUMBER:
+                Collections.sort(pcb, new Comparator<PCBObject>() {
+                    @Override
+                    public int compare(PCBObject o1, PCBObject o2) {
+                        return o1.getJobNumber() - o2.getJobNumber();
+                    }
+                });
+                sortType = sorttype.JOB_NUMBER;
                 break;
         }
     }
 
     public int getNumberOfJobs() { return pcb.size(); }
 }
+

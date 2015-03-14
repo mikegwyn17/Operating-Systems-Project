@@ -11,38 +11,53 @@ public class ShortTermScheduler
     //Cpu cpu = new Cpu();
     public PCBObject Job;
     public boolean go = false;
+    static PCB.sorttype byPriority = PCB.sorttype.JOB_PRIORITY;
+    static PCB.sorttype byJobNo = PCB.sorttype.JOB_NUMBER;
 
-    public ShortTermScheduler (PCB pcb)
-    {
-
+    public ShortTermScheduler() {
+        readyQueue = new ArrayList<PCBObject>();
     }
 
-    public void PrioritySchedule ()
-    {
-        // Sort ready queue in order with highest priority at the front
-        int n = readyQueue.size();
-        go = true;
-        while (go)
-        {
-            n--;
-            for (int i = 0; i < n; i++)
-            {
-                PCBObject Job1 = readyQueue.get(i);
-                PCBObject Job2 = readyQueue.get(i + 1);
+    public void PrioritySchedule () {
+        int noOfJobs = Driver.pcb.getNumberOfJobs();
 
-                if (Job1.getJobPriority() < Job2.getJobPriority())
-                {
-                    Job = Job1;
-                    PCBObject tempJob = readyQueue.get(i + 1);
-                    readyQueue.set(i, tempJob);
-                    readyQueue.set(i + 1, Job);
-                }
-            }
+        if(Driver.pcb.getPCBSortStatus() != byPriority) {
+            Driver.pcb.sortPCB(byPriority);
+        }
+
+        if(!readyQueue.isEmpty()) {
+            readyQueue.clear();
+        }
+
+        for(int i = 1; i < noOfJobs+1; i++) {
+            readyQueue.add(Driver.pcb.getPCB(i));
+        }
+
+        runCpu();
+    }
+
+    public void FIFOSchedule() {
+        int noOfJobs = Driver.pcb.getNumberOfJobs();
+
+        if(Driver.pcb.getPCBSortStatus() != byJobNo) {
+            Driver.pcb.sortPCB(byJobNo);
+        }
+
+        if(!readyQueue.isEmpty()) {
+            readyQueue.clear();
+        }
+
+        for(int i = 1; i < noOfJobs+1; i++) {
+            readyQueue.add(Driver.pcb.getPCB(i));
+        }
+
+        runCpu();
+    }
+
+    public void runCpu () {
+        for(int i = 0; i < readyQueue.size(); i++) {
+            Driver.cpu.loadCpu(readyQueue.get(i));
         }
     }
 
-    public static void runCpu ()
-    {
-
-    }
 }
