@@ -34,7 +34,7 @@ public class PCBObject {
     public int getOutputBuffer() { return outputBuffer; }
     public int getTemporaryBuffer() { return temporaryBuffer; }
     public String getInstruction(){return instruction;}
-    public boolean checkIOBound(){return IObound};
+    public boolean checkIOBound(){return IObound;}
 
     public void setDataDiskAddress(int k) {
         dataDiskAddress = k;

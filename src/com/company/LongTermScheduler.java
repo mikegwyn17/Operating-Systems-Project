@@ -11,21 +11,18 @@ public class LongTermScheduler {
     private final int ramSize = 1024;
     private int ramLeft = 1024;
     public PCBObject Job;
-    private int curJob;
+    //private int curJob;
     private double average;
     public  double percent;
     //instruction code
 
-    public LongTermScheduler(){
-            readyQueue = new ArrayList<PCBObject>();
-            curJob = 0;
-            //Begin();
-    }
+    public LongTermScheduler(){ readyQueue = new ArrayList<PCBObject>(); }
 
+    //Checks to see if a process is I/O or CPU bound
     public void checkType() {
         int k = Driver.pcb.getNumberOfJobs();
 
-        for (int i = 0; i <= k; i++) {
+        for (int i = 0; i <=k; i++) {
             if(Job.getInstruction() == "00" || Job.getInstruction() == "01") {
                 Job.setIObound(true);
             }
@@ -35,13 +32,12 @@ public class LongTermScheduler {
         }
     }
 
-    public void beginSchedule()
-    {
+    public void beginSchedule() {
         int k = Driver.pcb.getNumberOfJobs();
         int IOboundInside =0;
         int CPUboundInside=0;
         //loop check
-        while(IOboundInside - CPUboundInside <=2 || IOboundInside - CPUboundInside >= -2) {
+        while(IOboundInside - CPUboundInside <= 2 || IOboundInside - CPUboundInside >= -2) {
             for (int i = 0; i <=k; i++) {
                 readyQueue.add(Driver.pcb.getPCB(i));
                 if(Job.checkIOBound() == true){
@@ -53,6 +49,7 @@ public class LongTermScheduler {
             }
         }
     }
+
 
     public void RamPercent(int p){
 
