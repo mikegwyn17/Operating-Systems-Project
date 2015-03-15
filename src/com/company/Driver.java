@@ -36,11 +36,15 @@ public class Driver {
             System.out.println("Your program file was not found. Please rename the file to 'program.txt' and place it in the root directory of this project!");
         }
 
+       // System.out.println("LTS...");
+        //lts.beginSchedule();
 
         System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
         sts.FIFOSchedule();
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
+
+
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");

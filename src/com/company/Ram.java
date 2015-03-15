@@ -5,13 +5,12 @@ package com.company;
  */
 public class Ram {
 
-    private String data;
+    private int ramData;
     private String[] RAM;
 
-    public Ram(){
-        data = null;
-        RAM = new String[1024];
-    }
+    public Ram(){ RAM = new String[1024]; }
+
+
     public String returnData(int index){
         return RAM[index];
     }
@@ -19,7 +18,11 @@ public class Ram {
         return RAM[index];
     }
     public void writeRam(String s, int index){
-        RAM[index] = s;
+
+        if(RAM[index]==null){
+            ramData++;
+        }
+        s = RAM[index];
     }
 
 }

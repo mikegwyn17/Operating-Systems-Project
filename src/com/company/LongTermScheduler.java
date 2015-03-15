@@ -11,21 +11,20 @@ public class LongTermScheduler {
     private final int ramSize = 1024;
     private int ramLeft = 1024;
     public PCBObject Job;
-    private int curJob;
     private double average;
     public  double percent;
+    static  PCB.sorttype byPriority = PCB.sorttype.JOB_PRIORITY;
+    static  PCB.sorttype byJobNo = PCB.sorttype.JOB_NUMBER;
+
+
     //instruction code
 
-    public LongTermScheduler(){
-            readyQueue = new ArrayList<PCBObject>();
-            curJob = 0;
-            //Begin();
-    }
+    public LongTermScheduler(){ readyQueue = new ArrayList<PCBObject>(); }
 
     public void checkType() {
         int k = Driver.pcb.getNumberOfJobs();
 
-        for (int i = 0; i <= k; i++) {
+        for (int i = 0; i < k; i++) {
             if(Job.getInstruction() == "00" || Job.getInstruction() == "01") {
                 Job.setIObound(true);
             }
@@ -42,7 +41,7 @@ public class LongTermScheduler {
         int CPUboundInside=0;
         //loop check
         while(IOboundInside - CPUboundInside <=2 || IOboundInside - CPUboundInside >= -2) {
-            for (int i = 0; i <=k; i++) {
+            for (int i = 1; i < k; i++) {
                 readyQueue.add(Driver.pcb.getPCB(i));
                 if(Job.checkIOBound() == true){
                     IOboundInside++;
@@ -53,6 +52,64 @@ public class LongTermScheduler {
             }
         }
     }
+/*
+readyQueue.add(Driver.pcb.getPCB(i));
+                if(Job.checkIOBound() == true){
+                    IOboundInside++;
+                }
+                else{
+                    CPUboundInside++;
+                }
+ */
+
+
+
+    public void PrioritySchedule(){
+
+        int numOfJobs = Driver.pcb.getNumberOfJobs();
+
+    }
+
+
+
+
+
+
+
+    /*
+    public void PrioritySchedule () {
+        int noOfJobs = Driver.pcb.getNumberOfJobs();
+
+        if(Driver.pcb.getPCBSortStatus() != byPriority) {
+            Driver.pcb.sortPCB(byPriority);
+        }
+
+        if(!readyQueue.isEmpty()) {
+            readyQueue.clear();
+        }
+
+        for(int i = 1; i < noOfJobs+1; i++) {
+            readyQueue.add(Driver.pcb.getPCB(i));
+        }
+
+        runCpu();
+    }
+
+     */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void RamPercent(int p){
 
@@ -70,26 +127,4 @@ public class LongTermScheduler {
 
         }
     }
-
-
-
-
-/*
-
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
