@@ -7,10 +7,11 @@ public class Ram {
 
     private int ramData = 0;
     private String[] RAM;
-    private int ramFilled = 0;
+    public static int ramFilled;
 
     public Ram(){
         RAM = new String[1024];
+        ramFilled = 0;
     }
 
     public String readRam(int index){
@@ -18,18 +19,14 @@ public class Ram {
     }
     public void writeRam(String s, int index){
 
-        if(RAM[index]==null){
+        if(RAM[index] == null) {
             ramFilled++;
         }
         RAM[index] = s;
     }
 
-    public int getRamFilled() {
-        return ramFilled;
-    }
-
-    public void clearRam() {
-        ramFilled = 0;
+    public float getRamFilled() {
+        return ramFilled / 1024.00f;
     }
 
     public int getRamSize() {

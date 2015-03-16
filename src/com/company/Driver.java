@@ -65,14 +65,6 @@ public class Driver {
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
         }
-
-//      These comments print the whole PCB. Only used for debugging purposes.
-//        for(int i = 1; i <= pcbSize; i++) {
-//            System.out.println(pcb.getPCB(i).toString());
-//        }
-//        for (int i = 1; i <= pcbSize; i++)
-//        {
-//            cpu.loadCpu(pcb.getPCB(i));
-//        }
+        System.out.println("\nCurrent RAM Usage: " + df.format(ram.getRamFilled()) + " filled.");
     }
 }
