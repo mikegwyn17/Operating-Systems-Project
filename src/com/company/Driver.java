@@ -17,6 +17,9 @@ public class Driver {
     public static Cpu cpu;
     static public DecimalFormat df = new DecimalFormat("#.##%");
 
+    static PCB.sorttype byPriority = PCB.sorttype.JOB_PRIORITY;
+    static PCB.sorttype byJobNo = PCB.sorttype.JOB_NUMBER;
+
     public static void main(String[] a) {
         String program = "program.txt";
         cpu = new Cpu(disk);
@@ -36,15 +39,23 @@ public class Driver {
             System.out.println("Your program file was not found. Please rename the file to 'program.txt' and place it in the root directory of this project!");
         }
 
-       // System.out.println("LTS...");
-        //lts.beginSchedule();
+        System.out.println(pcbSize);
+
+
+        lts.loadJobs(byJobNo);
 
         System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
         sts.FIFOSchedule();
+        pcb.clearRanStatus();
+
+        lts.loadJobs(byPriority);
+
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
 
-
+        for(int i = 1; i <= 30; i++) {
+            System.out.println(pcb.getPCB(i).toString());
+        }
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");

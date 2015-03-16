@@ -50,13 +50,20 @@ public class ShortTermScheduler
         for(int i = 1; i < noOfJobs+1; i++) {
             readyQueue.add(Driver.pcb.getPCB(i));
         }
-
         runCpu();
     }
 
     public void runCpu () {
         for(int i = 0; i < readyQueue.size(); i++) {
-            Driver.cpu.loadCpu(readyQueue.get(i));
+            if(readyQueue.get(i).isInMemory()) {
+                Driver.cpu.loadCpu(readyQueue.get(i));
+                Driver.pcb.getPCB(i+1).setHasJobRan(true);
+            }
+            else {
+                Driver.lts.needJobInMemory(readyQueue.get(i));
+                Driver.cpu.loadCpu(readyQueue.get(i));
+                Driver.pcb.getPCB(i+1).setHasJobRan(true);
+            }
         }
     }
 
