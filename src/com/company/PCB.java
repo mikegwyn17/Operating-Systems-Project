@@ -8,11 +8,12 @@ import java.util.Comparator;
  */
 public class PCB {
     private ArrayList<PCBObject> pcb;
+
     public enum sorttype { JOB_NUMBER, JOB_PRIORITY }
     sorttype sortType;
 
     public PCB() {
-        pcb = new ArrayList<PCBObject>(30);
+        pcb = new ArrayList<PCBObject>();
         sortType = sorttype.JOB_NUMBER;
     }
 
@@ -55,6 +56,12 @@ public class PCB {
                 });
                 sortType = sorttype.JOB_NUMBER;
                 break;
+        }
+    }
+
+    public void clearRanStatus() {
+        for(PCBObject b : pcb) {
+            b.setHasJobRan(false);
         }
     }
 

@@ -43,6 +43,7 @@ public class Loader {
             if(line.contains("JOB")) {
                 String[] control = line.split("\\s+");
                 lastJobNo = Integer.parseInt(control[JOB_NUMBER], 16);
+
                 pcbObject = new PCBObject(lastJobNo, Integer.parseInt(control[JOB_PRIORITY], 16), index, Integer.parseInt(control[JOB_INSTRUCTIONS], 16));
                 Driver.pcb.insert(pcbObject);
             }
@@ -60,6 +61,7 @@ public class Loader {
                     Driver.pcb.sortPCB(PCB.sorttype.JOB_NUMBER);
                 }
             }
+            else if(line.contains("END")) { }
             else {
                 Driver.disk.writeDisk(line, index);
                 index++;
