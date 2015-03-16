@@ -19,8 +19,10 @@ public class Driver {
 
     static PCB.sorttype byPriority = PCB.sorttype.JOB_PRIORITY;
     static PCB.sorttype byJobNo = PCB.sorttype.JOB_NUMBER;
+    static long startTime;
 
     public static void main(String[] a) {
+        startTime = System.currentTimeMillis();
         String program = "program.txt";
         cpu = new Cpu(ram);
 
@@ -53,9 +55,11 @@ public class Driver {
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
 
-        for(int i = 1; i <= 30; i++) {
-            System.out.println(pcb.getPCB(i).toString());
-        }
+        sts.printWaitingTimes();
+
+//        for(int i = 1; i <= 30; i++) {
+//            System.out.println(pcb.getPCB(i).toString());
+//        }
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
