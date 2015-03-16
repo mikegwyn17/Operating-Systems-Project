@@ -50,15 +50,26 @@ public class Cpu
         inputBuffer = Job.getInputBuffer();
         outputBuffer = Job.getOutputBuffer();
         pc = Job.getJobDiskAddress();
-        for (int i = Job.getInstructionCount(); i > 0; i--)
+        int instructionCount = 1;
+        int endOfJob = Job.getJobDiskAddress() + Job.getInstructionCount();
+
+        // incorrect way of calling cpu but it runs
+        //for (int i = Job.getInstructionCount() + Job.getJobDiskAddress(); i >= 0; i--)
+
+        // should be the way to call the cpu but it creates an endless loop
+        while (pc < endOfJob)
         {
             System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
+            System.out.println("Instruction Count " + instructionCount);
             String instr = fetch(pc);
             execute(decode(instr), Job.getJobNumber());
-            if (!jumped)
+            if (!jumped) {
                 pc++;
-            else
+            }
+            else {
                 jumped = false;
+            }
+            instructionCount++;
         }
     }
 
@@ -220,10 +231,18 @@ public class Cpu
                 System.out.println("contents of accumulator: " + regArray[accumulator] + " contents of input buffer: " + inputBuffer);
 
                 System.out.println("After RD Instruction");
-                regArray[accumulator] = inputBuffer;
-                System.out.println("contents of accumulator: " + regArray[accumulator] + " contents of input buffer: " + inputBuffer);
-                break;
-            }
+                if (address > 0)
+                {
+                    regArray[reg1] = inputBuffer;
+                }
+                else
+                {
+                    regArray[reg1] = regArray[reg2];
+                }
+
+            System.out.println("contents of accumulator: " + regArray[accumulator] + " contents of input buffer: " + inputBuffer);
+            break;
+        }
 
             // Writes the content of the accumulator into O/P buffer
             case 1:
@@ -232,7 +251,7 @@ public class Cpu
                 System.out.println("contents of output buffer: " + outputBuffer + " contents of accumulator: " + regArray[accumulator]);
 
                 System.out.println("After WR Instruction");
-                outputBuffer = regArray[accumulator];
+                outputBuffer = regArray[reg2];
                 System.out.println("contents of output buffer: " + outputBuffer + " contents of accumulator: " + regArray[accumulator]);
                 break;
             }
@@ -243,7 +262,7 @@ public class Cpu
                 System.out.println("Before ST Instruction");
                 System.out.println("contents of address: " + address + " contents of d-reg: " + regArray[dReg]);
 
-                address += regArray[dReg];
+                regArray[(int)address] += regArray[dReg];
                 System.out.println("After ST Instruction");
                 System.out.println("contents of address: " + address + " contents of d-reg: " + regArray[dReg]);
                 break;
@@ -268,11 +287,11 @@ public class Cpu
                 System.out.println("contents of register 1: " + regArray[reg1] + " contents of register 2: " + regArray[reg2]);
 
                 // Swap contents of reg1 and reg 2
-                regArray[tempReg] = regArray[reg1];
-                regArray[reg1] = regArray[reg2];
-                regArray[reg2] = regArray[tempReg];
+                tempReg = sReg1;
+                sReg1 = sReg2;
+                sReg2 = tempReg;
                 System.out.println("After MOV Instruction");
-                System.out.println("contents of register 1: " + regArray[reg1] + " contents of register 2: " + regArray[reg2]);
+                System.out.println("contents of register 1: " + sReg1 + " contents of register 2: " + sReg2);
                 break;
             }
 
@@ -282,9 +301,9 @@ public class Cpu
                 System.out.println("Before ADD Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
 
-                regArray[dReg] = regArray[sReg1] + regArray[sReg2];
+                dReg = sReg1 + sReg2;
                 System.out.println("After ADD Instruction");
-                System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
+                System.out.println(" contents of d-reg: " + dReg);
                 break;
             }
 
@@ -294,12 +313,7 @@ public class Cpu
                 System.out.println("Before SUB Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
 
-                if (regArray[sReg1] > regArray[sReg2])
-                    regArray[tempReg] = regArray[sReg1]-regArray[sReg2];
-
-                else
-                    regArray[tempReg] = regArray[sReg2]-regArray[sReg1];
-
+                dReg = sReg1-sReg2;
                 System.out.println("After SUB Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
                 break;
@@ -311,8 +325,7 @@ public class Cpu
                 System.out.println("Before MUL Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
 
-                int tempReg = regArray[sReg1] * regArray[sReg2];
-                regArray[dReg] = tempReg;
+                dReg = sReg1*sReg2;
                 System.out.println("After MUL Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
                 break;
@@ -323,16 +336,15 @@ public class Cpu
             {
                 System.out.println("Before DIV Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
-                int tempReg;
-                if (regArray[sReg1] > regArray[sReg2])
+                if (sReg2 == 0)
                 {
-                    tempReg = regArray[sReg2] / regArray[sReg1];
+                    return;
+                }
+                else
+                {
+                    dReg = (int)(sReg1/sReg2);
                 }
 
-                else
-                    tempReg = regArray[sReg1]/regArray[sReg2];
-
-                regArray[dReg] = tempReg;
                 System.out.println("After DIV Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
                 break;
@@ -344,7 +356,7 @@ public class Cpu
                 System.out.println("Before AND Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
 
-                regArray[dReg] = regArray[sReg1]&regArray[sReg2];
+                dReg = sReg1&sReg2;
                 System.out.println("After AND Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
                 break;
@@ -356,7 +368,7 @@ public class Cpu
                 System.out.println("Before OR Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
 
-                regArray[dReg] = regArray[sReg1]|regArray[sReg2];
+                dReg = sReg1|sReg2;
                 System.out.println("After OR Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
                 break;
@@ -417,7 +429,7 @@ public class Cpu
                 System.out.println("contents of d-reg: " + regArray[dReg] + " contents of address: " + address);
                 regArray[dReg] = (int)address;
 
-                System.out.println("After MULI Instruction");
+                System.out.println("After LDI Instruction");
                 System.out.println("contents of d-reg: " + regArray[dReg] + " contents of address: " + address);
                 break;
             }
@@ -433,7 +445,7 @@ public class Cpu
                 else
                     regArray[dReg] = 0;
 
-                System.out.println("After OR Instruction");
+                System.out.println("After SLT Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
 
                 break;
@@ -459,6 +471,7 @@ public class Cpu
             case 18:
             {
                 System.out.println("HLT Instruction");
+                System.out.println("Io count for Job " + ioCount);
                 System.out.println("End Program");
                 break;
             }
@@ -476,7 +489,7 @@ public class Cpu
             {
                 System.out.println("Before JMP Instruction");
                 System.out.println("contents of address: " + address + " contents of pc " + pc);
-                pc = (int)address;
+                //pc = (int)address;
                 jumped = true;
 
                 System.out.println("After JMP Instruction");
@@ -489,10 +502,11 @@ public class Cpu
             {
                 System.out.println("Before BEQ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
-                if (regArray[bReg] == regArray[dReg])
-                {
-                    pc = (int)address;
-                }
+                //if (regArray[bReg] == regArray[dReg])
+                //{
+                  //  pc = (int)address;
+                    //pc += Job.getJobDiskAddress();
+               // }
 
                 System.out.println("After BEQ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
@@ -504,9 +518,10 @@ public class Cpu
             {
                 System.out.println("Before BNE Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
-                if (regArray[bReg] != regArray[dReg])
+                //if (regArray[bReg] != regArray[dReg])
                 {
-                    pc = (int)address;
+                //    pc = (int)address/4;
+                  //  pc += Job.getJobDiskAddress();
                 }
                 System.out.println("After BNE Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
@@ -518,10 +533,11 @@ public class Cpu
             {
                 System.out.println("Before BEZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
-                if (regArray[bReg] == 0)
-                {
-                    pc = (int)address;
-                }
+                //if (regArray[bReg] == 0)
+                //{
+                  //  pc = (int)address;
+                    //pc += Job.getJobDiskAddress();
+                //}
 
                 System.out.println("After BEZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
@@ -533,10 +549,11 @@ public class Cpu
             {
                 System.out.println("BNZ Instructions");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
-                if (regArray[bReg] != 0)
-                {
-                    pc = (int)address;
-                }
+                //if (regArray[bReg] != 0)
+                //{
+                  //  pc = (int)address;
+                   // pc += Job.getJobDiskAddress();
+                //}
 
                 System.out.println("After BNZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
@@ -548,9 +565,10 @@ public class Cpu
             {
                 System.out.println("Before BGZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
-                if (regArray[bReg] > 0)
+                //if (regArray[bReg] > 0)
                 {
-                    pc = (int)address;
+                //    pc = (int)address;
+                 //   pc += Job.getJobDiskAddress();
                 }
                 System.out.println("After BGZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
@@ -562,9 +580,10 @@ public class Cpu
             {
                 System.out.println("Before BLZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
-                if (regArray[bReg] < 0)
+               // if (regArray[bReg] < 0)
                 {
-                    pc = (int)address;
+                 //   pc = (int)address;
+                 //   pc += Job.getJobDiskAddress();
                 }
                 System.out.println("After BLZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
