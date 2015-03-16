@@ -1,10 +1,36 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Timer;
 
 /**
  * Created by Michael on 2/3/2015.
  */
+
+ class executeTimes
+{
+    int jobNum;
+    long executeTime;
+
+    public executeTimes(int j, long t)
+    {
+        jobNum = j;
+        executeTime = t;
+    }
+
+    public int getJobNum()
+    {
+        return jobNum;
+    }
+
+    public long getExecuteTime ()
+    {
+        return executeTime;
+    }
+}
+
 public class Cpu
 {
     // Array of strings used to simulate memory, will be replaced.
@@ -19,7 +45,6 @@ public class Cpu
     public int tempReg;
     public static int zero = 1;
     public static int accumulator = 0;
-    public static int running = 2;
     public int[] regArray;
 
     public int opCode;
@@ -37,6 +62,9 @@ public class Cpu
 
     public PCBObject Job;
     public Ram memory;
+    public static int jobCount;
+
+    public ArrayList<executeTimes> executeTime = new ArrayList<executeTimes>();
 
     public Cpu (Ram ram)
     {
@@ -44,6 +72,15 @@ public class Cpu
         regArray = new int[16];
         regArray[zero] = 0;
         jumped = false;
+        jobCount = 1;
+    }
+
+    public void printExecuteArray ()
+    {
+            for (int i = 0; i < executeTime.size(); i++)
+            {
+                System.out.println("Job# " + executeTime.get(i).getJobNum() + " Execute Time " + executeTime.get(i).getExecuteTime());
+            }
     }
 
     public void loadCpu (PCBObject j)
@@ -66,8 +103,8 @@ public class Cpu
         // should be the way to call the cpu but it creates an endless loop
         while (pc < endOfJob)
         {
-            System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
-            System.out.println("Instruction Count " + instructionCount);
+            //System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
+            //System.out.println("Instruction Count " + instructionCount);
             String instr = fetch(pc);
             execute(decode(instr));
             if (!jumped) {
@@ -79,6 +116,7 @@ public class Cpu
             instructionCount++;
         }
     }
+
 
     public int effectiveAddress(int i, long a)
     {
@@ -131,12 +169,12 @@ public class Cpu
         // Use first 2 bits to determine instruction type
         tempInstructionType = tempInstr.substring(0,2);
         instructionType = Integer.parseInt(tempInstructionType);
-        System.out.println("Instruction type: " + instructionType);
+        //System.out.println("Instruction type: " + instructionType);
 
         // Use second 6 bits as the oppcode
         tempOppCode = tempInstr.substring(3,8);
         opCode = Integer.parseInt(tempOppCode,2);
-        System.out.println("OpCode: " + opCode);
+        //System.out.println("OpCode: " + opCode);
 
         // determine what instruction should be executed
         switch(instructionType)
@@ -187,7 +225,7 @@ public class Cpu
             case 10:
             {
                 // set address
-                System.out.println("Unconditional jump");
+               System.out.println("Unconditional jump");
                 tempAddress = tempInstr.substring(9);
                 address = Long.parseLong(tempAddress, 2);
                 System.out.println("Address: " + address);
@@ -235,26 +273,21 @@ public class Cpu
             case 0:
             {
                 System.out.println("Before RD Instruction");
-                System.out.println("contents of accumulator: " + regArray[accumulator] + " contents of input buffer: " + inputBuffer);
+                System.out.println("contents of accumulator: " + regArray[reg1] + " contents of input buffer: " + inputBuffer);
 
                 System.out.println("After RD Instruction");
                 if (address > 0)
                 {
                     regArray[reg1] = inputBuffer;
                 }
-                else
-                {
-                    regArray[reg1] = regArray[reg2];
-                }
-
-            System.out.println("contents of accumulator: " + regArray[accumulator] + " contents of input buffer: " + inputBuffer);
+            System.out.println("contents of accumulator: " + regArray[reg1] + " contents of input buffer: " + inputBuffer);
             break;
         }
 
             // Writes the content of the accumulator into O/P buffer
             case 1:
             {
-                System.out.println("Before WR Instruction");
+               System.out.println("Before WR Instruction");
                 System.out.println("contents of output buffer: " + outputBuffer + " contents of accumulator: " + regArray[accumulator]);
 
                 System.out.println("After WR Instruction");
@@ -469,7 +502,7 @@ public class Cpu
                 else
                     regArray[dReg] = 0;
 
-                System.out.println("After SLTI Instruction");
+              System.out.println("After SLTI Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of address: " + address + " contents of d-reg: " + regArray[dReg]);
                 break;
             }
@@ -479,9 +512,15 @@ public class Cpu
             {
                 System.out.println("HLT Instruction");
                 long elapsedTimeMillis = System.currentTimeMillis()-start;
+                executeTime.add(new executeTimes(Job.getJobNumber(),elapsedTimeMillis));
                 System.out.println("Amount of time Job was running " + elapsedTimeMillis + " milliseconds");
                 System.out.println("Io count for Job " + ioCount);
                 System.out.println("End Program");
+                if (jobCount == 30)
+                {
+                    printExecuteArray();
+                }
+                jobCount++;
                 break;
             }
 
@@ -517,8 +556,8 @@ public class Cpu
                     //pc += Job.getJobMemoryAddress();
                // }
 
-                System.out.println("After BEQ Instruction");
-                System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
+        //        System.out.println("After BEQ Instruction");
+          //      System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
                 break;
             }
 
@@ -528,10 +567,9 @@ public class Cpu
                 System.out.println("Before BNE Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
                 //if (regArray[bReg] != regArray[dReg])
-                {
-                //    pc = (int)address/4;
-                  //  pc += Job.getJobMemoryAddress();
-                }
+                //{
+                  //  pc = (int)address/4;
+                //}
                 System.out.println("After BNE Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
                 break;

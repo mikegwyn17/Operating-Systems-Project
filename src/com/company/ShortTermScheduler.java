@@ -82,9 +82,6 @@ public class ShortTermScheduler
                 if(FIFO) waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
                 else waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
 
-
-
-
                 Driver.cpu.loadCpu(readyQueue.get(i));
                 Driver.pcb.getPCB(i+1).setHasJobRan(true);
             }
