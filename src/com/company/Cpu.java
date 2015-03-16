@@ -1,4 +1,7 @@
 package com.company;
+
+import java.util.Timer;
+
 /**
  * Created by Michael on 2/3/2015.
  */
@@ -22,6 +25,7 @@ public class Cpu
     public int instructionType;
     public long address;
     public static int ioCount;
+    public long start;
 
     public int inputBuffer;
     public int outputBuffer;
@@ -31,11 +35,11 @@ public class Cpu
     public boolean jumped;
 
     public PCBObject Job;
-    public Disk hardDisk;
+    public Ram memory;
 
-    public Cpu (Disk disk)
+    public Cpu (Ram ram)
     {
-        hardDisk = disk;
+        memory = ram;
         pc = 0;
         regArray = new int[15];
         regArray[zero] = 0;
@@ -45,16 +49,17 @@ public class Cpu
 
     public void loadCpu (PCBObject j)
     {
+        start = System.currentTimeMillis();
         Job = j;
         tempBuffer = Job.getTemporaryBuffer();
         inputBuffer = Job.getInputBuffer();
         outputBuffer = Job.getOutputBuffer();
-        pc = Job.getJobDiskAddress();
+        pc = Job.getJobMemoryAddress();
         int instructionCount = 1;
-        int endOfJob = Job.getJobDiskAddress() + Job.getInstructionCount();
+        int endOfJob = Job.getJobMemoryAddress() + Job.getInstructionCount();
 
         // incorrect way of calling cpu but it runs
-        //for (int i = Job.getInstructionCount() + Job.getJobDiskAddress(); i >= 0; i--)
+        //for (int i = Job.getInstructionCount() + Job.getJobMemoryAddress(); i >= 0; i--)
 
         // should be the way to call the cpu but it creates an endless loop
         while (pc < endOfJob)
@@ -89,7 +94,7 @@ public class Cpu
 
         // temporary string used for manipulating the instruction
         String tempInstr;
-        tempInstr = hardDisk.readDisk(pc);
+        tempInstr = memory.readRam(pc);
         tempInstr = tempInstr.substring(2);
         tempLong = Long.parseLong(tempInstr,16);
         tempInstr2 = Long.toBinaryString(tempLong);
@@ -471,6 +476,8 @@ public class Cpu
             case 18:
             {
                 System.out.println("HLT Instruction");
+                long elapsedTimeMillis = System.currentTimeMillis()-start;
+                System.out.println("Amount of time Job was running " + elapsedTimeMillis + " milliseconds");
                 System.out.println("Io count for Job " + ioCount);
                 System.out.println("End Program");
                 break;
@@ -505,7 +512,7 @@ public class Cpu
                 //if (regArray[bReg] == regArray[dReg])
                 //{
                   //  pc = (int)address;
-                    //pc += Job.getJobDiskAddress();
+                    //pc += Job.getJobMemoryAddress();
                // }
 
                 System.out.println("After BEQ Instruction");
@@ -521,7 +528,7 @@ public class Cpu
                 //if (regArray[bReg] != regArray[dReg])
                 {
                 //    pc = (int)address/4;
-                  //  pc += Job.getJobDiskAddress();
+                  //  pc += Job.getJobMemoryAddress();
                 }
                 System.out.println("After BNE Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
@@ -536,7 +543,7 @@ public class Cpu
                 //if (regArray[bReg] == 0)
                 //{
                   //  pc = (int)address;
-                    //pc += Job.getJobDiskAddress();
+                    //pc += Job.getJobMemoryAddress();
                 //}
 
                 System.out.println("After BEZ Instruction");
@@ -552,7 +559,7 @@ public class Cpu
                 //if (regArray[bReg] != 0)
                 //{
                   //  pc = (int)address;
-                   // pc += Job.getJobDiskAddress();
+                   // pc += Job.getJobMemoryAddress();
                 //}
 
                 System.out.println("After BNZ Instruction");
@@ -568,7 +575,7 @@ public class Cpu
                 //if (regArray[bReg] > 0)
                 {
                 //    pc = (int)address;
-                 //   pc += Job.getJobDiskAddress();
+                 //   pc += Job.getJobMemoryAddress();
                 }
                 System.out.println("After BGZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
@@ -583,7 +590,7 @@ public class Cpu
                // if (regArray[bReg] < 0)
                 {
                  //   pc = (int)address;
-                 //   pc += Job.getJobDiskAddress();
+                 //   pc += Job.getJobMemoryAddress();
                 }
                 System.out.println("After BLZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);

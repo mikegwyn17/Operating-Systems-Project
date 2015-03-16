@@ -52,7 +52,7 @@ public class LongTermScheduler {
                 j.setDataMemoryAddress(index+instructionCount);
                 j.setJobInMemory(true);
 
-                for(k = j.getJobDiskAddress(); k < j.getJobDiskAddress()+totalSpace; k++) {
+                for(k = j.getJobMemoryAddress(); k < j.getJobMemoryAddress()+totalSpace; k++) {
                     Driver.ram.writeRam(Driver.disk.readDisk(k), index);
                     index++;
                 }
@@ -69,7 +69,7 @@ public class LongTermScheduler {
         j.setDataMemoryAddress(index+instructionCount);
         j.setJobInMemory(true);
 
-        for(k = j.getJobDiskAddress(); k < j.getJobDiskAddress() + totalSpace; k++) {
+        for(k = j.getJobMemoryAddress(); k < j.getJobMemoryAddress() + totalSpace; k++) {
             Driver.ram.writeRam(Driver.disk.readDisk(k), index);
             index++;
         }

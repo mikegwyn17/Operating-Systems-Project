@@ -28,7 +28,6 @@ public class PCBObject {
     }
     public int getJobNumber() { return jobNumber; }
     public int getJobPriority() { return jobPriority; }
-    public int getJobDiskAddress() { return jobDiskAddress; }
     public int getJobMemoryAddress() { return jobMemoryAddress; }
     public int getDataDiskAddress() { return dataDiskAddress; }
     public int getDataMemoryAddress() { return dataMemoryAddress; }

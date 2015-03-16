@@ -22,7 +22,7 @@ public class Driver {
 
     public static void main(String[] a) {
         String program = "program.txt";
-        cpu = new Cpu(disk);
+        cpu = new Cpu(ram);
 
 
 
