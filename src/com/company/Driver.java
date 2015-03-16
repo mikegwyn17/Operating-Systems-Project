@@ -24,13 +24,10 @@ public class Driver {
     public static void main(String[] a) {
         startTime = System.currentTimeMillis();
         String program = "program.txt";
+
         cpu = new Cpu(ram);
-
-
-
         sts = new ShortTermScheduler();
         lts = new LongTermScheduler();
-
         loader = new Loader(program);
 
         int pcbSize = pcb.getNumberOfJobs();
