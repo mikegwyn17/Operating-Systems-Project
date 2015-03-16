@@ -50,6 +50,7 @@ public class Driver {
         sts.FIFOSchedule();
         pcb.clearRanStatus();
 
+        startTime = System.currentTimeMillis();
         lts.loadJobs(byPriority);
 
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
