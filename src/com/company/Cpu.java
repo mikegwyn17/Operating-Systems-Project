@@ -19,6 +19,7 @@ public class Cpu
     public int tempReg;
     public static int zero = 1;
     public static int accumulator = 0;
+    public static int running = 2;
     public int[] regArray;
 
     public int opCode;
@@ -40,17 +41,18 @@ public class Cpu
     public Cpu (Ram ram)
     {
         memory = ram;
-        pc = 0;
-        regArray = new int[15];
+        regArray = new int[16];
         regArray[zero] = 0;
-        ioCount = 0;
         jumped = false;
     }
 
     public void loadCpu (PCBObject j)
     {
+        // start time for amount of time job is on cpu
         start = System.currentTimeMillis();
+
         Job = j;
+        ioCount = 0;
         tempBuffer = Job.getTemporaryBuffer();
         inputBuffer = Job.getInputBuffer();
         outputBuffer = Job.getOutputBuffer();
@@ -67,7 +69,7 @@ public class Cpu
             System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
             System.out.println("Instruction Count " + instructionCount);
             String instr = fetch(pc);
-            execute(decode(instr), Job.getJobNumber());
+            execute(decode(instr));
             if (!jumped) {
                 pc++;
             }
@@ -224,7 +226,7 @@ public class Cpu
         return opCode;
     }
 
-    public void execute (int o, int jobNum)
+    public void execute (int o)
     {
         opCode = o;
         switch(opCode)
