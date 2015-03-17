@@ -32,9 +32,9 @@ public class PCBObject {
     public int getDataDiskAddress() { return dataDiskAddress; }
     public int getDataMemoryAddress() { return dataMemoryAddress; }
     public int getInstructionCount() { return instructionCount; }
-    public int getInputBuffer() { return inputBuffer; }
-    public int getOutputBuffer() { return outputBuffer; }
-    public int getTemporaryBuffer() { return temporaryBuffer; }
+    public int getInputBufferSize() { return inputBuffer; }
+    public int getOutputBufferSize() { return outputBuffer; }
+    public int getTemporaryBufferSize() { return temporaryBuffer; }
     public String getInstruction(){return instruction;}
     public boolean checkIOBound(){return IObound; }
     public boolean isInMemory(){ return jobInMemory; }
@@ -49,9 +49,9 @@ public class PCBObject {
     public void setDataMemoryAddress(int k) {
         dataMemoryAddress = k;
     }
-    public void setInputBuffer(int k) { inputBuffer = k; }
-    public void setOutputBuffer(int k) { outputBuffer = k; }
-    public void setTemporaryBuffer(int k) { temporaryBuffer = k; }
+    public void setInputBuffer(int k) {inputBuffer = k;}
+    public void setOutputBuffer(int k) {outputBuffer = k;}
+    public void setTemporaryBuffer(int k) {temporaryBuffer = k;}
     public void setIObound(boolean k) {IObound = k; }
     public void setJobInMemory(boolean k) { jobInMemory = k; }
     public void setHasJobRan(boolean k) {hasJobRan = k; }

@@ -53,9 +53,11 @@ public class Cpu
     public static int ioCount;
     public long start;
 
-    public int inputBuffer;
-    public int outputBuffer;
-    public int tempBuffer;
+    public int inputBufferSize;
+    public int outputBufferSize;
+    public int tempBufferSize;
+
+    public int cpuBuffer;
 
     public int pc;
     public boolean jumped;
@@ -63,6 +65,7 @@ public class Cpu
     public PCBObject Job;
     public Ram memory;
     public static int jobCount;
+    public DMAChannel dma;
 
     public ArrayList<executeTimes> executeTime = new ArrayList<executeTimes>();
 
@@ -73,6 +76,7 @@ public class Cpu
         regArray[zero] = 0;
         jumped = false;
         jobCount = 1;
+        dma = new DMAChannel(memory);
     }
 
     public void printExecuteArray ()
@@ -90,21 +94,18 @@ public class Cpu
 
         Job = j;
         ioCount = 0;
-        tempBuffer = Job.getTemporaryBuffer();
-        inputBuffer = Job.getInputBuffer();
-        outputBuffer = Job.getOutputBuffer();
+        tempBufferSize = Job.getTemporaryBufferSize();
+        inputBufferSize = Job.getInputBufferSize();
+        outputBufferSize = Job.getOutputBufferSize();
         pc = Job.getJobMemoryAddress();
         int instructionCount = 1;
         int endOfJob = Job.getJobMemoryAddress() + Job.getInstructionCount();
 
-        // incorrect way of calling cpu but it runs
-        //for (int i = Job.getInstructionCount() + Job.getJobMemoryAddress(); i >= 0; i--)
-
-        // should be the way to call the cpu but it creates an endless loop
+        // algorithm used to call the fetch and decode cycle
         while (pc < endOfJob)
         {
-            //System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
-            //System.out.println("Instruction Count " + instructionCount);
+            System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
+            System.out.println("Instruction Count " + instructionCount);
             String instr = fetch(pc);
             execute(decode(instr));
             if (!jumped) {
@@ -138,7 +139,7 @@ public class Cpu
         tempInstr = tempInstr.substring(2);
         tempLong = Long.parseLong(tempInstr,16);
         tempInstr2 = Long.toBinaryString(tempLong);
-        while (tempInstr2.length() < 32)
+        while (tempInstr2.length() != 32)
         {
             tempInstr2 = "0" + tempInstr2.substring(0);
         }
@@ -167,12 +168,12 @@ public class Cpu
         tempInstr = fetchedInstr;
 
         // Use first 2 bits to determine instruction type
-        tempInstructionType = tempInstr.substring(0,2);
+        tempInstructionType = tempInstr.substring(0,1);
         instructionType = Integer.parseInt(tempInstructionType);
         //System.out.println("Instruction type: " + instructionType);
 
         // Use second 6 bits as the oppcode
-        tempOppCode = tempInstr.substring(3,8);
+        tempOppCode = tempInstr.substring(2,7);
         opCode = Integer.parseInt(tempOppCode,2);
         //System.out.println("OpCode: " + opCode);
 
@@ -184,17 +185,17 @@ public class Cpu
             {
                 // set reg-1
                 System.out.println("Arithmetic case");
-                tempSReg1 = tempInstr.substring(9,12);
+                tempSReg1 = tempInstr.substring(8,11);
                 sReg1 = Integer.parseInt(tempSReg1,2);
                 System.out.println("S-Reg1: " + sReg1);
 
                 // set reg-2
-                tempSReg2 = tempInstr.substring(13,16);
+                tempSReg2 = tempInstr.substring(12,15);
                 sReg2 = Integer.parseInt(tempSReg2,2);
                 System.out.println("S-Reg2: " + sReg2);
 
                 // set d-reg
-                tempDReg = tempInstr.substring(17,20);
+                tempDReg = tempInstr.substring(16,19);
                 dReg = Integer.parseInt(tempDReg);
                 System.out.println("D-Reg: " + dReg);
                 break;
@@ -205,17 +206,17 @@ public class Cpu
             {
                 // set b-reg
                 System.out.println("Conditional format");
-                tempBReg = tempInstr.substring(9,12);
+                tempBReg = tempInstr.substring(8,11);
                 bReg = Integer.parseInt(tempBReg,2);
                 System.out.println("B-reg: " + bReg);
 
                 // set d-reg
-                tempDReg = tempInstr.substring(13,16);
+                tempDReg = tempInstr.substring(12,15);
                 dReg = Integer.parseInt(tempDReg,2);
                 System.out.println("D-reg: " + dReg);
 
                 // set address
-                tempAddress = tempInstr.substring(17);
+                tempAddress = tempInstr.substring(16);
                 address = Long.parseLong(tempAddress, 2);
                 System.out.println("Address: " + address);
                 break;
@@ -226,7 +227,7 @@ public class Cpu
             {
                 // set address
                System.out.println("Unconditional jump");
-                tempAddress = tempInstr.substring(9);
+                tempAddress = tempInstr.substring(8);
                 address = Long.parseLong(tempAddress, 2);
                 System.out.println("Address: " + address);
                 break;
@@ -237,17 +238,17 @@ public class Cpu
             {
                 // set reg-1
                 System.out.println("Input and Output format");
-                tempReg1 = tempInstr.substring(9,12);
+                tempReg1 = tempInstr.substring(8,11);
                 reg1 = Integer.parseInt(tempReg1,2);
                 System.out.println("Reg1: " + reg1);
 
                 // set reg-2
-                tempReg2 = tempInstr.substring(13,16);
+                tempReg2 = tempInstr.substring(12,15);
                 reg2 = Integer.parseInt(tempReg2,2);
                 System.out.println("Reg2: " + reg2);
 
                 // set address
-                tempAddress = tempInstr.substring(17);
+                tempAddress = tempInstr.substring(16);
                 address = Long.parseLong(tempAddress,2);
                 System.out.println("Address: " + address);
                 ioCount++;
@@ -272,27 +273,25 @@ public class Cpu
             // Reads the content of I/P buffer into accumulator
             case 0:
             {
-                System.out.println("Before RD Instruction");
-                System.out.println("contents of accumulator: " + regArray[reg1] + " contents of input buffer: " + inputBuffer);
-
-                System.out.println("After RD Instruction");
                 if (address > 0)
                 {
-                    regArray[reg1] = inputBuffer;
+                    cpuBuffer = bufferAddress((int) address);
+                    regArray[reg1] = dma.read(Job,cpuBuffer);
                 }
-            System.out.println("contents of accumulator: " + regArray[reg1] + " contents of input buffer: " + inputBuffer);
-            break;
+                else
+                {
+                    regArray[reg1] = regArray[reg2];
+                }
+                System.out.println("RD Instruction");
+                System.out.println("Register " + reg1 + " now contains " + regArray[reg1]);
+                break;
         }
 
             // Writes the content of the accumulator into O/P buffer
             case 1:
             {
-               System.out.println("Before WR Instruction");
-                System.out.println("contents of output buffer: " + outputBuffer + " contents of accumulator: " + regArray[accumulator]);
-
-                System.out.println("After WR Instruction");
-                outputBuffer = regArray[reg2];
-                System.out.println("contents of output buffer: " + outputBuffer + " contents of accumulator: " + regArray[accumulator]);
+                cpuBuffer = bufferAddress(regArray[reg2]);
+                dma.write(Job, (int) address, cpuBuffer);
                 break;
             }
 
@@ -338,6 +337,7 @@ public class Cpu
             // Adds content of two S-regs into D-reg
             case 5:
             {
+
                 System.out.println("Before ADD Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
 
@@ -417,12 +417,11 @@ public class Cpu
             // Transfers address/data directly into a register
             case 11:
             {
-                System.out.println("Before MOVI Instruction");
-                System.out.println("contents of d-reg: " + regArray[dReg] + " contents of address: " + address);
-                regArray[dReg] = (int)address;
+                cpuBuffer = bufferAddress((int) address);
+                regArray[dReg] = dma.read(Job,cpuBuffer);
 
-                System.out.println("After MOVI Instruction");
-                System.out.println("contents of d-reg: " + regArray[dReg] + " contents of address: " + address);
+                System.out.println("MOVI Instruction");
+                System.out.println("Register" + dReg + " now contains " + regArray[dReg]);
                 break;
             }
 
@@ -487,7 +486,6 @@ public class Cpu
 
                 System.out.println("After SLT Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
-
                 break;
             }
 
@@ -512,14 +510,9 @@ public class Cpu
             {
                 System.out.println("HLT Instruction");
                 long elapsedTimeMillis = System.currentTimeMillis()-start;
-                executeTime.add(new executeTimes(Job.getJobNumber(),elapsedTimeMillis));
                 System.out.println("Amount of time Job was running " + elapsedTimeMillis + " milliseconds");
                 System.out.println("Io count for Job " + ioCount);
                 System.out.println("End Program");
-                if (jobCount == 30)
-                {
-                    printExecuteArray();
-                }
                 jobCount++;
                 break;
             }
@@ -645,4 +638,10 @@ public class Cpu
             }
         }
     }
+
+    public int bufferAddress (int i)
+    {
+        return Math.abs(i - Job.getInstructionCount()* 4);
+    }
+
 }
