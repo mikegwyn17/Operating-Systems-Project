@@ -12,22 +12,26 @@ public class DMAChannel
     }
 
 //  read and return data from RAM as an integer value
-    public int read (PCBObject Job, int address)
+    public long read (PCBObject Job, long address)
     {
-        address = address + Job.getDataMemoryAddress();
-        String ramThing = memory.readRam(address);
+        address = address + (long)Job.getDataMemoryAddress();
+        String ramThing = memory.readRam((int)address);
         ramThing = ramThing.substring(2);
-        return Integer.parseInt(ramThing,16);
+        long returnThing = Long.parseLong(ramThing,16);
+        address = (int) returnThing;
+        return address;
     }
 
-    public void write (PCBObject Job, int address, int buffer)
+// Writes passed address data into RAM as a hex String
+    public void write (PCBObject Job, long buffer, int data)
     {
         String ramThing = "0x";
-
-        String ramThing2 = Integer.toHexString(address);
-        ramThing = ramThing2.concat(ramThing2);
-        System.out.println(ramThing);
-        memory.writeRam(ramThing,buffer);
-        System.out.println("Output buffer contents: " + memory.readRam(buffer));
+        String ramThing2 = Integer.toHexString(data);
+        while (ramThing2.length() != 8) {
+            ramThing2 = "0" + ramThing2.substring(0);
+        }
+        ramThing = ramThing.concat(ramThing2);
+        memory.writeRam(ramThing,(int)buffer);
+        System.out.println("Output buffer contents: " + memory.readRam((int)buffer));
     }
 }
