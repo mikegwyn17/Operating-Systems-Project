@@ -557,12 +557,8 @@ public class Cpu
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
                 if (regArray[bReg] != regArray[dReg])
                 {
-                    pc = (int)address/4;
-                }
-                // used for debugging remove later
-                else
-                {
-                    int i = 0;
+                    address = (address/4) + Job.getJobMemoryAddress();
+                    pc = (int)address;
                 }
                 System.out.println("After BNE Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
