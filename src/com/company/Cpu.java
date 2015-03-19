@@ -65,6 +65,7 @@ public class Cpu
     public Ram memory;
     public static int jobCount;
     public DMAChannel dma;
+    public int jobNumber;
 
     public Cpu (Ram ram)
     {
@@ -80,8 +81,8 @@ public class Cpu
     {
         // start time for amount of time job is on cpu
         start = System.currentTimeMillis();
-
         Job = j;
+        jobNumber = Job.getJobNumber();
         ioCount = 0;
         tempBufferSize = Job.getTemporaryBufferSize();
         inputBufferSize = Job.getInputBufferSize();
@@ -265,18 +266,16 @@ public class Cpu
             {
                 if (address > 0)
                 {
-                    cpuBuffer = bufferAddress((int)address);
-                    regArray[reg1] =(int) dma.read(Job,cpuBuffer);
-                }
-                else
+                    cpuBuffer = bufferAddress((int) address);
+                    regArray[reg1] = (int) dma.read(Job, cpuBuffer);
+                } else
                 {
                     regArray[reg1] = regArray[reg2];
                 }
                 System.out.println("RD Instruction");
                 System.out.println("Register " + reg1 + " now contains " + regArray[reg1]);
                 break;
-        }
-
+            }
             // Writes the content of the accumulator into O/P buffer
             case 1:
             {
@@ -408,8 +407,16 @@ public class Cpu
             // Transfers address/data directly into a register
             case 11:
             {
-                cpuBuffer = bufferAddress((int) address);
-                regArray[dReg] = (int)dma.read(Job,cpuBuffer);
+                if (address > 0)
+                {
+                    cpuBuffer = bufferAddress((int) address);
+                    regArray[dReg] = (int) dma.read(Job, cpuBuffer);
+                }
+                else
+                {
+                    regArray[dReg] = 0;
+                }
+
 
                 System.out.println("MOVI Instruction");
                 System.out.println("Register" + dReg + " now contains " + regArray[dReg]);
@@ -632,7 +639,7 @@ public class Cpu
     // method used to determine physical address to store or read data from Ram
     public long bufferAddress (int i)
     {
-        return Math.abs(i - Job.getInstructionCount()*4);
+        return i/4;
     }
 
 }
