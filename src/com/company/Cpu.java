@@ -291,7 +291,7 @@ public class Cpu
                 System.out.println("Before ST Instruction");
                 System.out.println("contents of address: " + address + " contents of d-reg: " + regArray[dReg]);
 
-                regArray[(int)address] += regArray[dReg];
+                regArray[bReg] += regArray[dReg];
                 System.out.println("After ST Instruction");
                 System.out.println("contents of address: " + address + " contents of d-reg: " + regArray[dReg]);
                 break;
@@ -395,7 +395,7 @@ public class Cpu
             // Logical OR of two S-regs into D-reg
             case 10:
             {
-                System.out.println("Before OR Instruction");
+                System.out.println("before OR Instruction");
                 System.out.println("contents of s-reg1: " + regArray[sReg1] + " contents of s-reg2: " + regArray[sReg2] + " contents of d-reg: " + regArray[dReg]);
 
                 dReg = sReg1|sReg2;
@@ -543,6 +543,7 @@ public class Cpu
                 if (regArray[bReg] == regArray[dReg])
                 {
                     pc = (int)address/4;
+                    pc += Job.getJobMemoryAddress();
                 }
 
                 System.out.println("After BEQ Instruction");
@@ -556,9 +557,9 @@ public class Cpu
                 System.out.println("Before BNE Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
                 if (regArray[bReg] != regArray[dReg])
-                {
-                    address = (address/4) + Job.getJobMemoryAddress();
-                    pc = (int)address;
+                {;
+                    pc = (int)address/4;
+                    pc += Job.getJobMemoryAddress();
                 }
                 System.out.println("After BNE Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of d-reg: " + regArray[dReg] + " contents of pc: " + pc);
@@ -573,6 +574,7 @@ public class Cpu
                 if (regArray[bReg] == 0)
                 {
                     pc = (int)address/4;
+                    pc += Job.getJobMemoryAddress();
                 }
 
                 System.out.println("After BEZ Instruction");
@@ -587,7 +589,8 @@ public class Cpu
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
                 if (regArray[bReg] != 0)
                 {
-                    pc = (int)address;
+                    pc = (int)address/4;
+                    pc += Job.getJobMemoryAddress();
                 }
 
                 System.out.println("After BNZ Instruction");
@@ -603,6 +606,7 @@ public class Cpu
                 if (regArray[bReg] > 0)
                 {
                     pc = (int)address/4;
+                    pc += Job.getJobMemoryAddress();
                 }
                 System.out.println("After BGZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
@@ -617,6 +621,7 @@ public class Cpu
                if (regArray[bReg] < 0)
                 {
                     pc = (int)address/4;
+                    pc += Job.getJobMemoryAddress();
                 }
                 System.out.println("After BLZ Instruction");
                 System.out.println("contents of b-reg " + regArray[bReg] + " contents of pc: " + pc + "contents of address: " + address);
