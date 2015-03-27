@@ -60,6 +60,8 @@ public class ShortTermScheduler
     public void FIFOSchedule() {
         int noOfJobs = Driver.pcb.getNumberOfJobs();
 
+        System.out.println(noOfJobs);
+
         if(Driver.pcb.getPCBSortStatus() != byJobNo) {
             Driver.pcb.sortPCB(byJobNo);
         }
@@ -76,23 +78,31 @@ public class ShortTermScheduler
     }
 
     public void runCpu () {
+        if(Driver.pcb.getPCBSortStatus() != Driver.byJobNo) {
+            Driver.pcb.sortPCB(Driver.byJobNo);
+        }
+
         for(int i = 0; i < readyQueue.size(); i++) {
-            if(readyQueue.get(i).isInMemory()) {
+
+            int jobNumber = readyQueue.get(i).getJobNumber();
+
+            if(Driver.pcb.getPCB(jobNumber).isInMemory()) {
 
                 if(FIFO) waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
                 else waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
 
-                Driver.cpu.loadCpu(readyQueue.get(i));
-                Driver.pcb.getPCB(i+1).setHasJobRan(true);
+                Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber));
+                Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
             }
             else {
-                Driver.lts.needJobInMemory(readyQueue.get(i));
+
 
                 if(FIFO) waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
                 else waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
 
-                Driver.cpu.loadCpu(readyQueue.get(i));
-                Driver.pcb.getPCB(i+1).setHasJobRan(true);
+                Driver.lts.needJobInMemory(Driver.pcb.getPCB(jobNumber));
+                Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber));
+                Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
             }
         }
     }

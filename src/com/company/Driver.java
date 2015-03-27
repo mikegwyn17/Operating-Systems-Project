@@ -30,16 +30,11 @@ public class Driver {
         lts = new LongTermScheduler();
         loader = new Loader(program);
 
-        int pcbSize = pcb.getNumberOfJobs();
-
         try {
            loader.Start();
         } catch(IOException e) {
             System.out.println("Your program file was not found. Please rename the file to 'program.txt' and place it in the root directory of this project!");
         }
-
-        System.out.println(pcbSize);
-
 
         lts.loadJobs(byJobNo);
 

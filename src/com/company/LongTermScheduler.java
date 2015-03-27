@@ -37,21 +37,21 @@ public class LongTermScheduler {
             }
         }
 
-        PCBObject j;
         int totalSpace, k;
         for (int i = 1; i <= 30; i++) {
-            j = Driver.pcb.getPCB(i);
-            totalSpace = j.getInstructionCount() + dataSize;
+            totalSpace = Driver.pcb.getPCB(i).getInstructionCount() + dataSize;
+
+            int j = Driver.pcb.getPCB(i).getJobNumber();
 
             if ((Driver.ram.getRamSize() - (index + totalSpace)) >= 0) {
 
-                int instructionCount = j.getInstructionCount();
+                int instructionCount = Driver.pcb.getPCB(i).getInstructionCount();
 
-                j.setJobMemoryAddress(index);
-                j.setDataMemoryAddress(index + instructionCount);
-                j.setJobInMemory(true);
+                Driver.pcb.getPCB(i).setJobMemoryAddress(index);
+                Driver.pcb.getPCB(i).setDataMemoryAddress(index + instructionCount);
+                Driver.pcb.getPCB(i).setJobInMemory(true);
 
-                for (k = j.getJobMemoryAddress(); k < j.getJobMemoryAddress() + totalSpace; k++) {
+                for (k = Driver.pcb.getPCB(i).getJobDiskAddress(); k < Driver.pcb.getPCB(i).getJobDiskAddress() + totalSpace; k++) {
                     Driver.ram.writeRam(Driver.disk.readDisk(k), index);
                     index++;
                 }
@@ -60,15 +60,21 @@ public class LongTermScheduler {
     }
 
     public void needJobInMemory(PCBObject j) {
-        int index = 0, k;
-        int instructionCount = j.getInstructionCount();
-        int totalSpace = j.getInstructionCount() + 44;
 
-        j.setJobMemoryAddress(index);
-        j.setDataMemoryAddress(index + instructionCount);
-        j.setJobInMemory(true);
+        if(Driver.pcb.getPCBSortStatus() != Driver.byJobNo) {
+            Driver.pcb.sortPCB(byJobNo);
+        }
 
-        for (k = j.getJobMemoryAddress(); k < j.getJobMemoryAddress() + totalSpace; k++) {
+        int jobNumber = j.getJobNumber();
+        int index = 0, k = 0;
+        int instructionCount = Driver.pcb.getPCB(jobNumber).getInstructionCount();
+        int totalSpace = Driver.pcb.getPCB(jobNumber).getInstructionCount() + 44;
+
+        Driver.pcb.getPCB(jobNumber).setJobMemoryAddress(index);
+        Driver.pcb.getPCB(jobNumber).setDataMemoryAddress(index + instructionCount);
+        Driver.pcb.getPCB(jobNumber).setJobInMemory(true);
+
+        for (k = Driver.pcb.getPCB(jobNumber).getJobDiskAddress(); k < j.getJobDiskAddress() + totalSpace; k++) {
             Driver.ram.writeRam(Driver.disk.readDisk(k), index);
             index++;
         }
