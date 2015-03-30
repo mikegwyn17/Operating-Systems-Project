@@ -41,6 +41,7 @@ public class Driver {
 
 //        FIFO SCHEDULING
 //        COMMENT THIS OUT IF YOU WANT TO RUN PRIORITY
+
         lts.loadJobs(byJobNo);
         System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
         sts.FIFOSchedule();
@@ -50,11 +51,12 @@ public class Driver {
 
 //        PRIORITY SCHEDULING
 //        COMMENT THIS OUT IF YOU WANT TO RUN FIFO
-        startTime = System.currentTimeMillis();
-        lts.loadJobs(byPriority);
-        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
-        sts.PrioritySchedule();
-        sts.printWaitingTimes(PRIORITY);
+
+//        startTime = System.currentTimeMillis();
+//        lts.loadJobs(byPriority);
+//        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
+//        sts.PrioritySchedule();
+//        sts.printWaitingTimes(PRIORITY);
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
