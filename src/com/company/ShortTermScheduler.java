@@ -107,7 +107,11 @@ public class ShortTermScheduler
         }
     }
 
-    public void printWaitingTimes() {
+    public void printWaitingTimes(boolean priority) {
+
+        // s
+        // true = FIFO
+        // false = Priority
 
         long FIFOTotal = 0, PriorityTotal = 0;
 
@@ -118,11 +122,19 @@ public class ShortTermScheduler
             }
         });
 
-        for(int i = 0; i < waitTimesFIFO.size(); i++) {
-            System.out.println("Job " + i + " Waits -- FIFO: " + waitTimesFIFO.get(i).waitTime + " Priority: " + waitTimesPriority.get(i).waitTime);
-            FIFOTotal += waitTimesFIFO.get(i).waitTime;
-            PriorityTotal += waitTimesPriority.get(i).waitTime;
+        if(priority) {
+            for(int i = 0; i < waitTimesPriority.size(); i++) {
+                System.out.println("Job " + i + " Waits -- Priority: " + waitTimesPriority.get(i).waitTime);
+                PriorityTotal += waitTimesPriority.get(i).waitTime;
+            }
+
+            System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0));
+        } else {
+            for(int i = 0; i < waitTimesFIFO.size(); i++) {
+                System.out.println("Job: " + i + "Waits -- FIFO: " + waitTimesFIFO.get(i).waitTime);
+                FIFOTotal += waitTimesFIFO.get(i).waitTime;
+            }
+            System.out.println("***************AVERAGES***************\nPriority: " + (FIFOTotal / 30.0));
         }
-        System.out.println("***************AVERAGES***************\nFIFO: " + (FIFOTotal / 30.0) + "\nPriority: " + (PriorityTotal / 30.0));
     }
 }

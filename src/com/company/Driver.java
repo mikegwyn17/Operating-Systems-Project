@@ -17,6 +17,9 @@ public class Driver {
     public static Cpu cpu;
     static public DecimalFormat df = new DecimalFormat("#.##%");
 
+    static final boolean PRIORITY = true;
+    static final boolean FIFO = false;
+
     static PCB.sorttype byPriority = PCB.sorttype.JOB_PRIORITY;
     static PCB.sorttype byJobNo = PCB.sorttype.JOB_NUMBER;
     static long startTime;
@@ -36,23 +39,22 @@ public class Driver {
             System.out.println("Your program file was not found. Please rename the file to 'program.txt' and place it in the root directory of this project!");
         }
 
+//        FIFO SCHEDULING
+//        COMMENT THIS OUT IF YOU WANT TO RUN PRIORITY
         lts.loadJobs(byJobNo);
-
         System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
         sts.FIFOSchedule();
+        sts.printWaitingTimes(FIFO);
         pcb.clearRanStatus();
 
+
+//        PRIORITY SCHEDULING
+//        COMMENT THIS OUT IF YOU WANT TO RUN FIFO
         startTime = System.currentTimeMillis();
         lts.loadJobs(byPriority);
-
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
-
-        sts.printWaitingTimes();
-
-//        for(int i = 1; i <= 30; i++) {
-//            System.out.println(pcb.getPCB(i).toString());
-//        }
+        sts.printWaitingTimes(PRIORITY);
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
