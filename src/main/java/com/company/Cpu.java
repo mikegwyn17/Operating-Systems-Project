@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Timer;
+import org.multiverse.api.references.*;
+import static org.multiverse.api.StmUtils.*;
 
 /**
  * Created by Michael on 2/3/2015.
@@ -31,7 +33,7 @@ import java.util.Timer;
 //    }
 //}
 
-public class Cpu
+public class Cpu implements Runnable
 {
 
     // Registers for the cpu
@@ -643,4 +645,8 @@ public class Cpu
         return i/4;
     }
 
+    public void run()
+    {
+     loadCpu(Job);
+    }
 }
