@@ -27,6 +27,20 @@ public class DMAChannel
         return otherReturnThing;
     }
 
+// read and return data from cache as an integer value
+    public long readNCpu (long address, String[] cache)
+    {
+        int otherReturnThing;
+        String ramThing;
+        long returnThing;
+        ramThing = cache[(int)address];
+        ramThing = ramThing.substring(2);
+        returnThing = Long.parseLong(ramThing, 16);
+        otherReturnThing = (int) returnThing;
+
+        return otherReturnThing;
+    }
+
 // Writes passed address data into RAM as a hex String
     public void write (PCBObject Job, long buffer, int data)
     {

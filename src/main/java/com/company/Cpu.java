@@ -97,20 +97,19 @@ public class Cpu implements Runnable
     jobSize = Job.getInstructionCount();
     cacheSize = tempBufferSize + inputBufferSize + outputBufferSize + jobSize;
     cache = new String[cacheSize];
-    int q = Job.getDataMemoryAddress();
+    int q = Job.getJobMemoryAddress();
     for (int i = 0; i < cacheSize; i++)
     {
         cache[i] = memory.readRam(q);
         q++;
     }
     pc = 0;
-    pc = Job.getJobMemoryAddress();
+//    pc = Job.getJobMemoryAddress();
 
     int instructionCount = 1;
-    int endOfJob = Job.getJobMemoryAddress() + Job.getInstructionCount();
-
+    //int endOfJob = Job.getJobMemoryAddress() + Job.getInstructionCount();
     // algorithm used to call the fetch and decode cycle
-    while (pc < endOfJob)
+    while (pc < cacheSize)
     {
         System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
         System.out.println("Instruction Count " + instructionCount);
@@ -125,6 +124,7 @@ public class Cpu implements Runnable
         instructionCount++;
     }
 }
+
     public int effectiveAddress(int i, long a)
     {
         return regArray[i] + (int)a;
@@ -141,7 +141,8 @@ public class Cpu implements Runnable
 
         // temporary string used for manipulating the instruction
         String tempInstr;
-        tempInstr = memory.readRam(pc);
+        //tempInstr = memory.readRam(pc);
+        tempInstr = cache[pc];
         tempInstr = tempInstr.substring(2);
         tempLong = Long.parseLong(tempInstr,16);
         tempInstr2 = Long.toBinaryString(tempLong);
@@ -282,10 +283,9 @@ public class Cpu implements Runnable
             {
                 if (address > 0)
                 {
-                    //cpuBuffer = bufferAddress((int) address);
+                    cpuBuffer = bufferAddress((int) address);
                     //regArray[reg1] = (int) dma.read(Job, cpuBuffer);
-                    //regArray[reg1] = cache[readCache];
-                    readCache++;
+                    regArray[reg1] = (int)dma.readNCpu(cpuBuffer,cache);
                 } else
                 {
                     regArray[reg1] = regArray[reg2];
@@ -428,7 +428,7 @@ public class Cpu implements Runnable
                 if (address > 0)
                 {
                     cpuBuffer = bufferAddress((int) address);
-                    regArray[dReg] = (int) dma.read(Job, cpuBuffer);
+                    regArray[dReg] = (int) dma.readNCpu(cpuBuffer, cache);
                 }
                 else
                 {
