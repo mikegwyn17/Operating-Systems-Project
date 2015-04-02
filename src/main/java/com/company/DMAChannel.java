@@ -19,28 +19,17 @@ public class DMAChannel
         long returnThing;
         int workThing = Job.getJobMemoryAddress();
         address  = address + workThing;
-//        if (address < 0)
-//        {
-            ramThing = memory.readRam((int) address);
-            ramThing = ramThing.substring(2);
-            returnThing = Long.parseLong(ramThing, 16);
-            otherReturnThing = (int) returnThing;
-//        }
-//        else
-//        {
-//            address = address + Job.getDataMemoryAddress();
-//            ramThing = memory.readRam((int) address);
-//            ramThing = ramThing.substring(2);
-//            returnThing = Long.parseLong(ramThing, 16);
-//            otherReturnThing = (int) returnThing;
-//        }
+        ramThing = memory.readRam((int) address);
+        ramThing = ramThing.substring(2);
+        returnThing = Long.parseLong(ramThing, 16);
+        otherReturnThing = (int) returnThing;
+
         return otherReturnThing;
     }
 
 // Writes passed address data into RAM as a hex String
     public void write (PCBObject Job, long buffer, int data)
     {
-        //int address = Job.getDataMemoryAddress();
         String ramThing = "0x";
         String ramThing2 = Integer.toHexString(data);
         while (ramThing2.length() != 8) {

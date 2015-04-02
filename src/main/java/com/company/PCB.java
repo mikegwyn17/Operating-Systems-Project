@@ -59,9 +59,10 @@ public class PCB {
         }
     }
 
-    public void clearRanStatus() {
+    public void clearStatus() {
         for(PCBObject b : pcb) {
             b.setHasJobRan(false);
+            b.setJobInMemory(false);
         }
     }
 

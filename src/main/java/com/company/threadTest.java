@@ -15,8 +15,11 @@ public class threadTest implements Runnable {
 
     @Override
     public void run() {
-        int randomNum = random.nextInt();
         try {
+            for(int i = 0; i < 30; i++)
+            {
+                int randomNum = random.nextInt();
+            }
             Thread.sleep(0);
         } catch (InterruptedException e) {
             e.printStackTrace();

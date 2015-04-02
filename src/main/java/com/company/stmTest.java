@@ -22,7 +22,10 @@ public class stmTest {
     public void thread() {
         atomic(new Runnable() {
             public void run() {
-                int randomNum = random.nextInt();
+                for (int i = 0;  i < 30; i++)
+                {
+                    int randomNum = random.nextInt();
+                }
             }
         });
     }

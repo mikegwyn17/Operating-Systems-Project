@@ -57,6 +57,8 @@ public class Cpu implements Runnable
     public int inputBufferSize;
     public int outputBufferSize;
     public int tempBufferSize;
+    public int jobSize;
+    public int cacheSize;
 
     public long cpuBuffer;
 
@@ -69,6 +71,8 @@ public class Cpu implements Runnable
     public DMAChannel dma;
     public int jobNumber;
 
+    public String[] cache;
+
     public Cpu (Ram ram)
     {
         memory = ram;
@@ -77,40 +81,50 @@ public class Cpu implements Runnable
         jumped = false;
         jobCount = 1;
         dma = new DMAChannel(memory);
+        cache = new String[100];
     }
 
     public void loadCpu (PCBObject j)
+{
+    // start time for amount of time job is on cpu
+    start = System.currentTimeMillis();
+    Job = j;
+    jobNumber = Job.getJobNumber();
+    ioCount = 0;
+    tempBufferSize = Job.getTemporaryBufferSize();
+    inputBufferSize = Job.getInputBufferSize();
+    outputBufferSize = Job.getOutputBufferSize();
+    jobSize = Job.getInstructionCount();
+    cacheSize = tempBufferSize + inputBufferSize + outputBufferSize + jobSize;
+    cache = new String[cacheSize];
+    int q = Job.getDataMemoryAddress();
+    for (int i = 0; i < cacheSize; i++)
     {
-        // start time for amount of time job is on cpu
-        start = System.currentTimeMillis();
-        Job = j;
-        jobNumber = Job.getJobNumber();
-        ioCount = 0;
-        tempBufferSize = Job.getTemporaryBufferSize();
-        inputBufferSize = Job.getInputBufferSize();
-        outputBufferSize = Job.getOutputBufferSize();
-        pc = Job.getJobMemoryAddress();
-        int instructionCount = 1;
-        int endOfJob = Job.getJobMemoryAddress() + Job.getInstructionCount();
-
-        // algorithm used to call the fetch and decode cycle
-        while (pc < endOfJob)
-        {
-            System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
-            System.out.println("Instruction Count " + instructionCount);
-            String instr = fetch(pc);
-            execute(decode(instr));
-            if (!jumped) {
-                pc++;
-            }
-            else {
-                jumped = false;
-            }
-            instructionCount++;
-        }
+        cache[i] = memory.readRam(q);
+        q++;
     }
+    pc = 0;
+    pc = Job.getJobMemoryAddress();
 
+    int instructionCount = 1;
+    int endOfJob = Job.getJobMemoryAddress() + Job.getInstructionCount();
 
+    // algorithm used to call the fetch and decode cycle
+    while (pc < endOfJob)
+    {
+        System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
+        System.out.println("Instruction Count " + instructionCount);
+        String instr = fetch(pc);
+        execute(decode(instr));
+        if (!jumped) {
+            pc++;
+        }
+        else {
+            jumped = false;
+        }
+        instructionCount++;
+    }
+}
     public int effectiveAddress(int i, long a)
     {
         return regArray[i] + (int)a;
@@ -257,9 +271,9 @@ public class Cpu implements Runnable
         return opCode;
     }
 
-
     public void execute (int o)
     {
+        int readCache = 0;
         opCode = o;
         switch(opCode)
         {
@@ -268,8 +282,10 @@ public class Cpu implements Runnable
             {
                 if (address > 0)
                 {
-                    cpuBuffer = bufferAddress((int) address);
-                    regArray[reg1] = (int) dma.read(Job, cpuBuffer);
+                    //cpuBuffer = bufferAddress((int) address);
+                    //regArray[reg1] = (int) dma.read(Job, cpuBuffer);
+                    //regArray[reg1] = cache[readCache];
+                    readCache++;
                 } else
                 {
                     regArray[reg1] = regArray[reg2];

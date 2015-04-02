@@ -2,14 +2,9 @@ package com.company;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-
-import org.multiverse.api.references.*;
-import static org.multiverse.api.StmUtils.*;
 
 public class Driver {
+
     public static double totalPercent;
     public static double sumPercent;
     public static int counter = 0;
@@ -50,39 +45,33 @@ public class Driver {
         Thread thread4 = new Thread (threadTest4);
 
         startTime = System.currentTimeMillis();
-        for (int i = 0; i < 30; i++)
-        {
-            stm.thread();
-            stm2.thread();
-            stm3.thread();
-            stm4.thread();
-        }
+        stm.thread();
+        stm2.thread();
+        stm3.thread();
+        stm4.thread();
+
         long elapsedTimeMillis = System.currentTimeMillis()-startTime;
         System.out.println("Time for STM: " + elapsedTimeMillis);
 
         startTime = System.currentTimeMillis();
-        for (int i = 0; i < 30; i++)
-        {
             thread1.start();
             thread2.start();
             thread3.start();
             thread4.start();
-        }
         elapsedTimeMillis = System.currentTimeMillis()-startTime;
         System.out.println("Time for thread: " + elapsedTimeMillis);
 
-
-        startTime = System.currentTimeMillis();
-        String program = "program.txt";
-
-        cpu = new Cpu(ram);
-        cpu2 = new Cpu(ram);
-        cpu3 = new Cpu(ram);
-        cpu4 = new Cpu(ram);
-        sts = new ShortTermScheduler();
-        lts = new LongTermScheduler();
-        loader = new Loader(program);
-
+//        startTime = System.currentTimeMillis();
+//        String program = "program.txt";
+//
+//        cpu = new Cpu(ram);
+//        cpu2 = new Cpu(ram);
+//        cpu3 = new Cpu(ram);
+//        cpu4 = new Cpu(ram);
+//        sts = new ShortTermScheduler();
+//        lts = new LongTermScheduler();
+//        loader = new Loader(program);
+//
 //        try {
 //           loader.Start();
 //        } catch(IOException e) {
@@ -91,36 +80,35 @@ public class Driver {
 //
 ////        FIFO SCHEDULING
 ////        COMMENT THIS OUT IF YOU WANT TO RUN PRIORITY
-//
 //        lts.loadJobs(byJobNo);
 //        System.out.println("*************STARTING FIFO SCHEDULING*************");
 //        sts.FIFOSchedule();
 //        sts.printWaitingTimes(FIFO);
-//        pcb.clearRanStatus();
-
-//        Thread tcpu1 = new Thread(cpu);
-//        Thread tcpu2 = new Thread(cpu2);
-//        Thread tcpu3 = new Thread(cpu3);
-//        Thread tcpu4 = new Thread(cpu4);
+//        pcb.clearStatus();
 //
-//        tcpu1.start();
-//        tcpu2.start();
-//        tcpu3.start();
-//        tcpu4.start();
-
-//        PRIORITY SCHEDULING
-//        COMMENT THIS OUT IF YOU WANT TO RUN FIFO
-
+////        Thread tcpu1 = new Thread(cpu);
+////        Thread tcpu2 = new Thread(cpu2);
+////        Thread tcpu3 = new Thread(cpu3);
+////        Thread tcpu4 = new Thread(cpu4);
+////
+////        tcpu1.start();
+////        tcpu2.start();
+////        tcpu3.start();
+////        tcpu4.start();
+//
+////        PRIORITY SCHEDULING
+////        COMMENT THIS OUT IF YOU WANT TO RUN FIFO
+//
 //        startTime = System.currentTimeMillis();
 //        lts.loadJobs(byPriority);
 //        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
 //        sts.PrioritySchedule();
 //        sts.printWaitingTimes(PRIORITY);
-
-        if(loader.executed) {
-            System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
-        }
-        System.out.println("\nCurrent RAM Usage: " + df.format(ram.getRamFilled()) + " filled.");
+//
+//        if(loader.executed) {
+//            System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
+//        }
+//        System.out.println("\nCurrent RAM Usage: " + df.format(ram.getRamFilled()) + " filled.");
     }
 }
 
