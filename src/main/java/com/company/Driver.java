@@ -79,17 +79,14 @@ public class Driver {
             System.out.println("Your program file was not found. Please rename the file to 'program.txt' and place it in the root directory of this project!");
         }
 
-////        FIFO SCHEDULING
-////        COMMENT THIS OUT IF YOU WANT TO RUN PRIORITY
+//      FIFO SCHEDULING
         lts.loadJobs(byJobNo);
         System.out.println("*************STARTING FIFO SCHEDULING*************");
         sts.FIFOSchedule();
         sts.printWaitingTimes(FIFO);
         pcb.clearStatus();
 
-////        PRIORITY SCHEDULING
-////        COMMENT THIS OUT IF YOU WANT TO RUN FIFO
-
+//      PRIORITY SCHEDULING
         startTime = System.currentTimeMillis();
         lts.loadJobs(byPriority);
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
