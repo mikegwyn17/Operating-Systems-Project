@@ -17,11 +17,9 @@ public class Driver {
     public static Cpu cpu;
     static public DecimalFormat df = new DecimalFormat("#.##%");
 
-    static final boolean PRIORITY = true;
-    static final boolean FIFO = false;
-
     static PCB.sorttype byPriority = PCB.sorttype.JOB_PRIORITY;
     static PCB.sorttype byJobNo = PCB.sorttype.JOB_NUMBER;
+    static PCB.sorttype byShortestJob = PCB.sorttype.SHORTEST_JOB;
     static long startTime;
 
     public static void main(String[] a) {
@@ -40,23 +38,31 @@ public class Driver {
         }
 
 //        FIFO SCHEDULING
-//        COMMENT THIS OUT IF YOU WANT TO RUN PRIORITY
 
         lts.loadJobs(byJobNo);
         System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
         sts.FIFOSchedule();
-        sts.printWaitingTimes(FIFO);
-        pcb.clearStatus();
+        sts.printWaitingTimes(byJobNo);
 
 
 //        PRIORITY SCHEDULING
-//        COMMENT THIS OUT IF YOU WANT TO RUN FIFO
 
+        pcb.clearStatus();
         startTime = System.currentTimeMillis();
         lts.loadJobs(byPriority);
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
-        sts.printWaitingTimes(PRIORITY);
+        sts.printWaitingTimes(byPriority);
+
+
+//        SJF SCHEDULING
+
+        pcb.clearStatus();
+        startTime = System.currentTimeMillis();
+        lts.loadJobs(byShortestJob);
+        System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
+        sts.SJFSchedule();
+        sts.printWaitingTimes(byShortestJob);
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");

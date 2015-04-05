@@ -9,7 +9,7 @@ import java.util.Comparator;
 public class PCB {
     private ArrayList<PCBObject> pcb;
 
-    public enum sorttype { JOB_NUMBER, JOB_PRIORITY }
+    public enum sorttype { JOB_NUMBER, JOB_PRIORITY, SHORTEST_JOB}
     sorttype sortType;
 
     public PCB() {
@@ -55,6 +55,15 @@ public class PCB {
                     }
                 });
                 sortType = sorttype.JOB_NUMBER;
+                break;
+            case SHORTEST_JOB:
+                Collections.sort(pcb, new Comparator<PCBObject>() {
+                    @Override
+                    public int compare(PCBObject o1, PCBObject o2) {
+                        return o1.getInstructionCount() - o2.getInstructionCount();
+                    }
+                });
+                sortType = sorttype.SHORTEST_JOB;
                 break;
         }
     }

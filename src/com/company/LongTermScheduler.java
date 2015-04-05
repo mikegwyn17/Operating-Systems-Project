@@ -13,8 +13,6 @@ public class LongTermScheduler {
     public PCBObject Job;
     private double average;
     public double percent;
-    static PCB.sorttype byPriority = PCB.sorttype.JOB_PRIORITY;
-    static PCB.sorttype byJobNo = PCB.sorttype.JOB_NUMBER;
 
     private final int dataSize = 44;
 
@@ -27,13 +25,17 @@ public class LongTermScheduler {
     public void loadJobs(PCB.sorttype s) {
         int index = 0;
 
-        if (s == byJobNo) {
-            if (Driver.pcb.getPCBSortStatus() != byJobNo) {
-                Driver.pcb.sortPCB(byJobNo);
+        if (s == Driver.byJobNo) {
+            if (Driver.pcb.getPCBSortStatus() != Driver.byJobNo) {
+                Driver.pcb.sortPCB(Driver.byJobNo);
+            }
+        } else if (s == Driver.byPriority) {
+            if (Driver.pcb.getPCBSortStatus() != Driver.byPriority) {
+                Driver.pcb.sortPCB(Driver.byPriority);
             }
         } else {
-            if (Driver.pcb.getPCBSortStatus() != byPriority) {
-                Driver.pcb.sortPCB(byPriority);
+            if (Driver.pcb.getPCBSortStatus() != Driver.byShortestJob) {
+                Driver.pcb.sortPCB(Driver.byShortestJob);
             }
         }
 
@@ -62,7 +64,7 @@ public class LongTermScheduler {
     public void needJobInMemory(PCBObject j) {
 
         if(Driver.pcb.getPCBSortStatus() != Driver.byJobNo) {
-            Driver.pcb.sortPCB(byJobNo);
+            Driver.pcb.sortPCB(Driver.byJobNo);
         }
 
         int jobNumber = j.getJobNumber();
