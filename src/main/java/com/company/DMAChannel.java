@@ -42,7 +42,7 @@ public class DMAChannel
     }
 
 // Writes passed address data into RAM as a hex String
-    public void write (PCBObject Job, long buffer, int data)
+    public synchronized void write (PCBObject Job, long buffer, int data)
     {
         String ramThing = "0x";
         String ramThing2 = Integer.toHexString(data);

@@ -73,8 +73,7 @@ public class Cpu implements Runnable
 
     public String[] cache;
 
-    public Cpu (Ram ram)
-    {
+    public Cpu(Ram ram) {
         memory = ram;
         regArray = new int[16];
         regArray[zero] = 0;
@@ -82,6 +81,11 @@ public class Cpu implements Runnable
         jobCount = 1;
         dma = new DMAChannel(memory);
         cache = new String[100];
+    }
+
+    public void setJob(PCBObject j)
+    {
+        Job = j;
     }
 
     public void loadCpu (PCBObject j)
@@ -113,8 +117,8 @@ public class Cpu implements Runnable
     {
         System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
         System.out.println("Instruction Count " + instructionCount);
-        String instr = fetch(pc);
-        execute(decode(instr));
+        String instr = fetch(pc,cache);
+        execute(decode(instr, cache), cache);
         if (!jumped) {
             pc++;
         }
@@ -130,9 +134,10 @@ public class Cpu implements Runnable
         return regArray[i] + (int)a;
     }
 
-    public String fetch (int p)
+    public String fetch (int p, String[] c)
     {
         pc = p;
+        cache = c;
         // long used for converting to binary
         long tempLong;
 
@@ -158,8 +163,9 @@ public class Cpu implements Runnable
         return fetchedInstr;
     }
 
-    public int decode (String fetchedInstr)
+    public int decode (String fetchedInstr, String[] c)
     {
+        cache = c;
         // temporary stings used for decoding the instruction set
         String tempInstr;
         String tempOppCode;
@@ -272,8 +278,9 @@ public class Cpu implements Runnable
         return opCode;
     }
 
-    public void execute (int o)
+    public void execute (int o, String[] c)
     {
+        cache = c;
         opCode = o;
         switch(opCode)
         {
@@ -607,8 +614,33 @@ public class Cpu implements Runnable
         return i/4;
     }
 
-    public void run()
-    {
-     loadCpu(Job);
+    public void runNCpu(PCBObject j) {
+        Job = j;
+        atomic(new Runnable() {
+            public void run() {
+                loadCpu(Job);
+            }
+        });
+    }
+
+    /**
+     * When an object implementing interface <code>Runnable</code> is used
+     * to create a thread, starting the thread causes the object's
+     * <code>run</code> method to be called in that separately executing
+     * thread.
+     * <p/>
+     * The general contract of the method <code>run</code> is that it may
+     * take any action whatsoever.
+     *
+     * @see Thread#run()
+     */
+    @Override
+    public void run() {
+        loadCpu(Job);
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
