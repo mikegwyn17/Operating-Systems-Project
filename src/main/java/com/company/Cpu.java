@@ -35,6 +35,8 @@ import static org.multiverse.api.StmUtils.*;
 
 public class Cpu implements Runnable
 {
+    // boolean used to end thread
+    private volatile boolean running = true;
 
     // Registers for the cpu
     public int sReg1;
@@ -498,6 +500,7 @@ public class Cpu implements Runnable
                 System.out.println("Io count for Job " + ioCount);
                 System.out.println("End Program");
                 jobCount++;
+                terminate();
                 break;
             }
 
@@ -623,6 +626,11 @@ public class Cpu implements Runnable
         });
     }
 
+    public void terminate ()
+    {
+        this.running = false;
+    }
+
     /**
      * When an object implementing interface <code>Runnable</code> is used
      * to create a thread, starting the thread causes the object's
@@ -636,11 +644,10 @@ public class Cpu implements Runnable
      */
     @Override
     public void run() {
-        loadCpu(Job);
-        try {
-            Thread.sleep(20);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (running)
+        {
+            loadCpu(Job);
         }
+
     }
 }
