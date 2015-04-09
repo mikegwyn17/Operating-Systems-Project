@@ -29,44 +29,20 @@ public class Driver {
     static long startTime;
 
     public static void main(String[] a) {
-//
-//        stmTest stm = new stmTest();
-//        stmTest stm2 = new stmTest();
-//        stmTest stm3 = new stmTest();
-//        stmTest stm4= new stmTest();
-//
-//        threadTest threadTest1 = new threadTest();
-//        threadTest threadTest2 = new threadTest();
-//        threadTest threadTest3 = new threadTest();
-//        threadTest threadTest4 = new threadTest();
-//
-//        Thread thread1 = new Thread (threadTest1);
-//        Thread thread2 = new Thread (threadTest2);
-//        Thread thread3 = new Thread (threadTest3);
-//        Thread thread4 = new Thread (threadTest4);
-//
-//        startTime = System.currentTimeMillis();
-//        for (int i = 0; i < 30; i++)
-//        {
-//            stm.thread();
-//            stm2.thread();
-//            stm3.thread();
-//            stm4.thread();
-//        }
-//
-//        long elapsedTimeMillis = System.currentTimeMillis()-startTime;
-//        System.out.println("Time for STM: " + elapsedTimeMillis);
-//
-//        startTime = System.currentTimeMillis();
-////        for (int i = 0; i < 30; i++)
-////        {
-//            thread1.start();
-//            thread2.start();
-//            thread3.start();
-//            thread4.start();
-////        }
-//        elapsedTimeMillis = System.currentTimeMillis()-startTime;
-//        System.out.println("Time for thread: " + elapsedTimeMillis);
+        threadTest threadTest1 = new threadTest();
+        threadTest threadTest2 = new threadTest();
+        threadTest threadTest3 = new threadTest();
+        threadTest threadTest4 = new threadTest();
+
+        Thread thread1 = new Thread (threadTest1);
+        Thread thread2 = new Thread (threadTest2);
+        Thread thread3 = new Thread (threadTest3);
+        Thread thread4 = new Thread (threadTest4);
+
+        startTime = System.currentTimeMillis();
+
+        long elapsedTimeMillis = System.currentTimeMillis()-startTime;
+        System.out.println("Time for thread: " + elapsedTimeMillis);
 
         startTime = System.currentTimeMillis();
         String program = "program.txt";
@@ -85,26 +61,6 @@ public class Driver {
         } catch(IOException e) {
             System.out.println("Your program file was not found. Please rename the file to 'program.txt' and place it in the root directory of this project!");
         }
-
-//        cpu1.setJob(pcb.getPCB(1));
-//        cpu2.setJob(pcb.getPCB(2));
-//        cpu3.setJob(pcb.getPCB(3));
-//        cpu4.setJob(pcb.getPCB(4));
-
-//        cpu1.thread(pcb.getPCB(1));
-//        cpu2.thread(pcb.getPCB(2));
-//        cpu3.thread(pcb.getPCB(3));
-//        cpu4.thread(pcb.getPCB(4));
-
-//        Thread cpuThread1 = new Thread (cpu1);
-//        Thread cpuThread2 = new Thread (cpu2);
-//        Thread cpuThread3 = new Thread (cpu3);
-//        Thread cpuThread4 = new Thread (cpu4);
-//
-//        cpuThread1.start();
-//        cpuThread2.start();
-//        cpuThread3.start();
-//        cpuThread4.start();
 
 //      FIFO SCHEDULING
         lts.loadJobs(byJobNo);

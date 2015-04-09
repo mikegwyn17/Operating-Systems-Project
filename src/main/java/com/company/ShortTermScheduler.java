@@ -19,6 +19,7 @@ class waitTimes {
 
 public class ShortTermScheduler
 {
+    public static CpuManager cpuManger = new CpuManager();
     public ArrayList<PCBObject> readyQueue;
     //Cpu cpu = new Cpu();
     public PCBObject Job;
@@ -79,10 +80,6 @@ public class ShortTermScheduler
 
     public void runCpu () {
         int count = 1;
-        Thread thread1 = new Thread(Driver.cpu1, "Thread One");
-        Thread thread2 = new Thread(Driver.cpu2, "Thread Two");
-        Thread thread3 = new Thread(Driver.cpu3, "Thread Three");
-        Thread thread4 = new Thread(Driver.cpu4, "Thread Four");
         if(Driver.pcb.getPCBSortStatus() != Driver.byJobNo) {
             Driver.pcb.sortPCB(Driver.byJobNo);
         }
@@ -100,116 +97,67 @@ public class ShortTermScheduler
                 {
                     case 1:
                     {
-                        Driver.cpu1.setJob(Driver.pcb.getPCB(jobNumber));
-                        thread1.start();
-                        try {
-                            thread1.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-//                        Driver.cpu1.runNCpu(Driver.pcb.getPCB(jobNumber));
+                        Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber));
                         count++;
                     }
 
                     case 2:
                     {
-                        Driver.cpu2.setJob(Driver.pcb.getPCB(jobNumber));
-                        thread2.start();
-                        try {
-                            thread2.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-//                        Driver.cpu2.runNCpu(Driver.pcb.getPCB(jobNumber));
+                        Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber));
                         count++;
                     }
 
                     case 3:
                     {
-                        Driver.cpu3.setJob(Driver.pcb.getPCB(jobNumber));
-                        thread3.start();
-                        try {
-                            thread3.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-//                        Driver.cpu3.runNCpu(Driver.pcb.getPCB(jobNumber));
+                        Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber));
                         count++;
                     }
 
                     case 4:
                     {
-                        Driver.cpu4.setJob(Driver.pcb.getPCB(jobNumber));
-                        thread4.start();
-                        try {
-                            thread4.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-//                        Driver.cpu4.runNCpu(Driver.pcb.getPCB(jobNumber));
+                        Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber));
                         count++;
                     }
                 }
-//                Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber));
+
                 Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
                 if  (count > 4)
                     count = 1;
             }
-            else {
-
-
+            else
+            {
                 if(FIFO) waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
                 else waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
 
                 Driver.lts.needJobInMemory(Driver.pcb.getPCB(jobNumber));
-                switch(count)
+                switch (count)
                 {
                     case 1:
                     {
-//                        Driver.cpu1.setJob(Driver.pcb.getPCB(jobNumber));
-//                        thread1.start();
-                        Driver.cpu1.runNCpu(Driver.pcb.getPCB(jobNumber));
+                        Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber));
+                        count++;
                     }
 
                     case 2:
                     {
-//                        Driver.cpu2.setJob(Driver.pcb.getPCB(jobNumber));
-//                        thread2.start();
-//                        try {
-//                            thread2.join();
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-                        Driver.cpu2.runNCpu(Driver.pcb.getPCB(jobNumber));
+                        Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber));
+                        count++;
                     }
 
                     case 3:
                     {
-//                        Driver.cpu3.setJob(Driver.pcb.getPCB(jobNumber));
-//                        thread3.start();
-//                        try {
-//                            thread3.join();
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-                        Driver.cpu3.runNCpu(Driver.pcb.getPCB(jobNumber));
+                        Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber));
+                        count++;
                     }
 
                     case 4:
                     {
-//                        Driver.cpu4.setJob(Driver.pcb.getPCB(jobNumber));
-//                        thread4.start();
-//                        try {
-//                            thread4.join();
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-                        Driver.cpu4.runNCpu(Driver.pcb.getPCB(jobNumber));
+                        Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber));
+                        count++;
                     }
                 }
                 //Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber));
                 Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
-                count++;
                 if (count > 4)
                     count = 1;
             }

@@ -33,7 +33,7 @@ import static org.multiverse.api.StmUtils.*;
 //    }
 //}
 
-public class Cpu implements Runnable
+public class Cpu
 {
     // boolean used to end thread
     private volatile boolean running = true;
@@ -85,50 +85,44 @@ public class Cpu implements Runnable
         cache = new String[100];
     }
 
-    public void setJob(PCBObject j)
+    public void loadCpu (PCBObject job)
     {
-        Job = j;
-    }
-
-    public void loadCpu (PCBObject j)
-{
-    // start time for amount of time job is on cpu
-    start = System.currentTimeMillis();
-    Job = j;
-    jobNumber = Job.getJobNumber();
-    ioCount = 0;
-    tempBufferSize = Job.getTemporaryBufferSize();
-    inputBufferSize = Job.getInputBufferSize();
-    outputBufferSize = Job.getOutputBufferSize();
-    jobSize = Job.getInstructionCount();
-    cacheSize = tempBufferSize + inputBufferSize + outputBufferSize + jobSize;
-    cache = new String[cacheSize];
-    int q = Job.getJobMemoryAddress();
-    for (int i = 0; i < cacheSize; i++)
-    {
-        cache[i] = memory.readRam(q);
-        q++;
-    }
-    pc = 0;
+        Job = job;
+        jobNumber = Job.getJobNumber();
+        ioCount = 0;
+        tempBufferSize = Job.getTemporaryBufferSize();
+        inputBufferSize = Job.getInputBufferSize();
+        outputBufferSize = Job.getOutputBufferSize();
+        jobSize = Job.getInstructionCount();
+        cacheSize = tempBufferSize + inputBufferSize + outputBufferSize + jobSize;
+        cache = new String[cacheSize];
+        int q = Job.getJobMemoryAddress();
+        for (int i = 0; i < cacheSize; i++)
+        {
+            cache[i] = memory.readRam(q);
+            q++;
+        }
+        pc = 0;
 //    pc = Job.getJobMemoryAddress();
 
-    int instructionCount = 1;
-    //int endOfJob = Job.getJobMemoryAddress() + Job.getInstructionCount();
-    // algorithm used to call the fetch and decode cycle
-    while (pc < jobSize)
-    {
-        System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
-        System.out.println("Instruction Count " + instructionCount);
-        String instr = fetch(pc,cache);
-        execute(decode(instr, cache), cache);
-        if (!jumped) {
-            pc++;
-        }
-        else {
-            jumped = false;
-        }
-        instructionCount++;
-    }
+            int instructionCount = 1;
+            //int endOfJob = Job.getJobMemoryAddress() + Job.getInstructionCount();
+            // algorithm used to call the fetch and decode cycle
+            while (pc < jobSize)
+            {
+                System.out.println("***** Job Number " + Job.getJobNumber() + " *****");
+                System.out.println("Instruction Count " + instructionCount);
+                String instr = fetch(pc, cache);
+                execute(decode(instr, cache), cache);
+                if (!jumped)
+                {
+                    pc++;
+                } else
+                {
+                    jumped = false;
+                }
+                instructionCount++;
+            }
 }
 
     public int effectiveAddress(int i, long a)
@@ -139,6 +133,7 @@ public class Cpu implements Runnable
     public String fetch (int p, String[] c)
     {
         pc = p;
+
         cache = c;
         // long used for converting to binary
         long tempLong;
@@ -617,37 +612,9 @@ public class Cpu implements Runnable
         return i/4;
     }
 
-    public void runNCpu(PCBObject j) {
-        Job = j;
-        atomic(new Runnable() {
-            public void run() {
-                loadCpu(Job);
-            }
-        });
-    }
-
+    // method used to end the current thread
     public void terminate ()
     {
-        this.running = false;
-    }
-
-    /**
-     * When an object implementing interface <code>Runnable</code> is used
-     * to create a thread, starting the thread causes the object's
-     * <code>run</code> method to be called in that separately executing
-     * thread.
-     * <p/>
-     * The general contract of the method <code>run</code> is that it may
-     * take any action whatsoever.
-     *
-     * @see Thread#run()
-     */
-    @Override
-    public void run() {
-        while (running)
-        {
-            loadCpu(Job);
-        }
-
+        Thread.currentThread().interrupt();
     }
 }
