@@ -5,19 +5,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Timer;
 
-import org.multiverse.api.references.*;
-
-import static org.multiverse.api.StmUtils.*;
-
 /**
  * Created by Michael on 2/3/2015.
  */
 
-class executeTimes {
+class executeTimes
+{
     int jobNo;
     long waitTime;
 
-    public executeTimes(int j, long w) {
+    public executeTimes(int j, long w)
+    {
         jobNo = j;
         waitTime = w;
     }
@@ -428,7 +426,7 @@ public class Cpu
             // Multiplies a data directly to the content of a register
             case 13:
             {
-                regArray[dReg] *= (int)address;
+                regArray[dReg] *= (int) address;
                 System.out.println("MULI Instruction");
                 System.out.println("Register " + dReg + " now contains " + regArray[dReg]);
                 break;
@@ -446,7 +444,7 @@ public class Cpu
             // Loads a data/address directly to the content of a register
             case 15:
             {
-                regArray[dReg] = (int) address/4;
+                regArray[dReg] = (int) address / 4;
                 System.out.println("LDI Instruction");
                 System.out.println("Register " + dReg + " now contains " + regArray[dReg]);
                 break;
@@ -485,7 +483,7 @@ public class Cpu
                 System.out.println("Amount of time Job was running " + elapsedTimeMillis + " milliseconds");
                 System.out.println("Io count for Job " + ioCount);
                 System.out.println("End Program");
-                times = new executeTimes(jobNumber,elapsedTimeMillis);
+                times = new executeTimes(jobNumber, elapsedTimeMillis);
                 break;
             }
 
