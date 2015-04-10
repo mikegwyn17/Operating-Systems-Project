@@ -180,30 +180,30 @@ public class ShortTermScheduler
                 System.out.println("Job " + i + " Waits -- Priority: " + waitTimesPriority.get(i).waitTime);
                 PriorityTotal += waitTimesPriority.get(i).waitTime;
             }
-            PriorityTotal = 0;
+            System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0) + "\n");
 
-            System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0));
+            PriorityTotal = 0;
             for(int i = 0; i < executeTimesPriority.size(); i++) {
                 System.out.println("Job " + i + " Executes -- Priority: " + executeTimesPriority.get(i).waitTime);
                 PriorityTotal += executeTimesPriority.get(i).waitTime;
             }
 
-            System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0));
+            System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0) + "\n");
 
         } else {
             for(int i = 0; i < waitTimesFIFO.size(); i++) {
                 System.out.println("Job: " + i + "Waits -- FIFO: " + waitTimesFIFO.get(i).waitTime);
                 FIFOTotal += waitTimesFIFO.get(i).waitTime;
             }
-            System.out.println("***************AVERAGES***************\nPriority: " + (FIFOTotal / 30.0));
+            System.out.println("***************AVERAGES***************\nFIFO\n: " + (FIFOTotal / 30.0) + "\n");
+
 
             FIFOTotal = 0;
-
             for(int i = 0; i < executeTimesPriority.size(); i++) {
                 System.out.println("Job: " + i + "Waits -- FIFO: " + executeTimesPriority.get(i).waitTime);
                 FIFOTotal += executeTimesPriority.get(i).waitTime;
             }
-            System.out.println("***************AVERAGES***************\nPriority: " + (FIFOTotal / 30.0));
+            System.out.println("***************AVERAGES***************\nFIFO: " + (FIFOTotal / 30.0) + "\n");
         }
     }
 }
