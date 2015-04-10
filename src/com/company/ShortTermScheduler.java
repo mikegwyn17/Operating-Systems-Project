@@ -106,32 +106,20 @@ public class ShortTermScheduler
 
             int jobNumber = readyQueue.get(i).getJobNumber();
 
-            if(Driver.pcb.getPCB(jobNumber).isInMemory()) {
-
-                if(algorithm == Driver.byJobNo) waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-                else if(algorithm == Driver.byPriority) waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-//                else waitTimesSJF.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-
-                Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber));
-                Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
-            }
-            else {
-                if(algorithm == Driver.byJobNo) waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-                else if(algorithm == Driver.byPriority) waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-                else waitTimesSJF.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-
+            if(!Driver.pcb.getPCB(jobNumber).isInMemory()) {
                 Driver.lts.needJobInMemory(Driver.pcb.getPCB(jobNumber));
-                Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber));
-                Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
             }
+
+            if(algorithm == Driver.byJobNo) waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
+            else if(algorithm == Driver.byPriority) waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
+            else waitTimesSJF.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
+
+            Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber));
+            Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
         }
     }
 
     public void printWaitingTimes(PCB.sorttype s) {
-
-        // s
-        // true = FIFO
-        // false = Priority
 
         long FIFOTotal = 0, PriorityTotal = 0, SJFTotal = 0;
 
