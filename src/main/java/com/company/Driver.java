@@ -29,20 +29,6 @@ public class Driver {
     static long startTime;
 
     public static void main(String[] a) {
-        threadTest threadTest1 = new threadTest();
-        threadTest threadTest2 = new threadTest();
-        threadTest threadTest3 = new threadTest();
-        threadTest threadTest4 = new threadTest();
-
-        Thread thread1 = new Thread (threadTest1);
-        Thread thread2 = new Thread (threadTest2);
-        Thread thread3 = new Thread (threadTest3);
-        Thread thread4 = new Thread (threadTest4);
-
-        startTime = System.currentTimeMillis();
-
-        long elapsedTimeMillis = System.currentTimeMillis()-startTime;
-        System.out.println("Time for thread: " + elapsedTimeMillis);
 
         startTime = System.currentTimeMillis();
         String program = "program.txt";
