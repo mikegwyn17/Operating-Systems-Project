@@ -51,6 +51,6 @@ public class DMAChannel
         }
         ramThing = ramThing.concat(ramThing2);
         memory.writeRam(ramThing,(int)buffer);
-        System.out.println("Output buffer contents: " + memory.readRam((int)buffer/2));
+        System.out.println("Output buffer contents: " + memory.readRam((int)buffer));
     }
 }

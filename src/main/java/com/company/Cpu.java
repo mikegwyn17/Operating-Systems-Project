@@ -411,11 +411,14 @@ public class Cpu
                 System.out.println("Register" + dReg + " now contains " + regArray[dReg]);
                 break;
             }
-
             // Adds a data directly to the content of a register
             case 12:
             {
-                regArray[dReg] += (int) address;
+                if (address > 1)
+                {
+                    address /= 4;
+                }
+                regArray[dReg] += address;
 
                 System.out.println("ADDI Instruction");
                 System.out.println("Register " + dReg + " now contains " + regArray[dReg]);
@@ -425,7 +428,7 @@ public class Cpu
             // Multiplies a data directly to the content of a register
             case 13:
             {
-                regArray[dReg] *= (int) address;
+                regArray[dReg] *= (int)address;
                 System.out.println("MULI Instruction");
                 System.out.println("Register " + dReg + " now contains " + regArray[dReg]);
                 break;
@@ -443,7 +446,7 @@ public class Cpu
             // Loads a data/address directly to the content of a register
             case 15:
             {
-                regArray[dReg] = (int) address;
+                regArray[dReg] = (int) address/4;
                 System.out.println("LDI Instruction");
                 System.out.println("Register " + dReg + " now contains " + regArray[dReg]);
                 break;
