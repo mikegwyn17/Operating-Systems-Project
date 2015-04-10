@@ -9,27 +9,15 @@ import java.util.Timer;
  * Created by Michael on 2/3/2015.
  */
 
-// class executeTimes
-//{
-//    int jobNum;
-//    long executeTime;
-//
-//    public executeTimes(int j, long t)
-//    {
-//        jobNum = j;
-//        executeTime = t;
-//    }
-//
-//    public int getJobNum()
-//    {
-//        return jobNum;
-//    }
-//
-//    public long getExecuteTime ()
-//    {
-//        return executeTime;
-//    }
-//}
+class executeTimes {
+    int jobNo;
+    long waitTime;
+
+    public executeTimes(int j, long w) {
+        jobNo = j;
+        waitTime = w;
+    }
+}
 
 public class Cpu
 {
@@ -66,6 +54,7 @@ public class Cpu
     public static int jobCount;
     public DMAChannel dma;
     public int jobNumber;
+    public executeTimes times;
 
     public Cpu (Ram ram)
     {
@@ -77,7 +66,7 @@ public class Cpu
         dma = new DMAChannel(memory);
     }
 
-    public void loadCpu (PCBObject j)
+    public executeTimes loadCpu (PCBObject j)
     {
         // start time for amount of time job is on cpu
         start = System.currentTimeMillis();
@@ -106,6 +95,7 @@ public class Cpu
             }
             instructionCount++;
         }
+        return times;
     }
 
 
@@ -510,7 +500,7 @@ public class Cpu
                 System.out.println("Amount of time Job was running " + elapsedTimeMillis + " milliseconds");
                 System.out.println("Io count for Job " + ioCount);
                 System.out.println("End Program");
-                jobCount++;
+                times = new executeTimes(jobNumber,elapsedTimeMillis);
                 break;
             }
 
