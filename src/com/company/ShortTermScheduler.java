@@ -27,6 +27,9 @@ public class ShortTermScheduler
     ArrayList<waitTimes> waitTimesFIFO;
     ArrayList<waitTimes> waitTimesPriority;
     ArrayList<waitTimes> waitTimesSJF;
+    ArrayList<executeTimes> executeTimesFIFO;
+    ArrayList<executeTimes> executeTimesPriority;
+    ArrayList<executeTimes> executeTimesSJF;
 
     PCB.sorttype algorithm;
 
@@ -35,6 +38,9 @@ public class ShortTermScheduler
         waitTimesFIFO = new ArrayList<waitTimes>();
         waitTimesPriority = new ArrayList<waitTimes>();
         waitTimesSJF = new ArrayList<waitTimes>();
+        executeTimesFIFO = new ArrayList<executeTimes>();
+        executeTimesPriority = new ArrayList<executeTimes>();
+        executeTimesSJF = new ArrayList<executeTimes>();
     }
 
     public void PrioritySchedule () {
@@ -110,9 +116,9 @@ public class ShortTermScheduler
 
                 if(algorithm == Driver.byJobNo) waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
                 else if(algorithm == Driver.byPriority) waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-//                else waitTimesSJF.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
+                //else waitTimesSJF.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
 
-                Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber));
+                executeTimesFIFO.add(Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber)));
                 Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
             }
             else {
@@ -121,7 +127,7 @@ public class ShortTermScheduler
                 else waitTimesSJF.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
 
                 Driver.lts.needJobInMemory(Driver.pcb.getPCB(jobNumber));
-                Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber));
+                executeTimesPriority.add(Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber)));
                 Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
             }
         }
@@ -149,16 +155,41 @@ public class ShortTermScheduler
             }
 
             System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0));
+
+            PriorityTotal = 0;
+
+            for(int i = 0; i < executeTimesPriority.size(); i++) {
+                System.out.println("Job " + i + " Executes -- Priority: " + executeTimesPriority.get(i).waitTime);
+                PriorityTotal += executeTimesPriority.get(i).waitTime;
+            }
+            System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0));
+
         } else if(s == Driver.byJobNo){
             for(int i = 0; i < waitTimesFIFO.size(); i++) {
-                System.out.println("Job: " + i + "Waits -- FIFO: " + waitTimesFIFO.get(i).waitTime);
+                System.out.println("Job: " + i + " Waits -- FIFO: " + waitTimesFIFO.get(i).waitTime);
                 FIFOTotal += waitTimesFIFO.get(i).waitTime;
+            }
+            System.out.println("***************AVERAGES***************\nFIFO: " + (FIFOTotal / 30.0));
+
+            FIFOTotal = 0;
+
+            for(int i = 0; i < executeTimesFIFO.size(); i++) {
+                System.out.println("Job: " + i + " Executes -- FIFO: " + executeTimesFIFO.get(i).waitTime);
+                FIFOTotal += executeTimesFIFO.get(i).waitTime;
             }
             System.out.println("***************AVERAGES***************\nFIFO: " + (FIFOTotal / 30.0));
         } else {
             for(int i = 0; i < waitTimesSJF.size(); i++) {
-                System.out.println("Job: " + i + "Waits -- SJF: " + waitTimesSJF.get(i).waitTime);
+                System.out.println("Job: " + i + " Waits -- SJF: " + waitTimesSJF.get(i).waitTime);
                 SJFTotal += waitTimesSJF.get(i).waitTime;
+            }
+            System.out.println("***************AVERAGES***************\nSJF: " + (SJFTotal / 30.0));
+
+            SJFTotal = 0;
+
+            for(int i = 0; i < executeTimesFIFO.size(); i++) {
+                System.out.println("Job: " + i + " Executes -- SJF: " + executeTimesFIFO.get(i).waitTime);
+                SJFTotal += executeTimesFIFO.get(i).waitTime;
             }
             System.out.println("***************AVERAGES***************\nSJF: " + (SJFTotal / 30.0));
         }
