@@ -218,7 +218,7 @@ public class ShortTermScheduler
                 System.out.println("Job: " + i + " Executes -- SJF: " + executeTimesSJF.get(i).waitTime);
                 SJFTotal += executeTimesSJF.get(i).waitTime;
             }
-            System.out.println("***************AVERAGES***************\nFIFO: " + (SJFTotal / 30.0) + "\n");
+            System.out.println("***************AVERAGES***************\nSJF: " + (SJFTotal / 30.0) + "\n");
         }
     }
 }
