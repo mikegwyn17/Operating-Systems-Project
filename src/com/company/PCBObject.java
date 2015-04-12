@@ -18,6 +18,11 @@ public class PCBObject {
     private String instruction; //instuction set for job
     private boolean jobInMemory;
     private boolean hasJobRan;
+    private ProcessStatus pStatus;
+    private PageTable pageTable;
+    private int dataCount;
+
+    public enum ProcessStatus { NEW, READY, WAITING, RUNNING, FINISHED, ERROR };
 
     public PCBObject(int jobNumber, int jobPriority, int jobDiskAddress, int instructionCount) {
         this.jobNumber = jobNumber;
@@ -25,7 +30,20 @@ public class PCBObject {
         this.jobDiskAddress = jobDiskAddress;
         this.instructionCount = instructionCount;
         jobInMemory = false;
+        pStatus = ProcessStatus.NEW;
+        dataCount = 44;
+
+        setUpPageTable();
     }
+
+    private void setUpPageTable() {
+        pageTable = new PageTable(getJobDiskAddress(), instructionCount, dataCount);
+    }
+
+    public void printPageTable() {
+        pageTable.printPageTable();
+    }
+
     public int getJobNumber() { return jobNumber; }
     public int getJobPriority() { return jobPriority; }
     public int getJobDiskAddress() {return jobDiskAddress; }
@@ -40,6 +58,7 @@ public class PCBObject {
     public boolean checkIOBound(){return IObound; }
     public boolean isInMemory(){ return jobInMemory; }
     public boolean hasJobRan() {return hasJobRan; }
+    public ProcessStatus getProcessStatus() { return pStatus; }
 
     public void setDataDiskAddress(int k) {
         dataDiskAddress = k;
@@ -56,6 +75,8 @@ public class PCBObject {
     public void setIObound(boolean k) {IObound = k; }
     public void setJobInMemory(boolean k) { jobInMemory = k; }
     public void setHasJobRan(boolean k) {hasJobRan = k; }
+    public void setProcessStatus(ProcessStatus k) { pStatus = k; }
+
 
     @Override
     public String toString() {

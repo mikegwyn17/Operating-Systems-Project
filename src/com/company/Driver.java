@@ -37,32 +37,39 @@ public class Driver {
             System.out.println("Your program file was not found. Please rename the file to 'program.txt' and place it in the root directory of this project!");
         }
 
-//        FIFO SCHEDULING
+////        FIFO SCHEDULING
+//
+//        lts.loadJobs(byJobNo);
+//        System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
+//        sts.FIFOSchedule();
+//        sts.printWaitingTimes(byJobNo);
+//
+//
+////        PRIORITY SCHEDULING
+//
+//        pcb.clearStatus();
+//        startTime = System.currentTimeMillis();
+//        lts.loadJobs(byPriority);
+//        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
+//        sts.PrioritySchedule();
+//        sts.printWaitingTimes(byPriority);
+//
+//
+////        SJF SCHEDULING
+//
+//        pcb.clearStatus();
+//        startTime = System.currentTimeMillis();
+//        lts.loadJobs(byShortestJob);
+//        System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
+//        sts.SJFSchedule();
+//        sts.printWaitingTimes(byShortestJob);
 
-        lts.loadJobs(byJobNo);
-        System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
-        sts.FIFOSchedule();
-        sts.printWaitingTimes(byJobNo);
 
-
-//        PRIORITY SCHEDULING
-
-        pcb.clearStatus();
-        startTime = System.currentTimeMillis();
-        lts.loadJobs(byPriority);
-        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
-        sts.PrioritySchedule();
-        sts.printWaitingTimes(byPriority);
-
-
-//        SJF SCHEDULING
-
-        pcb.clearStatus();
-        startTime = System.currentTimeMillis();
-        lts.loadJobs(byShortestJob);
-        System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
-        sts.SJFSchedule();
-        sts.printWaitingTimes(byShortestJob);
+        //READ ME!
+        // This is where the page table is printed for ONE Specific job.
+        // the second line, where we get the JobDiskAddress is used to match the actual job address.
+        pcb.getPCB(12).printPageTable();
+        System.out.println("Disk Address Starts At: " + pcb.getPCB(12).getJobDiskAddress());
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
