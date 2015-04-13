@@ -26,7 +26,7 @@ public class Driver {
         startTime = System.currentTimeMillis();
         String program = "program.txt";
 
-        cpu = new Cpu(ram);
+        cpu = new Cpu();
         sts = new ShortTermScheduler();
         lts = new LongTermScheduler();
         loader = new Loader(program);

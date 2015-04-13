@@ -56,14 +56,14 @@ public class Cpu
     public int jobNumber;
     public executeTimes times;
 
-    public Cpu (Ram ram)
+    public Cpu ()
     {
-        memory = ram;
+
         regArray = new int[16];
         regArray[zero] = 0;
         jumped = false;
         jobCount = 1;
-        dma = new DMAChannel(memory);
+        dma = new DMAChannel();
     }
 
     public executeTimes loadCpu (PCBObject j)
@@ -115,7 +115,7 @@ public class Cpu
 
         // temporary string used for manipulating the instruction
         String tempInstr;
-        tempInstr = memory.readRam(pc);
+        tempInstr = Driver.ram.readRam(pc);
         tempInstr = tempInstr.substring(2);
         tempLong = Long.parseLong(tempInstr,16);
         tempInstr2 = Long.toBinaryString(tempLong);

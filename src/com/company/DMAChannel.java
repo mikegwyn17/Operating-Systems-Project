@@ -5,10 +5,10 @@ package com.company;
  */
 public class DMAChannel
 {
-    public Ram memory;
-    public DMAChannel(Ram ram)
+    //public Ram memory;
+    public DMAChannel()
     {
-        memory = ram;
+
     }
 
 //  read and return data from RAM as an integer value
@@ -21,7 +21,7 @@ public class DMAChannel
         address  = address + workThing;
 //        if (address < 0)
 //        {
-            ramThing = memory.readRam((int) address);
+            ramThing = Driver.ram.readRam((int) address);
             ramThing = ramThing.substring(2);
             returnThing = Long.parseLong(ramThing, 16);
             otherReturnThing = (int) returnThing;
@@ -29,7 +29,7 @@ public class DMAChannel
 //        else
 //        {
 //            address = address + Job.getDataMemoryAddress();
-//            ramThing = memory.readRam((int) address);
+//            ramThing = Driver.ram.readRam((int) address);
 //            ramThing = ramThing.substring(2);
 //            returnThing = Long.parseLong(ramThing, 16);
 //            otherReturnThing = (int) returnThing;
@@ -47,7 +47,7 @@ public class DMAChannel
             ramThing2 = "0" + ramThing2.substring(0);
         }
         ramThing = ramThing.concat(ramThing2);
-        memory.writeRam(ramThing,(int)buffer);
-        System.out.println("Output buffer contents: " + memory.readRam((int)buffer/2));
+        Driver.ram.writeRam(ramThing,(int)buffer);
+        System.out.println("Output buffer contents: " + Driver.ram.readRam((int)buffer));
     }
 }
