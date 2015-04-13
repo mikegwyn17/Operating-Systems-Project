@@ -46,7 +46,7 @@ public class Page {
     public void printPage() {
         for(int i = 0; i < 4; i++) {
             System.out.println("Ram" + i + ": " + ram[i]);
-            System.out.println("Disk" + i + ": " + disk[i]);
+            System.out.println("Disk" + i + ": " + disk[i] + "Data: " + Driver.disk.readDisk(disk[i]));
         }
     }
 }
