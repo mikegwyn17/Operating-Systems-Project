@@ -56,7 +56,6 @@ public class Cpu
     public boolean jumped;
 
     public PCBObject Job;
-    public Ram memory;
     public static int jobCount;
     public DMAChannel dma;
     public int jobNumber;
@@ -64,14 +63,13 @@ public class Cpu
 
     public String[] cache;
 
-    public Cpu(Ram ram)
+    public Cpu()
     {
-        memory = ram;
         regArray = new int[16];
         regArray[zero] = 0;
         jumped = false;
         jobCount = 1;
-        dma = new DMAChannel(memory);
+        dma = new DMAChannel();
         cache = new String[100];
     }
 
@@ -90,7 +88,7 @@ public class Cpu
         int q = Job.getJobMemoryAddress();
         for (int i = 0; i < cacheSize; i++)
         {
-            cache[i] = memory.readRam(q);
+            cache[i] = Driver.ram.readRam(q);
             q++;
         }
         pc = 0;

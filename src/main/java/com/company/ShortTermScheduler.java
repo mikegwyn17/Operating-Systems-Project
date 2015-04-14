@@ -7,13 +7,11 @@ import java.util.*;
  * Created by Mike-PC on 3/1/2015.
  */
 
-class waitTimes
-{
+class waitTimes {
     int jobNo;
     long waitTime;
 
-    public waitTimes(int j, long w)
-    {
+    public waitTimes(int j, long w) {
         jobNo = j;
         waitTime = w;
     }
@@ -22,34 +20,37 @@ class waitTimes
 public class ShortTermScheduler
 {
     public ArrayList<PCBObject> readyQueue;
+    //Cpu cpu = new Cpu();
     public PCBObject Job;
     public boolean go = false;
-    static PCB.sorttype byPriority = PCB.sorttype.JOB_PRIORITY;
-    static PCB.sorttype byJobNo = PCB.sorttype.JOB_NUMBER;
 
     ArrayList<waitTimes> waitTimesFIFO;
     ArrayList<waitTimes> waitTimesPriority;
+    ArrayList<waitTimes> waitTimesSJF;
     ArrayList<executeTimes> executeTimesFIFO;
     ArrayList<executeTimes> executeTimesPriority;
+    ArrayList<executeTimes> executeTimesSJF;
 
-    boolean FIFO;
+    PCB.sorttype algorithm;
 
     public ShortTermScheduler()
     {
         readyQueue = new ArrayList<PCBObject>();
         waitTimesFIFO = new ArrayList<waitTimes>();
         waitTimesPriority = new ArrayList<waitTimes>();
+        waitTimesSJF = new ArrayList<waitTimes>();
         executeTimesFIFO = new ArrayList<executeTimes>();
         executeTimesPriority = new ArrayList<executeTimes>();
+        executeTimesSJF = new ArrayList<executeTimes>();
     }
 
     public void PrioritySchedule()
     {
         int noOfJobs = Driver.pcb.getNumberOfJobs();
 
-        if (Driver.pcb.getPCBSortStatus() != byPriority)
+        if (Driver.pcb.getPCBSortStatus() != Driver.byPriority)
         {
-            Driver.pcb.sortPCB(byPriority);
+            Driver.pcb.sortPCB(Driver.byPriority);
         }
 
         if (!readyQueue.isEmpty())
@@ -62,8 +63,9 @@ public class ShortTermScheduler
             readyQueue.add(Driver.pcb.getPCB(i));
         }
 
-        FIFO = false;
+        algorithm = Driver.byPriority;
         runCpu();
+
     }
 
     public void FIFOSchedule()
@@ -72,9 +74,9 @@ public class ShortTermScheduler
 
         System.out.println(noOfJobs);
 
-        if (Driver.pcb.getPCBSortStatus() != byJobNo)
+        if (Driver.pcb.getPCBSortStatus() != Driver.byJobNo)
         {
-            Driver.pcb.sortPCB(byJobNo);
+            Driver.pcb.sortPCB(Driver.byJobNo);
         }
 
         if (!readyQueue.isEmpty())
@@ -86,7 +88,31 @@ public class ShortTermScheduler
         {
             readyQueue.add(Driver.pcb.getPCB(i));
         }
-        FIFO = true;
+
+        algorithm = Driver.byJobNo;
+        runCpu();
+    }
+
+    public void SJFSchedule()
+    {
+        int noOfJobs = Driver.pcb.getNumberOfJobs();
+
+        if (Driver.pcb.getPCBSortStatus() != Driver.byShortestJob)
+        {
+            Driver.pcb.sortPCB(Driver.byShortestJob);
+        }
+
+        if (!readyQueue.isEmpty())
+        {
+            readyQueue.clear();
+        }
+
+        for (int i = 1; i < noOfJobs + 1; i++)
+        {
+            readyQueue.add(Driver.pcb.getPCB(i));
+        }
+
+        algorithm = Driver.byShortestJob;
         runCpu();
     }
 
@@ -103,101 +129,114 @@ public class ShortTermScheduler
 
             int jobNumber = readyQueue.get(i).getJobNumber();
 
-            if (Driver.pcb.getPCB(jobNumber).isInMemory())
+            if (!Driver.pcb.getPCB(jobNumber).isInMemory())
             {
+                Driver.lts.needJobInMemory(Driver.pcb.getPCB(jobNumber));
+            }
 
-                if (FIFO)
+            if (algorithm == Driver.byJobNo)
+            {
+                waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
+                switch (count)
                 {
-                    waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-                    if (count == 1)
+                    case 1:
                     {
                         executeTimesFIFO.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else if (count == 2)
+                        break;
+                    }
+                    case 2:
                     {
                         executeTimesFIFO.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else if (count == 3)
+                        break;
+                    }
+                    case 3:
                     {
                         executeTimesFIFO.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else
+                        break;
+                    }
+                    case 4:
                     {
                         executeTimesFIFO.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
                     }
 
-                    Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
-                } else
+                }
+                count++;
+                if (count > 4)
                 {
-                    waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-                    if (count == 1)
+                    count = 1;
+                }
+            } else if (algorithm == Driver.byPriority)
+            {
+                waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
+                switch (count)
+                {
+                    case 1:
                     {
                         executeTimesPriority.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else if (count == 2)
+                        break;
+                    }
+                    case 2:
                     {
                         executeTimesPriority.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else if (count == 3)
+                        break;
+                    }
+                    case 3:
                     {
                         executeTimesPriority.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else
+                        break;
+                    }
+                    case 4:
                     {
                         executeTimesPriority.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
                     }
-                    Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
+                }
+                count++;
+                if (count > 4)
+                {
+                    count = 1;
                 }
             } else
             {
-                if (FIFO)
+                waitTimesSJF.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
+                switch (count)
                 {
-                    waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-                    if (count == 1)
+                    case 1:
                     {
-                        executeTimesFIFO.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else if (count == 2)
-                    {
-                        executeTimesFIFO.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else if (count == 3)
-                    {
-                        executeTimesFIFO.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else
-                    {
-                        executeTimesFIFO.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        executeTimesSJF.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
                     }
-
-                } else
+                    case 2:
+                    {
+                        executeTimesSJF.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 3:
+                    {
+                        executeTimesSJF.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 4:
+                    {
+                        executeTimesSJF.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                }
+                count++;
+                if (count > 4)
                 {
-                    waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-                    if (count == 1)
-                    {
-                        executeTimesPriority.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else if (count == 2)
-                    {
-                        executeTimesPriority.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else if (count == 3)
-                    {
-                        executeTimesPriority.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    } else
-                    {
-                        executeTimesPriority.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
-                    }
-                    Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
+                    count = 1;
                 }
             }
-
-            Driver.lts.needJobInMemory(Driver.pcb.getPCB(jobNumber));
-            count++;
-            if (count > 4)
-                count = 1;
+            Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
         }
-
     }
 
-
-    public void printWaitingTimes(boolean priority)
+    public void printWaitingTimes(PCB.sorttype s)
     {
 
-        // s
-        // true = FIFO
-        // false = Priority
-
-        long FIFOTotal = 0, PriorityTotal = 0;
+        long FIFOTotal = 0, PriorityTotal = 0, SJFTotal = 0;
 
         Collections.sort(waitTimesPriority, new Comparator<waitTimes>()
         {
@@ -208,14 +247,15 @@ public class ShortTermScheduler
             }
         });
 
-        if (priority)
+        if (s == Driver.byPriority)
         {
             for (int i = 0; i < waitTimesPriority.size(); i++)
             {
                 System.out.println("Job " + i + " Waits -- Priority: " + waitTimesPriority.get(i).waitTime);
                 PriorityTotal += waitTimesPriority.get(i).waitTime;
             }
-            System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0) + "\n");
+
+            System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0));
 
             PriorityTotal = 0;
 
@@ -227,15 +267,15 @@ public class ShortTermScheduler
 
             System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0) + "\n");
 
-        } else
+        } else if (s == Driver.byJobNo)
         {
             for (int i = 0; i < waitTimesFIFO.size(); i++)
             {
                 System.out.println("Job: " + i + " Waits -- FIFO: " + waitTimesFIFO.get(i).waitTime);
                 FIFOTotal += waitTimesFIFO.get(i).waitTime;
             }
-            System.out.println("***************AVERAGES***************\nFIFO\n: " + (FIFOTotal / 30.0) + "\n");
 
+            System.out.println("***************AVERAGES***************\nFIFO: " + (FIFOTotal / 30.0));
 
             FIFOTotal = 0;
 
@@ -245,6 +285,23 @@ public class ShortTermScheduler
                 FIFOTotal += executeTimesFIFO.get(i).waitTime;
             }
             System.out.println("***************AVERAGES***************\nFIFO: " + (FIFOTotal / 30.0) + "\n");
+        } else
+        {
+            for (int i = 0; i < waitTimesSJF.size(); i++)
+            {
+                System.out.println("Job: " + i + " Waits -- SJF: " + waitTimesSJF.get(i).waitTime);
+                SJFTotal += waitTimesSJF.get(i).waitTime;
+            }
+            System.out.println("***************AVERAGES***************\nSJF: " + (SJFTotal / 30.0));
+
+            SJFTotal = 0;
+
+            for (int i = 0; i < executeTimesSJF.size(); i++)
+            {
+                System.out.println("Job: " + i + " Executes -- SJF: " + executeTimesSJF.get(i).waitTime);
+                SJFTotal += executeTimesSJF.get(i).waitTime;
+            }
+            System.out.println("***************AVERAGES***************\nSJF: " + (SJFTotal / 30.0) + "\n");
         }
     }
 }
