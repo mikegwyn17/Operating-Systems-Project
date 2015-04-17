@@ -77,6 +77,10 @@ public class PCBObject {
     public void setHasJobRan(boolean k) {hasJobRan = k; }
     public void setProcessStatus(ProcessStatus k) { pStatus = k; }
 
+    public Page getPage(int index) {
+        return pageTable.pages[index];
+    }
+
 
     @Override
     public String toString() {

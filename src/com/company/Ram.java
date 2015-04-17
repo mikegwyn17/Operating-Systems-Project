@@ -1,5 +1,10 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 /**
  * Created by evanross on 2/23/15.
  */
@@ -35,18 +40,29 @@ public class Ram {
     private RamSlot[] RAM;
     public static int ramFilled;
 
+    Stack freeFrames;
+    Queue<Integer> fullFrames;
 
 
     public Ram(){
         RAM = new RamSlot[1024];
         ramFilled = 0;
+        freeFrames = new Stack();
+        fullFrames = new LinkedList<Integer>();
+
+        for(int i = 0; i < RAM.length; i++) {
+            RAM[i] = new RamSlot();
+        }
+
+        for(int i = 0; i < 256; i++) {
+            freeFrames.push(new Integer(i));
+        }
     }
 
     public String readRam(int index){
         return RAM[index].readData();
     }
     public void writeRam(String s, int index){
-
         if(RAM[index].empty == true) {
             ramFilled++;
         }

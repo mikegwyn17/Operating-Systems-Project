@@ -15,6 +15,7 @@ public class Driver {
     public static LongTermScheduler lts;
     public static Loader loader;
     public static Cpu cpu;
+    public static Pager pager;
     static public DecimalFormat df = new DecimalFormat("#.##%");
 
     static PCB.sorttype byPriority = PCB.sorttype.JOB_PRIORITY;
@@ -30,6 +31,7 @@ public class Driver {
         sts = new ShortTermScheduler();
         lts = new LongTermScheduler();
         loader = new Loader(program);
+        pager = new Pager();
 
         try {
            loader.Start();
@@ -65,11 +67,17 @@ public class Driver {
 //        sts.printWaitingTimes(byShortestJob);
 
 
+
         //READ ME!
-        // This is where the page table is printed for ONE Specific job.
-        // the second line, where we get the JobDiskAddress is used to match the actual job address.
-        pcb.getPCB(12).printPageTable();
-        System.out.println("Disk Address Starts At: " + pcb.getPCB(12).getJobDiskAddress());
+
+
+        pager.initialFrames();
+
+        pcb.getPCB(1).printPageTable();
+        pcb.getPCB(2).printPageTable();
+
+        System.out.println("THIS: " + pager.needMemAddress(3, 0));
+        System.out.println("THIS TOO: " + ram.readRam(pager.needMemAddress(3, 0)));
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");

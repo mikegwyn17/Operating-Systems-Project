@@ -22,8 +22,8 @@ public class Page {
     }
 
     public void setRam(int s) {
-        for(int i = 0; i < disk.length; i++) {
-            disk[i] = s++;
+        for(int i = 0; i < ram.length; i++) {
+            ram[i] = s++;
         }
     }
 
@@ -45,8 +45,8 @@ public class Page {
 
     public void printPage() {
         for(int i = 0; i < 4; i++) {
-            System.out.println("Ram" + i + ": " + ram[i]);
-            System.out.println("Disk" + i + ": " + disk[i] + "Data: " + Driver.disk.readDisk(disk[i]));
+            System.out.println("Ram" + i + ": " + ram[i] + " \t\tData: " + Driver.ram.readRam(ram[i]));
+            System.out.println("Disk" + i + ": " + disk[i] + " \t\tData: " + Driver.disk.readDisk(disk[i]));
         }
     }
 }
