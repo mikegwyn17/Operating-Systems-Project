@@ -27,7 +27,7 @@ public class Driver {
         startTime = System.currentTimeMillis();
         String program = "program.txt";
 
-        cpu = new Cpu(ram);
+        cpu = new Cpu();
         sts = new ShortTermScheduler();
         lts = new LongTermScheduler();
         loader = new Loader(program);
@@ -39,32 +39,31 @@ public class Driver {
             System.out.println("Your program file was not found. Please rename the file to 'program.txt' and place it in the root directory of this project!");
         }
 
-////        FIFO SCHEDULING
-//
-//        lts.loadJobs(byJobNo);
-//        System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
-//        sts.FIFOSchedule();
-//        sts.printWaitingTimes(byJobNo);
-//
-//
-////        PRIORITY SCHEDULING
-//
-//        pcb.clearStatus();
-//        startTime = System.currentTimeMillis();
-//        lts.loadJobs(byPriority);
-//        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
-//        sts.PrioritySchedule();
-//        sts.printWaitingTimes(byPriority);
-//
-//
-////        SJF SCHEDULING
-//
-//        pcb.clearStatus();
-//        startTime = System.currentTimeMillis();
-//        lts.loadJobs(byShortestJob);
-//        System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
-//        sts.SJFSchedule();
-//        sts.printWaitingTimes(byShortestJob);
+//        FIFO SCHEDULING
+
+        lts.loadJobs(byJobNo);
+        System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
+        sts.FIFOSchedule();
+        sts.printWaitingTimes(byJobNo);
+
+//        PRIORITY SCHEDULING
+
+        pcb.clearStatus();
+        startTime = System.currentTimeMillis();
+        lts.loadJobs(byPriority);
+        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
+        sts.PrioritySchedule();
+        sts.printWaitingTimes(byPriority);
+
+
+//        SJF SCHEDULING
+
+        pcb.clearStatus();
+        startTime = System.currentTimeMillis();
+        lts.loadJobs(byShortestJob);
+        System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
+        sts.SJFSchedule();
+        sts.printWaitingTimes(byShortestJob);
 
 
 

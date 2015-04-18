@@ -67,6 +67,7 @@ public class Ram {
             ramFilled++;
         }
         RAM[index].write(s);
+        RAM[index].empty = false;
     }
 
     public void deleteSlot(int index) {
