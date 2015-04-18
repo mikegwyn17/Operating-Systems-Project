@@ -20,7 +20,6 @@ class waitTimes {
 public class ShortTermScheduler
 {
     public ArrayList<PCBObject> readyQueue;
-    //Cpu cpu = new Cpu();
     public PCBObject Job;
     public boolean go = false;
 
