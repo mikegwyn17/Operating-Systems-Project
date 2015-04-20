@@ -13,10 +13,14 @@ class RamSlot {
     private String data;
     boolean dirty;
     boolean empty;
+    int pageNo;
+    int jobNo;
 
     public RamSlot() {
         dirty = false;
         empty = true;
+        pageNo = 0;
+        jobNo = 0;
     }
 
     public void write(String d) {
@@ -31,6 +35,10 @@ class RamSlot {
         data = "";
         empty = true;
         dirty = false;
+    }
+
+    public int getPageNo() {
+        return pageNo;
     }
 }
 
@@ -73,6 +81,22 @@ public class Ram {
     public void deleteSlot(int index) {
         RAM[index].deleteSlot();
         ramFilled--;
+    }
+
+    public int getPageNo(int slot) {
+        return RAM[slot].getPageNo();
+    }
+
+    public void setPageNo(int slot, int job, int page) {
+        RAM[slot].pageNo = page;
+        RAM[slot].jobNo = job;
+    }
+
+    public void clearPageNo(int slot) {
+        RAM[slot].pageNo = -1;
+    }
+    public int getJobNo(int slot) {
+        return RAM[slot].jobNo;
     }
 
     public float getRamFilled() {

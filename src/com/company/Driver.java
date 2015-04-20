@@ -48,22 +48,22 @@ public class Driver {
 
 //        PRIORITY SCHEDULING
 
-        pcb.clearStatus();
-        startTime = System.currentTimeMillis();
-        lts.loadJobs(byPriority);
-        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
-        sts.PrioritySchedule();
-        sts.printWaitingTimes(byPriority);
-
-
-//        SJF SCHEDULING
-
-        pcb.clearStatus();
-        startTime = System.currentTimeMillis();
-        lts.loadJobs(byShortestJob);
-        System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
-        sts.SJFSchedule();
-        sts.printWaitingTimes(byShortestJob);
+//        pcb.clearStatus();
+//        startTime = System.currentTimeMillis();
+//        lts.loadJobs(byPriority);
+//        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
+//        sts.PrioritySchedule();
+//        sts.printWaitingTimes(byPriority);
+//
+//
+////        SJF SCHEDULING
+//
+//        pcb.clearStatus();
+//        startTime = System.currentTimeMillis();
+//        lts.loadJobs(byShortestJob);
+//        System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
+//        sts.SJFSchedule();
+//        sts.printWaitingTimes(byShortestJob);
 
 
 
@@ -72,11 +72,10 @@ public class Driver {
 
         pager.initialFrames();
 
-        pcb.getPCB(1).printPageTable();
-        pcb.getPCB(2).printPageTable();
 
-        System.out.println("THIS: " + pager.needMemAddress(3, 0));
-        System.out.println("THIS TOO: " + ram.readRam(pager.needMemAddress(3, 0)));
+        for(int i = 1; i <= 30; i++) {
+            pcb.getPCB(i).printPageTable();
+        }
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");

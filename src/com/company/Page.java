@@ -5,8 +5,8 @@ package com.company;
  */
 public class Page {
 
-    int[] ram;
-    int[] disk;
+    private int[] ram;
+    private int[] disk;
     boolean inMemory;
 
     public Page() {
@@ -43,9 +43,22 @@ public class Page {
         return ram[0];
     }
 
+    public int ramLength() { return ram.length; }
+
+    public void clearRam() {
+        for(int i = 0; i < ram.length; i++) {
+            ram[i] = -1;
+        }
+    }
+
     public void printPage() {
         for(int i = 0; i < 4; i++) {
-            System.out.println("Ram" + i + ": " + ram[i] + " \t\tData: " + Driver.ram.readRam(ram[i]));
+            if(inMemory) {
+                System.out.println("Ram" + i + ": " + ram[i] + " \t\tData: " + Driver.ram.readRam(ram[i]));
+            } else {
+                System.out.println("Ram" + i + ": " + ram[i] + " \t\tData: N/A");
+            }
+
             System.out.println("Disk" + i + ": " + disk[i] + " \t\tData: " + Driver.disk.readDisk(disk[i]));
         }
     }
