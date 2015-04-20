@@ -72,6 +72,11 @@ public class PCB {
         for(PCBObject b : pcb) {
             b.setHasJobRan(false);
             b.setJobInMemory(false);
+
+            for(int i = 0; i < b.getPageTableSize(); i++) {
+                b.getPage(i).inMemory = false;
+            }
+
         }
     }
 

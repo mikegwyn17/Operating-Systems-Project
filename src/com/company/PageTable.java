@@ -31,4 +31,8 @@ public class PageTable {
             pages[i].printPage();
         }
     }
+
+    public int numOfPages() {
+        return pages.length;
+    }
 }

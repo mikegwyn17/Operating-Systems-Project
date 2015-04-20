@@ -47,7 +47,7 @@ public class Page {
 
     public void clearRam() {
         for(int i = 0; i < ram.length; i++) {
-            ram[i] = -1;
+            ram[i] = 0;
         }
     }
 

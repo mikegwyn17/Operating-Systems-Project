@@ -14,6 +14,7 @@ public class PCBObject {
     private int inputBuffer;
     private int outputBuffer;
     private int temporaryBuffer;
+
     private boolean IObound; //IObound or not
     private String instruction; //instuction set for job
     private boolean jobInMemory;
@@ -59,6 +60,7 @@ public class PCBObject {
     public boolean isInMemory(){ return jobInMemory; }
     public boolean hasJobRan() {return hasJobRan; }
     public ProcessStatus getProcessStatus() { return pStatus; }
+    public int getPageTableSize() { return pageTable.numOfPages(); }
 
     public void setDataDiskAddress(int k) {
         dataDiskAddress = k;

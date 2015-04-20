@@ -1,5 +1,7 @@
 package com.company;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -23,9 +25,15 @@ public class Driver {
     static PCB.sorttype byShortestJob = PCB.sorttype.SHORTEST_JOB;
     static long startTime;
 
+    static FileWriter fileWriter;
+    static BufferedWriter buffWriter;
+
+    static int pageFaultCount;
+
     public static void main(String[] a) {
         startTime = System.currentTimeMillis();
         String program = "program.txt";
+        pageFaultCount = 0;
 
         cpu = new Cpu();
         sts = new ShortTermScheduler();
@@ -41,6 +49,7 @@ public class Driver {
 
 //        FIFO SCHEDULING
 
+        pcb.clearStatus();
         lts.loadJobs(byJobNo);
         System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
         sts.FIFOSchedule();
@@ -48,22 +57,22 @@ public class Driver {
 
 //        PRIORITY SCHEDULING
 
-//        pcb.clearStatus();
-//        startTime = System.currentTimeMillis();
-//        lts.loadJobs(byPriority);
-//        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
-//        sts.PrioritySchedule();
-//        sts.printWaitingTimes(byPriority);
-//
-//
-////        SJF SCHEDULING
-//
-//        pcb.clearStatus();
-//        startTime = System.currentTimeMillis();
-//        lts.loadJobs(byShortestJob);
-//        System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
-//        sts.SJFSchedule();
-//        sts.printWaitingTimes(byShortestJob);
+        pcb.clearStatus();
+        startTime = System.currentTimeMillis();
+        lts.loadJobs(byPriority);
+        System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
+        sts.PrioritySchedule();
+        sts.printWaitingTimes(byPriority);
+
+
+//        SJF SCHEDULING
+
+        pcb.clearStatus();
+        startTime = System.currentTimeMillis();
+        lts.loadJobs(byShortestJob);
+        System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
+        sts.SJFSchedule();
+        sts.printWaitingTimes(byShortestJob);
 
 
 
@@ -81,5 +90,7 @@ public class Driver {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
         }
         System.out.println("\nCurrent RAM Usage: " + df.format(ram.getRamFilled()) + " filled.");
+
+        System.out.println("Total page faults: " + pageFaultCount);
     }
 }

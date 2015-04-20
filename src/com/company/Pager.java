@@ -36,6 +36,7 @@ public class Pager {
             previousPage = Driver.ram.getPageNo((s*4));
 
             Driver.ram.freeFrames.push(s);
+            Driver.pageFaultCount++;
 
         }
         nextRamSlot = ((Integer) Driver.ram.freeFrames.pop() * 4);
