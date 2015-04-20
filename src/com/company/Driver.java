@@ -64,7 +64,6 @@ public class Driver {
         sts.PrioritySchedule();
         sts.printWaitingTimes(byPriority);
 
-
 //        SJF SCHEDULING
 
         pcb.clearStatus();
@@ -74,10 +73,7 @@ public class Driver {
         sts.SJFSchedule();
         sts.printWaitingTimes(byShortestJob);
 
-
-
         //READ ME!
-
 
         pager.initialFrames();
 
