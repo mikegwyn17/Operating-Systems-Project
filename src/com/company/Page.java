@@ -8,11 +8,13 @@ public class Page {
     private int[] ram;
     private int[] disk;
     boolean inMemory;
+    long pageServiceTime;
 
     public Page() {
         ram = new int[4];
         disk = new int[4];
         inMemory = false;
+        pageServiceTime = 0;
     }
 
     public void setDisk(int s) {
@@ -35,20 +37,19 @@ public class Page {
         return disk[i];
     }
 
-    public int returnPageBaseDisk() {
-        return disk[0];
-    }
-
-    public int returnPageBaseRam() {
-        return ram[0];
-    }
-
     public int ramLength() { return ram.length; }
 
     public void clearRam() {
         for(int i = 0; i < ram.length; i++) {
             ram[i] = 0;
         }
+    }
+
+    public void setPageServiceTime(long s) {
+        pageServiceTime = s;
+    }
+    public long getPageServiceTime() {
+        return pageServiceTime;
     }
 
     public void printPage() {
@@ -58,8 +59,8 @@ public class Page {
             } else {
                 System.out.println("Ram" + i + ": " + ram[i] + " \t\tData: N/A");
             }
-
             System.out.println("Disk" + i + ": " + disk[i] + " \t\tData: " + Driver.disk.readDisk(disk[i]));
+            System.out.println("Fault Service Time: " + getPageServiceTime() + "ns");
         }
     }
 }
