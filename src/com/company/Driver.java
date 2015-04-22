@@ -28,6 +28,8 @@ public class Driver {
     static PCB.sorttype byShortestJob = PCB.sorttype.SHORTEST_JOB;
     static long startTime;
 
+    static int fifoPageFaults, priorityPageFaults, sjfPageFaults;
+
     static FileWriter fileWriter;
     static BufferedWriter buffWriter;
 
@@ -48,42 +50,72 @@ public class Driver {
         loader = new Loader(program);
         pager = new Pager();
 
+        fifoPageFaults = 0;
+        priorityPageFaults = 0;
+        sjfPageFaults = 0;
+
         try {
            loader.Start();
         } catch(IOException e) {
             System.out.println("Your program file was not found. Please rename the file to 'program.txt' and place it in the root directory of this project!");
         }
 
-//        FIFO SCHEDULING
-
-        pcb.clearStatus();
-        lts.loadJobs(byJobNo);
-        System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
-        sts.FIFOSchedule();
-        sts.printWaitingTimes(byJobNo);
-
 //        PRIORITY SCHEDULING
 
+        pageFaultCount = 0;
         pcb.clearStatus();
         startTime = System.currentTimeMillis();
-        lts.loadJobs(byPriority);
+        pager.initialFrames();
+        //lts.loadJobs(byPriority);
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
         sts.printWaitingTimes(byPriority);
 
+        priorityPageFaults = pageFaultCount;
+        System.out.println("PRIORITY PAGE FAULT SERVICE TIMES: ");
+        for(int i = 1; i <= 30; i++) {
+            pcb.getPCB(i).pageFaultServiceTime();
+        }
+
+
+        System.out.println("Priority Page Faults: " + priorityPageFaults);
+
+
+        //        FIFO SCHEDULING
+
+        pcb.clearStatus();
+        pager.initialFrames();
+        //lts.loadJobs(byJobNo);
+        System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
+        sts.FIFOSchedule();
+        sts.printWaitingTimes(byJobNo);
+
+        System.out.println("FIFO PAGE FAULT SERVICE TIMES: ");
+        for(int i = 1; i <= 30; i++) {
+            pcb.getPCB(i).pageFaultServiceTime();
+        }
+
+        fifoPageFaults = pageFaultCount;
+        System.out.println("FIFO Page Faults: " + fifoPageFaults);
+
 //        SJF SCHEDULING
 
         pcb.clearStatus();
+        pageFaultCount = 0;
         startTime = System.currentTimeMillis();
-        lts.loadJobs(byShortestJob);
+        pager.initialFrames();
+        //lts.loadJobs(byShortestJob);
         System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
         sts.SJFSchedule();
         sts.printWaitingTimes(byShortestJob);
+        sjfPageFaults = pageFaultCount;
 
-        //READ ME!
+        System.out.println("SJF PAGE FAULT SERVICE TIMES: ");
+        for(int i = 1; i <= 30; i++) {
+            pcb.getPCB(i).pageFaultServiceTime();
+        }
 
-        pager.initialFrames();
-
+        System.out.println("SJF Page Faults: " + sjfPageFaults);
 
         for(int i = 1; i <= 30; i++) {
             pcb.getPCB(i).printPageTable();

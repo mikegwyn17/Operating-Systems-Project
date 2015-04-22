@@ -27,7 +27,8 @@ public class PageTable {
 
     public void printPageTable() {
         for(int i = 0; i < pages.length; i++) {
-            System.out.println("\n*********PAGE " + i + "*********");
+
+            System.out.println("\n********* JOB " + i + " PAGE " + i + "*********");
             pages[i].printPage();
         }
     }
