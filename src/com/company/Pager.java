@@ -5,7 +5,13 @@ package com.company;
  */
 public class Pager {
 
+    long time, time2;
+    long diffTime;
+
     public Pager() {
+        time = 0;
+        time2 = 0;
+        diffTime = 0;
 
     }
 
@@ -19,13 +25,18 @@ public class Pager {
         }
 
         if(!Driver.pcb.getPCB(jobNo).getPage(page).inMemory) {
-            framePage(jobNo, page);
+            Driver.pageFaultCount++;
+            time = System.nanoTime();
+            framePage(jobNo, page, true);
+            time2 = System.nanoTime();
+            diffTime = time2 - time;
+            Driver.pcb.getPCB(jobNo).getPage(page).setPageServiceTime(diffTime);
         }
 
         return Driver.pcb.getPCB(jobNo).getPage(page).returnRAM(instruction);
     }
 
-    public void framePage(int jobNo, int page) {
+    public void framePage(int jobNo, int page, boolean fault) {
         int nextRamSlot, nextRamSlotPerm;
         int previousJob = -1, previousPage = -1;
 
@@ -63,7 +74,7 @@ public class Pager {
     public void initialFrames() {
         for(int job = 1; job <= 30; job++) {
             for(int page = 0; page < 4; page++) {
-                framePage(job, page);
+                framePage(job, page, false);
             }
         }
     }

@@ -37,6 +37,15 @@ public class PCBObject {
         setUpPageTable();
     }
 
+    public void pageFaultServiceTime() {
+        long total = 0;
+        for(int i = 0; i < getPageTableSize(); i++) {
+            total += getPage(i).getPageServiceTime();
+        }
+        System.out.println("Job " + getJobNumber() + " Page Fault Service Time: " + total + "ns");
+        //System.out.println(total);
+    }
+
     private void setUpPageTable() {
         pageTable = new PageTable(getJobDiskAddress(), instructionCount, dataCount);
     }
