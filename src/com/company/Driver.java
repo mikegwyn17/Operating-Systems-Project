@@ -60,7 +60,24 @@ public class Driver {
             System.out.println("Your program file was not found. Please rename the file to 'program.txt' and place it in the root directory of this project!");
         }
 
-//        PRIORITY SCHEDULING
+        //        FIFO SCHEDULING
+
+        pcb.clearStatus();
+        pager.initialFrames();
+        //lts.loadJobs(byJobNo);
+        System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
+        sts.FIFOSchedule();
+        sts.printWaitingTimes(byJobNo);
+
+        System.out.println("FIFO PAGE FAULT SERVICE TIMES: ");
+        for(int i = 1; i <= 30; i++) {
+            pcb.getPCB(i).pageFaultServiceTime();
+        }
+
+        fifoPageFaults = pageFaultCount;
+        System.out.println("FIFO Page Faults: " + fifoPageFaults);
+
+        //        PRIORITY SCHEDULING
 
         pageFaultCount = 0;
         pcb.clearStatus();
@@ -79,24 +96,6 @@ public class Driver {
 
 
         System.out.println("Priority Page Faults: " + priorityPageFaults);
-
-
-        //        FIFO SCHEDULING
-
-        pcb.clearStatus();
-        pager.initialFrames();
-        //lts.loadJobs(byJobNo);
-        System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
-        sts.FIFOSchedule();
-        sts.printWaitingTimes(byJobNo);
-
-        System.out.println("FIFO PAGE FAULT SERVICE TIMES: ");
-        for(int i = 1; i <= 30; i++) {
-            pcb.getPCB(i).pageFaultServiceTime();
-        }
-
-        fifoPageFaults = pageFaultCount;
-        System.out.println("FIFO Page Faults: " + fifoPageFaults);
 
 //        SJF SCHEDULING
 
@@ -125,7 +124,5 @@ public class Driver {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
         }
         System.out.println("\nCurrent RAM Usage: " + df.format(ram.getRamFilled()) + " filled.");
-
-        System.out.println("Total page faults: " + pageFaultCount);
     }
 }
