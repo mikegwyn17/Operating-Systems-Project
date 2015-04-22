@@ -44,6 +44,13 @@ public class PCBObject {
     public void printPageTable() {
         pageTable.printPageTable();
     }
+    public void pageFaultServiceTime() {
+        long total = 0;
+        for(int i = 0; i < getPageTableSize(); i++) {
+            total += getPage(i).getPageServiceTime();
+        }
+        System.out.println("Job " + getJobNumber() + " Page Fault Service Time: " + total + "ns");
+    }
 
     public int getJobNumber() { return jobNumber; }
     public int getJobPriority() { return jobPriority; }

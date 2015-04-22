@@ -75,6 +75,7 @@ public class PCB {
 
             for(int i = 0; i < b.getPageTableSize(); i++) {
                 b.getPage(i).inMemory = false;
+                b.getPage(i).setPageServiceTime(0);
             }
 
         }
