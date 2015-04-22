@@ -78,7 +78,6 @@ public class Driver {
         pcb.clearStatus();
         startTime = System.currentTimeMillis();
         pager.initialFrames();
-        //lts.loadJobs(byPriority);
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
         sts.printWaitingTimes(byPriority);
@@ -98,7 +97,6 @@ public class Driver {
         pageFaultCount = 0;
         startTime = System.currentTimeMillis();
         pager.initialFrames();
-        //lts.loadJobs(byShortestJob);
         System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
         sts.SJFSchedule();
         sts.printWaitingTimes(byShortestJob);
