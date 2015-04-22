@@ -19,7 +19,6 @@ class waitTimes {
 public class ShortTermScheduler
 {
     public ArrayList<PCBObject> readyQueue;
-    //Cpu cpu = new Cpu();
     public PCBObject Job;
     public boolean go = false;
 
@@ -117,6 +116,7 @@ public class ShortTermScheduler
 
     public void dispatcher()
     {
+        int count = 1;
         if (Driver.pcb.getPCBSortStatus() != Driver.byJobNo)
         {
             Driver.pcb.sortPCB(Driver.byJobNo);
@@ -135,17 +135,89 @@ public class ShortTermScheduler
             if (algorithm == Driver.byJobNo)
             {
                 waitTimesFIFO.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-                executeTimesFIFO.add(Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                switch (count)
+                {
+                    case 1:
+                    {
+                        executeTimesFIFO.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 2:
+                    {
+                        executeTimesFIFO.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 3:
+                    {
+                        executeTimesFIFO.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 4:
+                    {
+                        executeTimesFIFO.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+
+                }
             } else if (algorithm == Driver.byPriority)
             {
                 waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-                executeTimesPriority.add(Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                switch (count)
+                {
+                    case 1:
+                    {
+                        executeTimesPriority.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 2:
+                    {
+                        executeTimesPriority.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 3:
+                    {
+                        executeTimesPriority.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 4:
+                    {
+                        executeTimesPriority.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                }
             } else
             {
                 waitTimesSJF.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
-                executeTimesSJF.add(Driver.cpu.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                switch (count)
+                {
+                    case 1:
+                    {
+                        executeTimesSJF.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 2:
+                    {
+                        executeTimesSJF.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 3:
+                    {
+                        executeTimesSJF.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                    case 4:
+                    {
+                        executeTimesSJF.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        break;
+                    }
+                }
             }
             Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
+            count++;
+            if (count > 4)
+            {
+                count = 1;
+            }
         }
     }
 

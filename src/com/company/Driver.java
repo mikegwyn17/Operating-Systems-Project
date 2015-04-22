@@ -16,7 +16,10 @@ public class Driver {
     public static ShortTermScheduler sts;
     public static LongTermScheduler lts;
     public static Loader loader;
-    public static Cpu cpu;
+    public static Cpu cpu1;
+    public static Cpu cpu2;
+    public static Cpu cpu3;
+    public static Cpu cpu4;
     public static Pager pager;
     static public DecimalFormat df = new DecimalFormat("#.##%");
 
@@ -35,7 +38,11 @@ public class Driver {
         String program = "program.txt";
         pageFaultCount = 0;
 
-        cpu = new Cpu();
+        cpu1 = new Cpu();
+        cpu2 = new Cpu();
+        cpu3 = new Cpu();
+        cpu4 = new Cpu();
+
         sts = new ShortTermScheduler();
         lts = new LongTermScheduler();
         loader = new Loader(program);
