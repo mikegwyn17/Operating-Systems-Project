@@ -160,11 +160,6 @@ public class ShortTermScheduler
                     }
 
                 }
-                count++;
-                if (count > 4)
-                {
-                    count = 1;
-                }
             } else if (algorithm == Driver.byPriority)
             {
                 waitTimesPriority.add(new waitTimes(readyQueue.get(i).getJobNumber(), (System.currentTimeMillis() - Driver.startTime)));
@@ -190,11 +185,6 @@ public class ShortTermScheduler
                         executeTimesPriority.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
                         break;
                     }
-                }
-                count++;
-                if (count > 4)
-                {
-                    count = 1;
                 }
             } else
             {
@@ -222,13 +212,13 @@ public class ShortTermScheduler
                         break;
                     }
                 }
-                count++;
-                if (count > 4)
-                {
-                    count = 1;
-                }
             }
             Driver.pcb.getPCB(jobNumber).setHasJobRan(true);
+            count++;
+            if (count > 4)
+            {
+                count = 1;
+            }
         }
     }
 
@@ -245,6 +235,30 @@ public class ShortTermScheduler
                 return o1.jobNo - o2.jobNo;
             }
         });
+        Collections.sort(waitTimesSJF, new Comparator<waitTimes>()
+        {
+            @Override
+            public int compare(waitTimes o1, waitTimes o2)
+            {
+                return o1.jobNo - o2.jobNo;
+            }
+        });
+        Collections.sort(executeTimesPriority, new Comparator<executeTimes>()
+        {
+            @Override
+            public int compare(executeTimes o1, executeTimes o2)
+            {return o1.jobNo - o2.jobNo;
+            }
+        });
+        Collections.sort(executeTimesSJF, new Comparator<executeTimes>()
+        {
+            @Override
+            public int compare(executeTimes o1, executeTimes o2)
+            {
+                return o1.jobNo - o2.jobNo;
+            }
+        });
+
 
         if (s == Driver.byPriority)
         {

@@ -26,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Driver.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Driver.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/company/Driver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="599" max-vertical-offset="1394">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.4047619" vertical-offset="0" max-vertical-offset="1394">
+              <caret line="20" column="63" selection-start-line="20" selection-start-column="63" selection-end-line="20" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -38,21 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DMAChannel.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/company/DMAChannel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.34385964" vertical-offset="182" max-vertical-offset="1037">
-              <caret line="28" column="54" selection-start-line="0" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ShortTermScheduler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/company/ShortTermScheduler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5168">
-              <caret line="148" column="30" selection-start-line="148" selection-start-column="30" selection-end-line="148" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3654" max-vertical-offset="5066">
+              <caret line="259" column="11" selection-start-line="259" selection-start-column="11" selection-end-line="259" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -63,11 +53,11 @@
       <file leaf-file-name="PCB.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/company/PCB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-29.310345" vertical-offset="0" max-vertical-offset="1258">
+            <state vertical-scroll-proportion="0.0" vertical-offset="339" max-vertical-offset="1275">
               <caret line="62" column="68" selection-start-line="62" selection-start-column="68" selection-end-line="62" selection-end-column="68" />
               <folding>
-                <element signature="e#630#631#0" expanded="true" />
-                <element signature="e#671#672#0" expanded="true" />
+                <element signature="e#1643#1895#0" expanded="true" />
+                <element signature="e#1894#1895#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -76,12 +66,10 @@
       <file leaf-file-name="Cpu.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/company/Cpu.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.862069" vertical-offset="0" max-vertical-offset="10523">
-              <caret line="10" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="616" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10472">
+              <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2777#2778#0" expanded="true" />
-                <element signature="e#2821#2822#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,7 +78,7 @@
       <file leaf-file-name="program.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/program.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3458" max-vertical-offset="36091">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4811" max-vertical-offset="36091">
               <caret line="283" column="10" selection-start-line="283" selection-start-column="10" selection-end-line="283" selection-end-column="10" />
               <folding />
             </state>
@@ -100,7 +88,7 @@
       <file leaf-file-name="Loader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/company/Loader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="446" max-vertical-offset="1343">
+            <state vertical-scroll-proportion="0.0" vertical-offset="424" max-vertical-offset="1343">
               <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -138,8 +126,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/company/Driver.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/company/PCB.java" />
         <option value="$PROJECT_DIR$/program.txt" />
-        <option value="$PROJECT_DIR$/src/main/java/com/company/ShortTermScheduler.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/company/Cpu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/company/ShortTermScheduler.java" />
       </list>
     </option>
   </component>
@@ -189,8 +177,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -199,18 +185,10 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Operating-Systems-Project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Operating Systems Repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -466,7 +444,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -479,20 +457,20 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7610811" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7581837" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31716418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22552083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42594594" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.08342133" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -513,18 +491,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/company/Cpu.java</url>
-          <line>417</line>
-          <properties />
-          <option name="timeStamp" value="417" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="418" />
+      <option name="time" value="423" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -545,8 +515,6 @@
           <caret line="97" column="9" selection-start-line="97" selection-start-column="9" selection-end-line="97" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2777#2778#0" expanded="true" />
-            <element signature="e#2821#2822#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -595,8 +563,6 @@
           <caret line="99" column="14" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2777#2778#0" expanded="true" />
-            <element signature="e#2821#2822#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -666,8 +632,6 @@
           <caret line="59" column="16" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2777#2778#0" expanded="true" />
-            <element signature="e#2821#2822#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -719,8 +683,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2777#2778#0" expanded="true" />
-            <element signature="e#2821#2822#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -758,8 +720,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2777#2778#0" expanded="true" />
-            <element signature="e#2821#2822#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -790,8 +750,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2777#2778#0" expanded="true" />
-            <element signature="e#2821#2822#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -910,13 +868,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/Driver.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/DMAChannel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="599" max-vertical-offset="1394">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.3723229" vertical-offset="182" max-vertical-offset="1037">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/Cpu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10472">
+          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/program.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4631" max-vertical-offset="36091">
+          <caret line="283" column="10" selection-start-line="283" selection-start-column="10" selection-end-line="283" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -932,50 +906,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/company/PCB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-29.310345" vertical-offset="0" max-vertical-offset="1258">
+        <state vertical-scroll-proportion="0.0" vertical-offset="850" max-vertical-offset="1258">
           <caret line="62" column="68" selection-start-line="62" selection-start-column="68" selection-end-line="62" selection-end-column="68" />
           <folding>
-            <element signature="e#630#631#0" expanded="true" />
-            <element signature="e#671#672#0" expanded="true" />
+            <element signature="e#1643#1895#0" expanded="true" />
+            <element signature="e#1894#1895#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/program.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4631" max-vertical-offset="36091">
-          <caret line="283" column="10" selection-start-line="283" selection-start-column="10" selection-end-line="283" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/company/ShortTermScheduler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5168">
-          <caret line="148" column="30" selection-start-line="148" selection-start-column="30" selection-end-line="148" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3654" max-vertical-offset="5066">
+          <caret line="259" column="11" selection-start-line="259" selection-start-column="11" selection-end-line="259" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/Cpu.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/Driver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.862069" vertical-offset="0" max-vertical-offset="10523">
-          <caret line="10" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="616" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4047619" vertical-offset="0" max-vertical-offset="1394">
+          <caret line="20" column="63" selection-start-line="20" selection-start-column="63" selection-end-line="20" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2777#2778#0" expanded="true" />
-            <element signature="e#2821#2822#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/company/DMAChannel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34385964" vertical-offset="182" max-vertical-offset="1037">
-          <caret line="28" column="54" selection-start-line="0" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
