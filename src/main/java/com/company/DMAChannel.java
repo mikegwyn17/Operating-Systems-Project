@@ -10,46 +10,30 @@ public class DMAChannel
 
     }
 
-//  read and return data from RAM as an integer value
-    public long read (PCBObject Job,long address)
-    {
-        int otherReturnThing;
-        String ramThing;
-        long returnThing;
-        int workThing = Job.getJobMemoryAddress();
-        address  = address + workThing;
-        ramThing = Driver.ram.readRam((int) address);
-        ramThing = ramThing.substring(2);
-        returnThing = Long.parseLong(ramThing, 16);
-        otherReturnThing = (int) returnThing;
-
-        return otherReturnThing;
-    }
-
 // read and return data from cache as an integer value
-    public long readNCpu (long address, String[] cache)
+    public long readCpu(long address, String[] cache)
     {
-        int otherReturnThing;
-        String ramThing;
+        int intInstruction;
+        String stringInstruction;
         long returnThing;
-        ramThing = cache[(int)address];
-        ramThing = ramThing.substring(2);
-        returnThing = Long.parseLong(ramThing, 16);
-        otherReturnThing = (int) returnThing;
+        stringInstruction = cache[(int)address];
+        stringInstruction = stringInstruction.substring(2);
+        returnThing = Long.parseLong(stringInstruction, 16);
+        intInstruction = (int) returnThing;
 
-        return otherReturnThing;
+        return intInstruction;
     }
 
 // Writes passed address data into RAM as a hex String
-    public synchronized void write (PCBObject Job, long buffer, int data)
+    public void write (long buffer, int data)
     {
-        String ramThing = "0x";
-        String ramThing2 = Integer.toHexString(data);
-        while (ramThing2.length() != 8) {
-            ramThing2 = "0" + ramThing2.substring(0);
+        String stringInstruction = "0x";
+        String hexInstruction = Integer.toHexString(data);
+        while (hexInstruction.length() != 8) {
+            hexInstruction = "0" + hexInstruction.substring(0);
         }
-        ramThing = ramThing.concat(ramThing2);
-        Driver.ram.writeRam(ramThing,(int)buffer);
+        stringInstruction = stringInstruction.concat(hexInstruction);
+        Driver.ram.writeRam(stringInstruction,(int)buffer);
         System.out.println("Output buffer contents: " + Driver.ram.readRam((int)buffer));
     }
 }

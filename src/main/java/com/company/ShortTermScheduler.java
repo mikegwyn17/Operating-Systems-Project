@@ -1,6 +1,5 @@
 package com.company;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -63,7 +62,7 @@ public class ShortTermScheduler
         }
 
         algorithm = Driver.byPriority;
-        runCpu();
+        dispatcher();
 
     }
 
@@ -89,7 +88,7 @@ public class ShortTermScheduler
         }
 
         algorithm = Driver.byJobNo;
-        runCpu();
+        dispatcher();
     }
 
     public void SJFSchedule()
@@ -112,10 +111,10 @@ public class ShortTermScheduler
         }
 
         algorithm = Driver.byShortestJob;
-        runCpu();
+        dispatcher();
     }
 
-    public void runCpu()
+    public void dispatcher()
     {
         int count = 1;
         if (Driver.pcb.getPCBSortStatus() != Driver.byJobNo)

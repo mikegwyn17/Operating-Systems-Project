@@ -1,10 +1,5 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Timer;
-
 /**
  * Created by Michael on 2/3/2015.
  */
@@ -274,7 +269,7 @@ public class Cpu
                 if (address > 0)
                 {
                     cpuBuffer = bufferAddress((int) address);
-                    regArray[reg1] = (int) dma.readNCpu(cpuBuffer, cache);
+                    regArray[reg1] = (int) dma.readCpu(cpuBuffer, cache);
                 } else
                 {
                     regArray[reg1] = regArray[reg2];
@@ -288,7 +283,7 @@ public class Cpu
             case 1:
             {
                 cpuBuffer = bufferAddress((int) address);
-                dma.write(Job, cpuBuffer, regArray[reg2]);
+                dma.write(cpuBuffer, regArray[reg2]);
                 System.out.println("WR Instruction");
                 break;
             }
@@ -318,9 +313,6 @@ public class Cpu
                 regArray[tempReg] = regArray[sReg1];
                 regArray[sReg1] = regArray[sReg2];
                 regArray[sReg2] = regArray[tempReg];
-//                tempReg = sReg1;
-//                sReg1 = sReg2;
-//                sReg2 = tempReg;
                 System.out.println("MOV Instruction");
                 System.out.println("Swapped register: " + sReg1 + " and register: " + sReg2);
                 System.out.println("Contents of register " + sReg1 + " now: " + regArray[sReg1] + " contents of register " + sReg2 + " now: " + regArray[sReg2]);
@@ -331,7 +323,6 @@ public class Cpu
             case 5:
             {
                 regArray[dReg] = regArray[sReg1] + regArray[sReg2];
-//                dReg = sReg1+sReg2;
                 System.out.println("ADD Instruction");
                 System.out.println("added register: " + sReg1 + " and register: " + sReg2);
                 System.out.println("Contents of register " + sReg1 + ": " + regArray[sReg1] + " + " + " contents of register " + sReg2 + " " + regArray[sReg2] + " Contents of register " + dReg + " now " + regArray[dReg]);
@@ -342,7 +333,6 @@ public class Cpu
             case 6:
             {
                 regArray[dReg] = regArray[sReg1] - regArray[sReg2];
-//                dReg = sReg1 - sReg2;
                 System.out.println("SUB Instruction");
                 System.out.println("subtracted register: " + sReg1 + " and register: " + sReg2);
                 System.out.println("Contents of register " + sReg1 + ": " + regArray[sReg1] + " - " + " contents of register " + sReg2 + " " + regArray[sReg2] + " Contents of register " + dReg + " now " + regArray[dReg]);
@@ -352,7 +342,6 @@ public class Cpu
             // Multiplies content of two S-regs into D-reg
             case 7:
             {
-//                dReg = sReg1 * sReg2;
                 regArray[dReg] = sReg1*sReg2;
                 System.out.println("MUL Instruction");
                 System.out.println("multiplied register: " + sReg1 + " and register: " + sReg2);
@@ -374,16 +363,6 @@ public class Cpu
                     System.out.println("divided register: " + sReg1 + " and register: " + sReg2);
                     System.out.println("Contents of register " + sReg1 + ": " + regArray[sReg1] + " / " + " contents of register " + sReg2 + " " + regArray[sReg2] + " Contents of register " + dReg + " now " + regArray[dReg]);
                 }
-//                if (sReg2 == 0)
-//                {
-//                    System.out.println("Couldn't divide registers");
-//                    return;
-//                } else
-//                {
-//                    dReg = sReg1 / sReg2;
-//                    System.out.println("divided register: " + sReg1 + " and register: " + sReg2);
-//                    System.out.println("Contents of register " + sReg1 + ": " + regArray[sReg1] + " + " + " contents of register " + sReg2 + " " + regArray[sReg2] + " Contents of register " + dReg + " now " + regArray[dReg]);
-//                }
                 break;
             }
 
@@ -391,7 +370,6 @@ public class Cpu
             case 9:
             {
                 regArray[dReg] = regArray[sReg1] & regArray[sReg2];
-//                dReg = sReg1 & sReg2;
                 System.out.println("AND Instruction");
                 System.out.println("logical and of register: " + sReg1 + " and register: " + sReg2);
                 System.out.println("Contents of register " + sReg1 + ": " + regArray[sReg1] + " and " + " contents of register " + sReg2 + " " + regArray[sReg2] + " Contents of register " + dReg + " now " + regArray[dReg]);
@@ -402,7 +380,6 @@ public class Cpu
             case 10:
             {
                 regArray[dReg] = regArray[sReg1] | regArray[sReg2];
-//                dReg = sReg1|sReg2;
                 System.out.println("OR Instruction");
                 System.out.println("logical or of register: " + sReg1 + " and register: " + sReg2);
                 System.out.println("Contents of register " + sReg1 + ": " + regArray[sReg1] + " or " + " contents of register " + sReg2 + " " + regArray[sReg2] + " Contents of register " + dReg + " now " + regArray[dReg]);
@@ -414,9 +391,8 @@ public class Cpu
             {
                 if (address > 1)
                 {
-                    //cpuBuffer = bufferAddress((int) address);
                     address += Job.getInstructionCount();
-                    regArray[dReg] = (int) dma.readNCpu(address, cache);
+                    regArray[dReg] = (int) dma.readCpu(address, cache);
                 } else
                 {
                     regArray[dReg] = (int)address;
@@ -429,10 +405,6 @@ public class Cpu
             // Adds a data directly to the content of a register
             case 12:
             {
-//                if (address > 1)
-//                {
-//                    address /= 4;
-//                }
                 regArray[dReg] += (int)address;
 
                 System.out.println("ADDI Instruction");
@@ -554,7 +526,6 @@ public class Cpu
                 if (regArray[dReg] == 0)
                 {
                     pc = (int) address / 4;
-                    //pc += Job.getJobMemoryAddress();
                     System.out.println("branch to PC " + pc);
                 }
                 break;
@@ -568,7 +539,6 @@ public class Cpu
                 if (regArray[bReg] != 0)
                 {
                     pc = (int) address / 4;
-                    //pc += Job.getJobMemoryAddress();
                     System.out.println("branch to PC " + pc);
                 }
                 break;
