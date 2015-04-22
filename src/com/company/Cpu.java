@@ -257,7 +257,7 @@ public class Cpu
             {
                 if (address > 0)
                 {
-                    cpuBuffer = bufferAddress((int) address);
+                    cpuBuffer = bufferAddress((int)address);
                     regArray[reg1] = (int) dma.readNCpu((int)cpuBuffer,jobNumber);
                 } else
                 {
@@ -272,7 +272,7 @@ public class Cpu
             case 1:
             {
                 cpuBuffer = bufferAddress((int) address);
-                dma.write(cpuBuffer,regArray[reg2],jobNumber);
+                dma.write(cpuBuffer, regArray[reg2], jobNumber);
                 System.out.println("WR Instruction");
                 break;
             }
@@ -359,7 +359,6 @@ public class Cpu
             case 9:
             {
                 regArray[dReg] = regArray[sReg1] & regArray[sReg2];
-//                dReg = sReg1 & sReg2;
                 System.out.println("AND Instruction");
                 System.out.println("logical and of register: " + sReg1 + " and register: " + sReg2);
                 System.out.println("Contents of register " + sReg1 + ": " + regArray[sReg1] + " and " + " contents of register " + sReg2 + " " + regArray[sReg2] + " Contents of register " + dReg + " now " + regArray[dReg]);
@@ -379,15 +378,7 @@ public class Cpu
             // Transfers address/data directly into a register
             case 11:
             {
-                if (address > 1)
-                {
-                    address += Job.getInstructionCount();
-                    regArray[dReg] = (int) dma.readNCpu((int)address,jobNumber);
-                } else
-                {
-                    regArray[dReg] = (int)address;
-                }
-
+                regArray[dReg] = (int)address;
                 System.out.println("MOVI Instruction");
                 System.out.println("Register " + dReg + " now contains " + regArray[dReg]);
                 break;
@@ -516,7 +507,6 @@ public class Cpu
                 if (regArray[dReg] == 0)
                 {
                     pc = (int) address / 4;
-                    //pc += Job.getJobMemoryAddress();
                     System.out.println("branch to PC " + pc);
                 }
                 break;
@@ -567,6 +557,7 @@ public class Cpu
             }
         }
     }
+
 
     // method used to determine physical address to store or read data from Ram
     public long bufferAddress(int i)
