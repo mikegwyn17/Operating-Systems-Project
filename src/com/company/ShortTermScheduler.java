@@ -162,6 +162,30 @@ public class ShortTermScheduler
                 return o1.jobNo - o2.jobNo;
             }
         });
+        Collections.sort(waitTimesSJF, new Comparator<waitTimes>()
+        {
+            @Override
+            public int compare(waitTimes o1, waitTimes o2)
+            {
+                return o1.jobNo - o2.jobNo;
+            }
+        });
+        Collections.sort(executeTimesPriority, new Comparator<executeTimes>()
+        {
+            @Override
+            public int compare(executeTimes o1, executeTimes o2)
+            {return o1.jobNo - o2.jobNo;
+            }
+        });
+        Collections.sort(executeTimesSJF, new Comparator<executeTimes>()
+        {
+            @Override
+            public int compare(executeTimes o1, executeTimes o2)
+            {
+                return o1.jobNo - o2.jobNo;
+            }
+        });
+
 
         if (s == Driver.byPriority)
         {

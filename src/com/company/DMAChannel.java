@@ -11,50 +11,32 @@ public class DMAChannel
         pager = new Pager();
     }
 
-    //  read and return data from RAM as an integer value
-    public long read (PCBObject Job,long address)
-    {
-        int otherReturnThing;
-        String ramThing;
-        long returnThing;
-        int workThing = Job.getJobMemoryAddress();
-        address  = address + workThing;
-        ramThing = Driver.ram.readRam((int) address);
-        ramThing = ramThing.substring(2);
-        returnThing = Long.parseLong(ramThing, 16);
-        otherReturnThing = (int) returnThing;
-
-        return otherReturnThing;
-    }
-
     // read and return data from cache as an integer value
     public long readNCpu (int address, int j)
     {
-        int otherReturnThing;
-        String ramThing;
-        long returnThing;
+        int returnedInstruction;
+        String instructionInRam;
+        long longInstruction;
         int ramIndex = pager.needMemAddress(j,address);
-        ramThing = Driver.ram.readRam(ramIndex);
-//        ramThing = cache[(int)address];
-        ramThing = ramThing.substring(2);
-        returnThing = Long.parseLong(ramThing, 16);
-        otherReturnThing = (int) returnThing;
+        instructionInRam = Driver.ram.readRam(ramIndex);
+        instructionInRam = instructionInRam.substring(2);
+        longInstruction = Long.parseLong(instructionInRam, 16);
+        returnedInstruction = (int) longInstruction;
 
-        return otherReturnThing;
+        return returnedInstruction;
     }
 
     // Writes passed address data into RAM as a hex String
     public void write (long buffer, int data, int j)
     {
-        String ramThing = "0x";
-        String ramThing2 = Integer.toHexString(data);
-        while (ramThing2.length() != 8) {
-            ramThing2 = "0" + ramThing2.substring(0);
+        String stringInstruction = "0x";
+        String hexInstruction = Integer.toHexString(data);
+        while (hexInstruction.length() != 8) {
+            hexInstruction = "0" + hexInstruction.substring(0);
         }
-        ramThing = ramThing.concat(ramThing2);
+        stringInstruction = stringInstruction.concat(hexInstruction);
         int ramIndex = pager.needMemAddress(j,(int)buffer);
-        Driver.ram.writeRam(ramThing,ramIndex);
-//        Driver.ram.writeRam(ramThing,(int)buffer);
+        Driver.ram.writeRam(stringInstruction,ramIndex);
         System.out.println("Output buffer contents: " + Driver.ram.readRam(ramIndex));
     }
 }
