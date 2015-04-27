@@ -24,7 +24,7 @@ public class PCBObject {
     private PageTable pageTable;
     private int dataCount;
 
-    public enum ProcessStatus { NEW, READY, WAITING, RUNNING, FINISHED, ERROR };
+    public enum ProcessStatus { NEW, READY, WAIT, RUN, TERMINATE};
 
     public PCBObject(int jobNumber, int jobPriority, int jobDiskAddress, int instructionCount) {
         this.jobNumber = jobNumber;
