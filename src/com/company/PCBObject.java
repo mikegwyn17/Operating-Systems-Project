@@ -14,6 +14,7 @@ public class PCBObject {
     private int inputBuffer;
     private int outputBuffer;
     private int temporaryBuffer;
+    private int pageFaults;
 
     private boolean IObound; //IObound or not
     private String instruction; //instuction set for job
@@ -23,7 +24,7 @@ public class PCBObject {
     private PageTable pageTable;
     private int dataCount;
 
-    public enum ProcessStatus { NEW, READY, WAITING, RUNNING, FINISHED, ERROR };
+    public enum ProcessStatus { NEW, READY, WAIT, RUN, TERMINATE };
 
     public PCBObject(int jobNumber, int jobPriority, int jobDiskAddress, int instructionCount) {
         this.jobNumber = jobNumber;
@@ -33,6 +34,7 @@ public class PCBObject {
         jobInMemory = false;
         pStatus = ProcessStatus.NEW;
         dataCount = 44;
+        pageFaults = 0;
 
         setUpPageTable();
     }
@@ -70,6 +72,7 @@ public class PCBObject {
     public boolean hasJobRan() {return hasJobRan; }
     public ProcessStatus getProcessStatus() { return pStatus; }
     public int getPageTableSize() { return pageTable.numOfPages(); }
+    public int getPageFaults() { return pageFaults; }
 
     public void setDataDiskAddress(int k) {
         dataDiskAddress = k;
@@ -86,7 +89,13 @@ public class PCBObject {
     public void setIObound(boolean k) {IObound = k; }
     public void setJobInMemory(boolean k) { jobInMemory = k; }
     public void setHasJobRan(boolean k) {hasJobRan = k; }
-    public void setProcessStatus(ProcessStatus k) { pStatus = k; }
+    public void setProcessStatus(ProcessStatus k) {
+        pStatus = k;
+    }
+    public void addPageFault() { pageFaults++; }
+    public void resetPageFaults() {
+        pageFaults = 0;
+    }
 
     public Page getPage(int index) {
         return pageTable.pages[index];
