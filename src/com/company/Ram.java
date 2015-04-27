@@ -78,10 +78,6 @@ public class Ram {
         RAM[index].empty = false;
     }
 
-    public void deleteSlot(int index) {
-        RAM[index].deleteSlot();
-        ramFilled--;
-    }
 
     public int getPageNo(int slot) {
         return RAM[slot].getPageNo();
@@ -100,7 +96,20 @@ public class Ram {
     }
 
     public float getRamFilled() {
-        return ramFilled / 1024.00f;
+        float number = 0.0f;
+        for(RamSlot s : RAM) {
+            if(!s.empty) {
+                number += 1.0f;
+            }
+        }
+
+        return number / 1024.0f;
+    }
+
+    public void clearRam() {
+        for(RamSlot s : RAM) {
+            s.empty = true;
+        }
     }
 
     public int getRamSize() {
