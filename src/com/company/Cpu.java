@@ -73,6 +73,7 @@ public class Cpu
         start = System.currentTimeMillis();
         Job = job;
         jobNumber = Job.getJobNumber();
+        Driver.pcb.getPCB(jobNumber).setProcessStatus(PCBObject.ProcessStatus.RUNNING);
         ioCount = 0;
         tempBufferSize = Job.getTemporaryBufferSize();
         inputBufferSize = Job.getInputBufferSize();
@@ -453,6 +454,7 @@ public class Cpu
                 System.out.println("Io count for Job " + ioCount);
                 System.out.println("End Program");
                 times = new executeTimes(jobNumber, elapsedTimeMillis);
+                Driver.pcb.getPCB(jobNumber).setProcessStatus(PCBObject.ProcessStatus.FINISHED);
                 break;
             }
 
