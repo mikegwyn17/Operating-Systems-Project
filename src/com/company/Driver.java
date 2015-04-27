@@ -57,11 +57,13 @@ public class Driver {
 //        FIFO SCHEDULING
 
         pcb.clearStatus();
+        ram.clearRam();
         pager.initialFrames();
         //lts.loadJobs(byJobNo);
         System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
         sts.FIFOSchedule();
         sts.printWaitingTimes(byJobNo);
+        System.out.println("RAM Usage: (FIFO) " + df.format(ram.getRamFilled()));
 
         System.out.println("FIFO PAGE FAULT SERVICE TIMES: ");
         for(int i = 1; i <= 30; i++) {
@@ -76,30 +78,35 @@ public class Driver {
 
         pageFaultCount = 0;
         pcb.clearStatus();
+        ram.clearRam();
+        System.out.println("RAM Usage: (Priority) " + df.format(ram.getRamFilled()));
+
         startTime = System.currentTimeMillis();
         pager.initialFrames();
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
         sts.printWaitingTimes(byPriority);
+        System.out.println("RAM Usage: (Priority) " + df.format(ram.getRamFilled()));
 
         priorityPageFaults = pageFaultCount;
         System.out.println("PRIORITY PAGE FAULT SERVICE TIMES: ");
         for(int i = 1; i <= 30; i++) {
             pcb.getPCB(i).pageFaultServiceTime();
         }
-
-
         System.out.println("Priority Page Faults: " + priorityPageFaults);
 
 //        SJF SCHEDULING
 
         pcb.clearStatus();
+        ram.clearRam();
         pageFaultCount = 0;
         startTime = System.currentTimeMillis();
         pager.initialFrames();
         System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
         sts.SJFSchedule();
         sts.printWaitingTimes(byShortestJob);
+        System.out.println("RAM Usage: (SJF) " + df.format(ram.getRamFilled()));
+
         sjfPageFaults = pageFaultCount;
 
         System.out.println("SJF PAGE FAULT SERVICE TIMES: ");
