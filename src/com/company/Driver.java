@@ -65,6 +65,8 @@ public class Driver {
         sts.printWaitingTimes(byJobNo);
         System.out.println("RAM Usage: (FIFO) " + df.format(ram.getRamFilled()));
 
+        pcb.printPageFaults();
+
         System.out.println("FIFO PAGE FAULT SERVICE TIMES: ");
         for(int i = 1; i <= 30; i++) {
             pcb.getPCB(i).pageFaultServiceTime();
@@ -88,6 +90,8 @@ public class Driver {
         sts.printWaitingTimes(byPriority);
         System.out.println("RAM Usage: (Priority) " + df.format(ram.getRamFilled()));
 
+        pcb.printPageFaults();
+
         priorityPageFaults = pageFaultCount;
         System.out.println("PRIORITY PAGE FAULT SERVICE TIMES: ");
         for(int i = 1; i <= 30; i++) {
@@ -106,6 +110,8 @@ public class Driver {
         sts.SJFSchedule();
         sts.printWaitingTimes(byShortestJob);
         System.out.println("RAM Usage: (SJF) " + df.format(ram.getRamFilled()));
+
+        pcb.printPageFaults();
 
         sjfPageFaults = pageFaultCount;
 

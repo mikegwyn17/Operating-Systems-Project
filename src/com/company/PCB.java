@@ -68,10 +68,17 @@ public class PCB {
         }
     }
 
+    public void printPageFaults() {
+        for(int i = 1; i <= 30; i++) {
+            System.out.println(getPCB(i).getPageFaults());
+        }
+    }
+
     public void clearStatus() {
         for(PCBObject b : pcb) {
             b.setHasJobRan(false);
             b.setJobInMemory(false);
+            b.resetPageFaults();
 
             for(int i = 0; i < b.getPageTableSize(); i++) {
                 b.getPage(i).inMemory = false;

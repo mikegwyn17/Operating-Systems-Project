@@ -189,7 +189,8 @@ public class ShortTermScheduler
         {
             for (int i = 0; i < waitTimesPriority.size(); i++)
             {
-                System.out.println("Job " + i + " Waits -- Priority: " + waitTimesPriority.get(i).waitTime);
+                System.out.println(waitTimesPriority.get(i).waitTime);
+//                System.out.println("Job " + i + " Waits -- Priority: " + waitTimesPriority.get(i).waitTime);
                 PriorityTotal += waitTimesPriority.get(i).waitTime;
             }
 
@@ -199,7 +200,8 @@ public class ShortTermScheduler
 
             for (int i = 0; i < executeTimesPriority.size(); i++)
             {
-                System.out.println("Job " + i + " Executes -- Priority: " + executeTimesPriority.get(i).waitTime);
+                System.out.println(executeTimesPriority.get(i).waitTime);
+//                System.out.println("Job " + i + " Executes -- Priority: " + executeTimesPriority.get(i).waitTime);
                 PriorityTotal += executeTimesPriority.get(i).waitTime;
             }
 
@@ -209,7 +211,8 @@ public class ShortTermScheduler
         {
             for (int i = 0; i < waitTimesFIFO.size(); i++)
             {
-                System.out.println("Job: " + i + " Waits -- FIFO: " + waitTimesFIFO.get(i).waitTime);
+                System.out.println(waitTimesFIFO.get(i).waitTime);
+//                System.out.println("Job: " + i + " Waits -- FIFO: " + waitTimesFIFO.get(i).waitTime);
                 FIFOTotal += waitTimesFIFO.get(i).waitTime;
             }
 
@@ -219,7 +222,8 @@ public class ShortTermScheduler
 
             for (int i = 0; i < executeTimesFIFO.size(); i++)
             {
-                System.out.println("Job: " + i + " Executes -- FIFO: " + executeTimesFIFO.get(i).waitTime);
+                System.out.println(executeTimesFIFO.get(i).waitTime);
+//                System.out.println("Job: " + i + " Executes -- FIFO: " + executeTimesFIFO.get(i).waitTime);
                 FIFOTotal += executeTimesFIFO.get(i).waitTime;
             }
             System.out.println("***************AVERAGES***************\nFIFO: " + (FIFOTotal / 30.0) + "\n");
@@ -227,7 +231,8 @@ public class ShortTermScheduler
         {
             for (int i = 0; i < waitTimesSJF.size(); i++)
             {
-                System.out.println("Job: " + i + " Waits -- SJF: " + waitTimesSJF.get(i).waitTime);
+                System.out.println(waitTimesSJF.get(i).waitTime);
+//                System.out.println("Job: " + i + " Waits -- SJF: " + waitTimesSJF.get(i).waitTime);
                 SJFTotal += waitTimesSJF.get(i).waitTime;
             }
             System.out.println("***************AVERAGES***************\nSJF: " + (SJFTotal / 30.0));
@@ -236,7 +241,8 @@ public class ShortTermScheduler
 
             for (int i = 0; i < executeTimesSJF.size(); i++)
             {
-                System.out.println("Job: " + i + " Executes -- SJF: " + executeTimesSJF.get(i).waitTime);
+                System.out.println(executeTimesSJF.get(i).waitTime);
+//                System.out.println("Job: " + i + " Executes -- SJF: " + executeTimesSJF.get(i).waitTime);
                 SJFTotal += executeTimesSJF.get(i).waitTime;
             }
             System.out.println("***************AVERAGES***************\nSJF: " + (SJFTotal / 30.0) + "\n");

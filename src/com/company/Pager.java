@@ -68,6 +68,8 @@ public class Pager {
         Driver.pcb.getPCB(jobNo).getPage(page).inMemory = true;
         Driver.ram.setPageNo(nextRamSlotPerm, jobNo, page);
 
+        if(fault) Driver.pcb.getPCB(jobNo).addPageFault();
+
     }
 
     public void initialFrames() {
