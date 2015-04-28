@@ -84,7 +84,7 @@ public class PCB {
 
     public void printPageFaults() {
         for(int i = 1; i <= 30; i++) {
-            System.out.println(getPCB(i).getPageFaults());
+            System.out.print("\nPage Faults on Job " + i + ": " + getPCB(i).getPageFaults());
         }
     }
 

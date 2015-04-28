@@ -7,9 +7,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class Driver {
-    public static double totalPercent;
-    public static double sumPercent;
-    public static int counter = 0;
     public static Disk disk = new Disk();
     public static PCB pcb = new PCB();
     public static Ram ram = new Ram();
@@ -28,17 +25,9 @@ public class Driver {
     static PCB.sorttype byShortestJob = PCB.sorttype.SHORTEST_JOB;
     static long startTime;
 
-    static int fifoPageFaults, priorityPageFaults, sjfPageFaults;
-
-    static FileWriter fileWriter;
-    static BufferedWriter buffWriter;
-
-    static int pageFaultCount;
-
     public static void main(String[] a) {
         startTime = System.currentTimeMillis();
         String program = "program.txt";
-        pageFaultCount = 0;
 
         cpu1 = new Cpu();
         cpu2 = new Cpu();
@@ -49,10 +38,6 @@ public class Driver {
         lts = new LongTermScheduler();
         loader = new Loader(program);
         pager = new Pager();
-
-        fifoPageFaults = 0;
-        priorityPageFaults = 0;
-        sjfPageFaults = 0;
 
         try {
            loader.Start();
@@ -78,12 +63,8 @@ public class Driver {
             pcb.getPCB(i).pageFaultServiceTime();
         }
 
-        fifoPageFaults = pageFaultCount;
-        System.out.println("FIFO Page Faults: " + fifoPageFaults);
-
         //        PRIORITY SCHEDULING
 
-        pageFaultCount = 0;
         pcb.clearStatus();
         ram.clearRam();
         startTime = System.currentTimeMillis();
@@ -96,27 +77,21 @@ public class Driver {
 
         pcb.printPageFaults();
 
-        priorityPageFaults = pageFaultCount;
         System.out.println("PRIORITY PAGE FAULT SERVICE TIMES: ");
         for(int i = 1; i <= 30; i++) {
             pcb.getPCB(i).pageFaultServiceTime();
         }
 
-
-        System.out.println("Priority Page Faults: " + priorityPageFaults);
-
 //        SJF SCHEDULING
 
         pcb.clearStatus();
         ram.clearRam();
-        pageFaultCount = 0;
         startTime = System.currentTimeMillis();
         pager.initialFrames();
         //lts.loadJobs(byShortestJob);
         System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
         sts.SJFSchedule();
         sts.printWaitingTimes(byShortestJob);
-        sjfPageFaults = pageFaultCount;
         System.out.println("RAM Usage: (SJF) " + df.format(ram.getRamFilled()));
 
         pcb.printPageFaults();
@@ -124,12 +99,6 @@ public class Driver {
         System.out.println("SJF PAGE FAULT SERVICE TIMES: ");
         for(int i = 1; i <= 30; i++) {
             pcb.getPCB(i).pageFaultServiceTime();
-        }
-
-        System.out.println("SJF Page Faults: " + sjfPageFaults);
-
-        for(int i = 1; i <= 30; i++) {
-            pcb.getPCB(i).printPageTable();
         }
 
         if(loader.executed) {

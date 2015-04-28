@@ -59,6 +59,7 @@ public class ShortTermScheduler
         for (int i = 1; i < noOfJobs + 1; i++)
         {
             readyQueue.add(Driver.pcb.getPCB(i));
+            Driver.pcb.getPCB(i).setProcessStatus(PCBObject.ProcessStatus.READY);
         }
 
         algorithm = Driver.byPriority;
@@ -85,6 +86,7 @@ public class ShortTermScheduler
         for (int i = 1; i < noOfJobs + 1; i++)
         {
             readyQueue.add(Driver.pcb.getPCB(i));
+            Driver.pcb.getPCB(i).setProcessStatus(PCBObject.ProcessStatus.READY);
         }
 
         algorithm = Driver.byJobNo;
@@ -108,6 +110,8 @@ public class ShortTermScheduler
         for (int i = 1; i < noOfJobs + 1; i++)
         {
             readyQueue.add(Driver.pcb.getPCB(i));
+            Driver.pcb.getPCB(i).setProcessStatus(PCBObject.ProcessStatus.READY);
+
         }
 
         algorithm = Driver.byShortestJob;
@@ -268,7 +272,7 @@ public class ShortTermScheduler
                 PriorityTotal += waitTimesPriority.get(i).waitTime;
             }
 
-            System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0));
+            System.out.println("Average Priority Wait Time: " + (PriorityTotal / 30.0));
 
             PriorityTotal = 0;
 
@@ -279,7 +283,7 @@ public class ShortTermScheduler
                 PriorityTotal += executeTimesPriority.get(i).waitTime;
             }
 
-            System.out.println("***************AVERAGES***************\nPriority: " + (PriorityTotal / 30.0) + "\n");
+            System.out.println("Average Priority Execute Time: " + (PriorityTotal / 30.0) + "\n");
 
         } else if (s == Driver.byJobNo)
         {
@@ -290,7 +294,7 @@ public class ShortTermScheduler
                 FIFOTotal += waitTimesFIFO.get(i).waitTime;
             }
 
-            System.out.println("***************AVERAGES***************\nFIFO: " + (FIFOTotal / 30.0));
+            System.out.println("Average FIFO Wait Time: " + (FIFOTotal / 30.0));
 
             FIFOTotal = 0;
 
@@ -300,7 +304,7 @@ public class ShortTermScheduler
 //                System.out.println(executeTimesFIFO.get(i).waitTime);
                 FIFOTotal += executeTimesFIFO.get(i).waitTime;
             }
-            System.out.println("***************AVERAGES***************\nFIFO: " + (FIFOTotal / 30.0) + "\n");
+            System.out.println("Average FIFO Execute Time:  " + (FIFOTotal / 30.0) + "\n");
         } else
         {
             for (int i = 0; i < waitTimesSJF.size(); i++)
@@ -309,7 +313,7 @@ public class ShortTermScheduler
 //                System.out.println(waitTimesSJF.get(i).waitTime);
                 SJFTotal += waitTimesSJF.get(i).waitTime;
             }
-            System.out.println("***************AVERAGES***************\nSJF: " + (SJFTotal / 30.0));
+            System.out.println("Average SJF Wait Time: " + (SJFTotal / 30.0));
 
             SJFTotal = 0;
 
@@ -319,7 +323,7 @@ public class ShortTermScheduler
 //                System.out.println(executeTimesSJF.get(i).waitTime);
                 SJFTotal += executeTimesSJF.get(i).waitTime;
             }
-            System.out.println("***************AVERAGES***************\nSJF: " + (SJFTotal / 30.0) + "\n");
+            System.out.println("Average SJF Execute Time: " + (SJFTotal / 30.0) + "\n");
         }
     }
 }

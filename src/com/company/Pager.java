@@ -25,12 +25,13 @@ public class Pager {
         }
 
         if(!Driver.pcb.getPCB(jobNo).getPage(page).inMemory) {
-            Driver.pageFaultCount++;
+            Driver.pcb.getPCB(jobNo).setProcessStatus(PCBObject.ProcessStatus.WAIT);
             time = System.nanoTime();
             framePage(jobNo, page, true);
             time2 = System.nanoTime();
             diffTime = time2 - time;
             Driver.pcb.getPCB(jobNo).getPage(page).setPageServiceTime(diffTime);
+            Driver.pcb.getPCB(jobNo).setProcessStatus(PCBObject.ProcessStatus.RUN);
         }
 
         return Driver.pcb.getPCB(jobNo).getPage(page).returnRAM(instruction);
@@ -47,7 +48,6 @@ public class Pager {
             previousPage = Driver.ram.getPageNo((s*4));
 
             Driver.ram.freeFrames.push(s);
-            Driver.pageFaultCount++;
 
         }
         nextRamSlot = ((Integer) Driver.ram.freeFrames.pop() * 4);
@@ -70,7 +70,9 @@ public class Pager {
         Driver.pcb.getPCB(jobNo).getPage(page).inMemory = true;
         Driver.ram.setPageNo(nextRamSlotPerm, jobNo, page);
 
-        if(fault) Driver.pcb.getPCB(jobNo).addPageFault();
+        if(fault) {
+            Driver.pcb.getPCB(jobNo).addPageFault();
+        }
     }
 
     public void initialFrames() {
