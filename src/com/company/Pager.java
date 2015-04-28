@@ -25,12 +25,14 @@ public class Pager {
         }
 
         if(!Driver.pcb.getPCB(jobNo).getPage(page).inMemory) {
+            Driver.pcb.getPCB(jobNo).setProcessStatus(PCBObject.ProcessStatus.WAIT);
             Driver.pageFaultCount++;
             time = System.nanoTime();
             framePage(jobNo, page, true);
             time2 = System.nanoTime();
             diffTime = time2 - time;
             Driver.pcb.getPCB(jobNo).getPage(page).setPageServiceTime(diffTime);
+            Driver.pcb.getPCB(jobNo).setProcessStatus(PCBObject.ProcessStatus.RUN);
         }
 
         return Driver.pcb.getPCB(jobNo).getPage(page).returnRAM(instruction);
