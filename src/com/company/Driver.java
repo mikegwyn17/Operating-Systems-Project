@@ -39,34 +39,39 @@ public class Driver {
 
 //        FIFO SCHEDULING
 
+        ram.clearRam();
         lts.loadJobs(byJobNo);
         System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
         sts.FIFOSchedule();
         sts.printWaitingTimes(byJobNo);
+        System.out.println("\nCurrent RAM Usage: (FIFO) " + df.format(ram.getRamFilled()) + " filled.");
 
 
 //        PRIORITY SCHEDULING
 
+        ram.clearRam();
         pcb.clearStatus();
         startTime = System.currentTimeMillis();
         lts.loadJobs(byPriority);
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
         sts.printWaitingTimes(byPriority);
+        System.out.println("\nCurrent RAM Usage: (PRIORITY) " + df.format(ram.getRamFilled()) + " filled.");
 
 
 //        SJF SCHEDULING
 
+        ram.clearRam();
         pcb.clearStatus();
         startTime = System.currentTimeMillis();
         lts.loadJobs(byShortestJob);
         System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
         sts.SJFSchedule();
         sts.printWaitingTimes(byShortestJob);
+        System.out.println("\nCurrent RAM Usage: (SJF) " + df.format(ram.getRamFilled()) + " filled.");
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
         }
-        System.out.println("\nCurrent RAM Usage: " + df.format(ram.getRamFilled()) + " filled.");
     }
 }
