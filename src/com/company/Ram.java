@@ -107,7 +107,7 @@ public class Ram {
 
     public void clearRam() {
         for(RamSlot s : RAM) {
-            s.empty = true;
+            s.deleteSlot();
         }
     }
 
