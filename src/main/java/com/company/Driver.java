@@ -15,6 +15,7 @@ public class Driver {
     public static LongTermScheduler lts;
     public static Loader loader;
     public static Cpu cpu1, cpu2, cpu3, cpu4;
+    public static int cpu1Count, cpu2Count, cpu3Count, cpu4Count;
 
     static public DecimalFormat df = new DecimalFormat("#.##%");
 
@@ -31,6 +32,10 @@ public class Driver {
         cpu2 = new Cpu();
         cpu3 = new Cpu();
         cpu4 = new Cpu();
+        cpu1Count = 0;
+        cpu2Count = 0;
+        cpu3Count = 0;
+        cpu4Count = 0;
 
         sts = new ShortTermScheduler();
         lts = new LongTermScheduler();
@@ -52,6 +57,14 @@ public class Driver {
         sts.printWaitingTimes(byJobNo);
 
         System.out.println("\nCurrent RAM Usage (FIFO): " + df.format(ram.getRamFilled()) + " filled.");
+        System.out.println("Cpu1 Job Count: " + cpu1Count);
+        System.out.println("Cpu2 Job Count: " + cpu2Count);
+        System.out.println("Cpu3 Job Count: " + cpu3Count);
+        System.out.println("Cpu4 Job Count: " + cpu4Count);
+        cpu1Count = 0;
+        cpu2Count = 0;
+        cpu3Count = 0;
+        cpu4Count = 0;
 
 //        PRIORITY SCHEDULING
 
@@ -64,6 +77,14 @@ public class Driver {
         sts.printWaitingTimes(byPriority);
 
         System.out.println("\nCurrent RAM Usage (PRIORITY): " + df.format(ram.getRamFilled()) + " filled.");
+        System.out.println("Cpu1 Job Count: " + cpu1Count);
+        System.out.println("Cpu2 Job Count: " + cpu2Count);
+        System.out.println("Cpu3 Job Count: " + cpu3Count);
+        System.out.println("Cpu4 Job Count: " + cpu4Count);
+        cpu1Count = 0;
+        cpu2Count = 0;
+        cpu3Count = 0;
+        cpu4Count = 0;
 
 //        SJF SCHEDULING
 
@@ -76,6 +97,14 @@ public class Driver {
         sts.printWaitingTimes(byShortestJob);
 
         System.out.println("\nCurrent RAM Usage (SJF):" + df.format(ram.getRamFilled()) + " filled.");
+        System.out.println("Cpu1 Job Count: " + cpu1Count);
+        System.out.println("Cpu2 Job Count: " + cpu2Count);
+        System.out.println("Cpu3 Job Count: " + cpu3Count);
+        System.out.println("Cpu4 Job Count: " + cpu4Count);
+        cpu1Count = 0;
+        cpu2Count = 0;
+        cpu3Count = 0;
+        cpu4Count = 0;
 
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");

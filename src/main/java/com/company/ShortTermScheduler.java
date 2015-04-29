@@ -140,21 +140,25 @@ public class ShortTermScheduler
                     case 1:
                     {
                         executeTimesFIFO.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu1Count++;
                         break;
                     }
                     case 2:
                     {
                         executeTimesFIFO.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu2Count++;
                         break;
                     }
                     case 3:
                     {
                         executeTimesFIFO.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu3Count++;
                         break;
                     }
                     case 4:
                     {
                         executeTimesFIFO.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu4Count++;
                         break;
                     }
 
@@ -167,21 +171,25 @@ public class ShortTermScheduler
                     case 1:
                     {
                         executeTimesPriority.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu1Count++;
                         break;
                     }
                     case 2:
                     {
                         executeTimesPriority.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu2Count++;
                         break;
                     }
                     case 3:
                     {
                         executeTimesPriority.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu3Count++;
                         break;
                     }
                     case 4:
                     {
                         executeTimesPriority.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu4Count++;
                         break;
                     }
                 }
@@ -193,21 +201,25 @@ public class ShortTermScheduler
                     case 1:
                     {
                         executeTimesSJF.add(Driver.cpu1.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu1Count++;
                         break;
                     }
                     case 2:
                     {
                         executeTimesSJF.add(Driver.cpu2.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu2Count++;
                         break;
                     }
                     case 3:
                     {
                         executeTimesSJF.add(Driver.cpu3.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu3Count++;
                         break;
                     }
                     case 4:
                     {
                         executeTimesSJF.add(Driver.cpu4.loadCpu(Driver.pcb.getPCB(jobNumber)));
+                        Driver.cpu4Count++;
                         break;
                     }
                 }
