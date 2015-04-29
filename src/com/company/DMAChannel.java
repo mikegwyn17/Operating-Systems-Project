@@ -5,49 +5,35 @@ package com.company;
  */
 public class DMAChannel
 {
-    //public Ram memory;
     public DMAChannel()
     {
 
     }
 
-//  read and return data from RAM as an integer value
-    public long read (PCBObject Job,long address)
+    // read and return data from cache as an integer value
+    public long readCpu(long address, String[] cache)
     {
-        int otherReturnThing;
-        String ramThing;
+        int intInstruction;
+        String stringInstruction;
         long returnThing;
-        int workThing = Job.getJobMemoryAddress();
-        address  = address + workThing;
-//        if (address < 0)
-//        {
-            ramThing = Driver.ram.readRam((int) address);
-            ramThing = ramThing.substring(2);
-            returnThing = Long.parseLong(ramThing, 16);
-            otherReturnThing = (int) returnThing;
-//        }
-//        else
-//        {
-//            address = address + Job.getDataMemoryAddress();
-//            ramThing = Driver.ram.readRam((int) address);
-//            ramThing = ramThing.substring(2);
-//            returnThing = Long.parseLong(ramThing, 16);
-//            otherReturnThing = (int) returnThing;
-//        }
-        return otherReturnThing;
+        stringInstruction = cache[(int)address];
+        stringInstruction = stringInstruction.substring(2);
+        returnThing = Long.parseLong(stringInstruction, 16);
+        intInstruction = (int) returnThing;
+
+        return intInstruction;
     }
 
-// Writes passed address data into RAM as a hex String
-    public void write (PCBObject Job, long buffer, int data)
+    // Writes passed address data into RAM as a hex String
+    public void write (long buffer, int data)
     {
-        //int address = Job.getDataMemoryAddress();
-        String ramThing = "0x";
-        String ramThing2 = Integer.toHexString(data);
-        while (ramThing2.length() != 8) {
-            ramThing2 = "0" + ramThing2.substring(0);
+        String stringInstruction = "0x";
+        String hexInstruction = Integer.toHexString(data);
+        while (hexInstruction.length() != 8) {
+            hexInstruction = "0" + hexInstruction.substring(0);
         }
-        ramThing = ramThing.concat(ramThing2);
-        Driver.ram.writeRam(ramThing,(int)buffer);
+        stringInstruction = stringInstruction.concat(hexInstruction);
+        Driver.ram.writeRam(stringInstruction,(int)buffer);
         System.out.println("Output buffer contents: " + Driver.ram.readRam((int)buffer));
     }
 }
