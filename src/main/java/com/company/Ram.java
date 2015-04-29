@@ -19,7 +19,7 @@ public class Ram {
     }
     public void writeRam(String s, int index){
 
-        if(RAM[index] == null) {
+        if(RAM[index].equals(".")) {
             ramFilled++;
         }
         RAM[index] = s;
@@ -31,5 +31,13 @@ public class Ram {
 
     public int getRamSize() {
         return RAM.length;
+    }
+
+    public void clearRam() {
+        for(int i = 0; i < RAM.length; i++) {
+            RAM[i] = ".";
+        }
+
+        ramFilled = 0;
     }
 }
