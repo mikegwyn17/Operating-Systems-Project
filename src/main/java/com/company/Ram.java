@@ -17,22 +17,25 @@ public class Ram {
     public String readRam(int index){
         return RAM[index];
     }
+    
     public void writeRam(String s, int index){
-
         if(RAM[index].equals(".")) {
             ramFilled++;
         }
         RAM[index] = s;
     }
 
+    //Returns the RAM percentage used in a floating point format
     public float getRamFilled() {
         return ramFilled / 1024.00f;
     }
-
+    
+    //returns the ram size (1024)
     public int getRamSize() {
         return RAM.length;
     }
 
+    //Clears all ram slots
     public void clearRam() {
         for(int i = 0; i < RAM.length; i++) {
             RAM[i] = ".";
