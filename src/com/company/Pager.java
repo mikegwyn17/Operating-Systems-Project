@@ -15,6 +15,9 @@ public class Pager {
 
     }
 
+    //Returns the memory address that is needed.
+    //The job number and index for the instruction or data is provided. Depending on this, it finds the corect page and word in the page and returns the address.
+    // If the page is not in memory, then it calls framePage() and puts the page into memory.
     public int needMemAddress(int jobNo, int index) {
 
         int page = index / 4;
@@ -38,6 +41,8 @@ public class Pager {
         return Driver.pcb.getPCB(jobNo).getPage(page).returnRAM(instruction);
     }
 
+    //This method puts the page into RAM on a free slot.
+    //If there are no free slots left then it takes out the oldest frame and replaces it with the one thats needed.
     public void framePage(int jobNo, int page, boolean fault) {
         int nextRamSlot, nextRamSlotPerm;
         int previousJob = -1, previousPage = -1;
@@ -74,6 +79,7 @@ public class Pager {
 
     }
 
+    //Initially all jobs get 4 frames in RAM. It takes the first four pages and puts it into RAM non-contiguously.
     public void initialFrames() {
         for(int job = 1; job <= 30; job++) {
             for(int page = 0; page < 4; page++) {

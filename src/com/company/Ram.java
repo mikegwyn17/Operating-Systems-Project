@@ -78,22 +78,26 @@ public class Ram {
         RAM[index].empty = false;
     }
 
+    //This returns the page number and job number that is in this ram slot
     public int getPageNo(int slot) {
         return RAM[slot].getPageNo();
-    }
-
-    public void setPageNo(int slot, int job, int page) {
-        RAM[slot].pageNo = page;
-        RAM[slot].jobNo = job;
-    }
-
-    public void clearPageNo(int slot) {
-        RAM[slot].pageNo = -1;
     }
     public int getJobNo(int slot) {
         return RAM[slot].jobNo;
     }
 
+    //This sets the page number for this ram slot. This is needed later when we try to clear the ram slot
+    public void setPageNo(int slot, int job, int page) {
+        RAM[slot].pageNo = page;
+        RAM[slot].jobNo = job;
+    }
+
+    //Clears the page number and makes it -1 so it seems there is no page in this ram slot.
+    public void clearPageNo(int slot) {
+        RAM[slot].pageNo = -1;
+    }
+
+    //Returns the RAM percentage used in a floating point format
     public float getRamFilled() {
         float number = 0.0f;
         for(RamSlot s : RAM) {
@@ -105,12 +109,14 @@ public class Ram {
         return number / 1024.0f;
     }
 
+    //Clears all ram slots
     public void clearRam() {
         for(RamSlot s : RAM) {
             s.deleteSlot();
         }
     }
 
+    //returns the ram size (1024)
     public int getRamSize() {
         return RAM.length;
     }
