@@ -7,6 +7,7 @@ public class PageTable {
     public Page[] pages;
     int diskStartPoint;
 
+    //Initializing the page table makes it the correct size
     public PageTable(int diskStartPoint, int instructionCount, int dataCount) {
         int totalSpace = instructionCount + dataCount;
         this.diskStartPoint = diskStartPoint;
@@ -25,6 +26,7 @@ public class PageTable {
         }
     }
 
+    //Calls the print page for each page in this page table.
     public void printPageTable() {
         for(int i = 0; i < pages.length; i++) {
 
@@ -33,6 +35,7 @@ public class PageTable {
         }
     }
 
+    //Returns the number of pages in this page table
     public int numOfPages() {
         return pages.length;
     }
