@@ -25,7 +25,8 @@ public class LongTermScheduler {
     }
 
     // This method loads the initial jobs in the RAM. This is called by the driver.
-    // Based on the algorithm, it depends which jobs are loaded into RAM at first    public void loadJobs(PCB.sorttype s) {
+    // Based on the algorithm, it depends which jobs are loaded into RAM at first
+    public void loadJobs(PCB.sorttype s) {
         int index = 0;
 
         if (s == byJobNo) {
