@@ -98,10 +98,6 @@ public class Driver {
             pcb.getPCB(i).pageFaultServiceTime();
         }
 
-        for(int i = 1; i <= 30; i++) {
-            pcb.getPCB(i).printPageTable();
-        }
-
         if(loader.executed) {
             System.out.println("\nAll jobs have been loaded on to the Disk.\nYour disk is " + df.format(disk.diskPercent()) + " filled.");
         }
