@@ -118,6 +118,7 @@ public class ShortTermScheduler
         dispatcher();
     }
 
+    // method used to run the jobs on the cpu
     public void dispatcher()
     {
         int count = 1;
@@ -225,6 +226,7 @@ public class ShortTermScheduler
         }
     }
 
+    // method used to print the execute and waiting times 
     public void printWaitingTimes(PCB.sorttype s)
     {
 

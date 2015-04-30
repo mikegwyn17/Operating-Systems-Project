@@ -68,6 +68,7 @@ public class Cpu
         pager = new Pager();
     }
 
+    // method used to run the job on the cpu
     public executeTimes loadCpu(PCBObject job)
     {
         start = System.currentTimeMillis();
@@ -105,6 +106,7 @@ public class Cpu
         return regArray[i] + (int) a;
     }
 
+    // method used to fetch the instructions from the pager
     public String fetch(int p)
     {
         pc = p;
@@ -134,6 +136,7 @@ public class Cpu
         return fetchedInstr;
     }
 
+    // method used to decode the instruction
     public int decode(String fetchedInstr)
     {
         // temporary stings used for decoding the instruction set
@@ -248,6 +251,7 @@ public class Cpu
         return opCode;
     }
 
+    // method that executes the instruction based on the opcode
     public void execute(int o)
     {
         opCode = o;

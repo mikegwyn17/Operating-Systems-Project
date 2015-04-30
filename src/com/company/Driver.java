@@ -50,7 +50,6 @@ public class Driver {
         pcb.clearStatus();
         ram.clearRam();
         pager.initialFrames();
-        //lts.loadJobs(byJobNo);
         System.out.println("*************STARTING FIFO SCHEDULING SCHEDULING*************");
         sts.FIFOSchedule();
         sts.printWaitingTimes(byJobNo);
@@ -69,7 +68,6 @@ public class Driver {
         ram.clearRam();
         startTime = System.currentTimeMillis();
         pager.initialFrames();
-        //lts.loadJobs(byPriority);
         System.out.println("\n\n\n\n*************STARTING PRIORITY SCHEDULING*************");
         sts.PrioritySchedule();
         sts.printWaitingTimes(byPriority);
@@ -88,7 +86,6 @@ public class Driver {
         ram.clearRam();
         startTime = System.currentTimeMillis();
         pager.initialFrames();
-        //lts.loadJobs(byShortestJob);
         System.out.println("\n\n\n\n*************STARTING SHORTEST JOB SCHEDULING*************");
         sts.SJFSchedule();
         sts.printWaitingTimes(byShortestJob);

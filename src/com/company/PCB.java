@@ -34,6 +34,7 @@ public class PCB {
         return sortType;
     }
 
+    // used to determine which of the sorting algorithms to use
     public void sortPCB(sorttype s) {
         switch(s) {
             case JOB_PRIORITY:
