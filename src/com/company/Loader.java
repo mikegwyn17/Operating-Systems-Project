@@ -21,6 +21,7 @@ public class Loader {
     final int JOB_INSTRUCTIONS = 3, OUTPUT_BUFFER = 3;
     final int JOB_PRIORITY = 4, TEMPORARY_BUFFER = 3;
 
+
     public Loader(String file) {
 
         try {
@@ -31,6 +32,9 @@ public class Loader {
         }
     }
 
+    // Starts the long term loader. This is the method that loads the file and puts it into the Disk.
+    // The PCB is also updated in this method
+    // This is called by the driver.
     public void Start() throws IOException {
         String line;
         int index = 0;
