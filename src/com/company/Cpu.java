@@ -68,6 +68,7 @@ public class Cpu
         cache = new String[100];
     }
 
+    // method used to run the desired job on the Cpu
     public executeTimes loadCpu(PCBObject job)
     {
         start = System.currentTimeMillis();
@@ -112,6 +113,7 @@ public class Cpu
         return regArray[i] + (int) a;
     }
 
+    // method used to fetch the instruction from Cache
     public String fetch(int p, String[] c)
     {
         pc = p;
@@ -142,6 +144,7 @@ public class Cpu
         return fetchedInstr;
     }
 
+    // Method used to decode hte fetched instruction
     public int decode(String fetchedInstr, String[] c)
     {
         cache = c;
@@ -257,6 +260,7 @@ public class Cpu
         return opCode;
     }
 
+    // Method used to execute the instruction based on its opcode
     public void execute(int o, String[] c)
     {
         cache = c;
