@@ -24,8 +24,8 @@ public class LongTermScheduler {
 
     }
 
-    // method used to sort the ready Queues based on the sorting algorithm
-    public void loadJobs(PCB.sorttype s) {
+    // This method loads the initial jobs in the RAM. This is called by the driver.
+    // Based on the algorithm, it depends which jobs are loaded into RAM at first    public void loadJobs(PCB.sorttype s) {
         int index = 0;
 
         if (s == byJobNo) {
@@ -59,7 +59,9 @@ public class LongTermScheduler {
             }
         }
     }
-
+    
+     // This method takes one job and puts it into memory depending on where there is space
+    // If there is no space, then it takes a job out and replaces it with one thats needed.
     public void needJobInMemory(PCBObject j) {
 
         if(Driver.pcb.getPCBSortStatus() != Driver.byJobNo) {
