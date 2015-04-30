@@ -43,6 +43,7 @@ public class ShortTermScheduler
         executeTimesSJF = new ArrayList<executeTimes>();
     }
 
+    // used for prioirty scheduling
     public void PrioritySchedule()
     {
         int noOfJobs = Driver.pcb.getNumberOfJobs();
@@ -68,6 +69,7 @@ public class ShortTermScheduler
 
     }
 
+    // used for fifo scheduling
     public void FIFOSchedule()
     {
         int noOfJobs = Driver.pcb.getNumberOfJobs();
@@ -94,6 +96,7 @@ public class ShortTermScheduler
         dispatcher();
     }
 
+    // used for sjf scheduling
     public void SJFSchedule()
     {
         int noOfJobs = Driver.pcb.getNumberOfJobs();
@@ -118,6 +121,7 @@ public class ShortTermScheduler
         dispatcher();
     }
 
+    // method that allows the jobs to run on the cpu
     public void dispatcher()
     {
         if (Driver.pcb.getPCBSortStatus() != Driver.byJobNo)
@@ -152,6 +156,7 @@ public class ShortTermScheduler
         }
     }
 
+    // method used to print the execute and waiting times
     public void printWaitingTimes(PCB.sorttype s)
     {
 

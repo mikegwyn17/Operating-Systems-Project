@@ -34,6 +34,7 @@ public class PCB {
         return sortType;
     }
 
+    // method used to sort based on scheduling algorithm
     public void sortPCB(sorttype s) {
         switch(s) {
             case JOB_PRIORITY:
@@ -73,6 +74,7 @@ public class PCB {
             System.out.print("\nPage Faults on Job " + i + ": " + getPCB(i).getPageFaults());        }
     }
 
+    // method used to clear all crucial information from the pcb
     public void clearStatus() {
         for(PCBObject b : pcb) {
             b.setHasJobRan(false);
