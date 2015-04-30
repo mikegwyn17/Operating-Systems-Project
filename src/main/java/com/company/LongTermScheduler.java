@@ -24,6 +24,7 @@ public class LongTermScheduler {
 
     }
 
+    // method used to sort the ready Queues based on the sorting algorithm
     public void loadJobs(PCB.sorttype s) {
         int index = 0;
 

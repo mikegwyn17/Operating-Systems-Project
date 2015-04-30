@@ -18,9 +18,6 @@ class executeTimes
 
 public class Cpu
 {
-    // boolean used to end thread
-    private volatile boolean running = true;
-
     // Registers for the cpu
     public int sReg1;
     public int sReg2;
@@ -58,6 +55,7 @@ public class Cpu
 
     public String[] cache;
 
+    // default constructor for Cpu class
     public Cpu()
     {
         regArray = new int[16];
@@ -68,6 +66,7 @@ public class Cpu
         cache = new String[100];
     }
 
+    // Method called by the Dispatcher to run the Job on the Cpu
     public executeTimes loadCpu(PCBObject job)
     {
         start = System.currentTimeMillis();
@@ -112,6 +111,7 @@ public class Cpu
         return regArray[i] + (int) a;
     }
 
+    // Method called to fetch the instruction from Cache
     public String fetch(int p, String[] c)
     {
         pc = p;
@@ -257,6 +257,7 @@ public class Cpu
         return opCode;
     }
 
+    // method used to execute the instruction based on the opcode
     public void execute(int o, String[] c)
     {
         cache = c;

@@ -31,6 +31,7 @@ public class Loader {
         }
     }
 
+    // Method used to read the file into the O.S
     public void Start() throws IOException {
         String line;
         int index = 0;
